@@ -511,11 +511,19 @@ dependencies = [
 name = "container-dashbord"
 version = "0.1.0"
 dependencies = [
+ "container_bridge",
  "serde",
  "serde_json",
  "tauri",
  "tauri-build",
  "tauri-plugin-opener",
+]
+
+[[package]]
+name = "container_bridge"
+version = "0.1.0"
+dependencies = [
+ "swift-rs",
 ]
 
 [[package]]

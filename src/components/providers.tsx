@@ -1,6 +1,8 @@
 import { HeroUIProvider } from '@heroui/system';
 import { NavigateOptions, ToOptions, useRouter } from '@tanstack/react-router';
+import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import { PropsWithChildren } from 'react';
+import { Toaster } from 'sonner';
 
 declare module '@react-types/shared' {
   interface RouterConfig {
@@ -18,6 +20,8 @@ export function Providers({ children }: PropsWithChildren) {
       useHref={(to) => router.buildLocation({ to }).href}
     >
       {children}
+      <Toaster />
+      <TanStackRouterDevtools position="bottom-right" />
     </HeroUIProvider>
   );
 }
