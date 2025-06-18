@@ -5,6 +5,7 @@ edition = "2024"
 
 [dependencies]
 swift-rs = "1.0.7"
+tauri = { version = "2", features = [] }
 
 [build-dependencies]
 swift-rs = { version = "1.0.7", features = ["build"] }

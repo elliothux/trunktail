@@ -522,6 +522,7 @@ name = "container_bridge"
 version = "0.1.0"
 dependencies = [
  "swift-rs",
+ "tauri",
 ]
 
 [[package]]

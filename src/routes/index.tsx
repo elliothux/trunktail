@@ -255,10 +255,10 @@ function Home() {
 
 async function ping() {
   try {
-    const result = await invoke<string>('ping');
+    const result = await invoke<string>('ping_async');
     console.log('Result from Rust:', result);
     return result;
   } catch (error) {
-    console.error('Failed to call ping:', error);
+    console.error('Failed to call ping_async:', error);
   }
 }

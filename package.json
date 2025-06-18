@@ -7,7 +7,8 @@
     "dev": "vite",
     "dev:tauri": "export SDKROOT=$(xcrun --sdk macosx --show-sdk-path) && tauri dev",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "format:swift": "swift-format format ./swift-lib/Sources/container-bridge/ --recursive -i"
   },
   "dependencies": {
     "@heroui/button": "^2.2.21",
