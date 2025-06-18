@@ -23,3 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 .tanstack
+
+swift-lib/.build
+
+DESIGN.md
+_container_bridge.swift

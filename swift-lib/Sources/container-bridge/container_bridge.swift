@@ -1,7 +1,14 @@
-import Foundation
 import SwiftRs
 
-@_cdecl("add")
-public func add(_ a: Int32, _ b: Int32) -> Int32 {
-    return a + b
+@_cdecl("ffi_ping")
+public func ffi_ping() -> SRString {
+    return SRString("pong")
+}
+
+@_cdecl("ffi_ping_async")
+public func pingAsync(completion: FFICompletion) {
+    Task {
+        // try? await Task.sleep(nanoseconds: 100_000_000)
+        completion(SRString("pong"))
+    }
 }

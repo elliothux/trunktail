@@ -1,0 +1,10 @@
+swift-lib/.build/artifacts
+swift-lib/.build/index-build
+swift-lib/.build/prebuilts
+swift-lib/.build/repositories
+
+src-tauri/target
+
+.tanstack
+.idea
+.vscode

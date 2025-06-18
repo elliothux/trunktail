@@ -1,20 +1,10 @@
-use swift_rs::{swift};
+use swift_rs::{swift, SRString};
 
-swift!(fn add(a: i32, b: i32) -> i32);
+// test function
+swift!(fn ffi_ping() -> SRString);
 
-pub fn add_from_rust(a: i32, b: i32) -> i32 {
+pub fn ping() -> String {
     unsafe {    
-        add(a, b)
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add_from_rust(2, 2);
-        assert_eq!(result, 4);
+        ffi_ping().to_string()
     }
 }

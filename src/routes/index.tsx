@@ -134,7 +134,7 @@ function Home() {
         <div
           className="flex items-center gap-2 border-t border-gray-800 p-4 text-xs text-gray-400"
           onClick={() => {
-            void addNumbers(3, 5);
+            void ping();
           }}
         >
           <UserCircle className="h-6 w-6" /> elliot@coca...
@@ -253,14 +253,12 @@ function Home() {
   );
 }
 
-// 调用 add_via_swift，传递参数 a 和 b
-async function addNumbers(a: number, b: number) {
+async function ping() {
   try {
-    // 注意：命令名要与 Rust #[tauri::command] 标注的函数名一致
-    const result = await invoke<number>('add_via_swift', { a, b });
+    const result = await invoke<string>('ping');
     console.log('Result from Rust:', result);
     return result;
   } catch (error) {
-    console.error('Failed to call add_via_swift:', error);
+    console.error('Failed to call ping:', error);
   }
 }
