@@ -34,7 +34,7 @@ export function PortalProvider({ children }: PropsWithChildren) {
           portals,
           setPortal,
         }),
-        [portals],
+        [portals, setPortal],
       )}
     >
       {children}
@@ -60,7 +60,7 @@ export function PortalRoot({ name, ...props }: { name: string } & Omit<Component
     return () => {
       setPortal(name, null);
     };
-  }, [name]);
+  }, [name, setPortal]);
 
   return <div ref={ref} {...props} />;
 }

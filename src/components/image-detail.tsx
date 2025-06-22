@@ -1,27 +1,10 @@
 import { ImageDescriptor, ImageInfo, OCIImageHistory } from '@/lib/bridge/images';
 import { Badge } from '@heroui/badge';
-import { Snippet } from '@heroui/snippet';
 import { filesize } from 'filesize';
+import { DetailRow } from './ui/detail-row';
 
 interface Props {
   image: ImageInfo;
-}
-
-function DetailItem({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <>
-      <div className="text-xs text-gray-400">{label}</div>
-      <Snippet
-        className="mb-4 max-w-full bg-transparent p-0 text-sm"
-        classNames={{
-          pre: 'overflow-scroll scrollbar-hide grow-0 shrink',
-        }}
-        symbol=""
-      >
-        {children}
-      </Snippet>
-    </>
-  );
 }
 
 function HistoryItem({ item }: { item: OCIImageHistory }) {
@@ -42,37 +25,26 @@ function Descriptor({ item: { descriptor, config, manifest } }: { item: ImageDes
         {descriptor.platform.variant && `(${descriptor.platform.variant})`}
       </h3>
       <div className="grid grid-cols-2 gap-x-4">
-        <DetailItem label="Digest">
-          <span className="font-mono">{descriptor.digest}</span>
-        </DetailItem>
-        <DetailItem label="Size">{filesize(descriptor.size) as string}</DetailItem>
-        <DetailItem label="Media Type">{descriptor.mediaType}</DetailItem>
-        {config.created && <DetailItem label="Created">{new Date(config.created).toLocaleString()}</DetailItem>}
+        <DetailRow label="Digest">{descriptor.digest}</DetailRow>
+
+        <DetailRow label="Size">{filesize(descriptor.size) as string}</DetailRow>
+        <DetailRow label="Media Type">{descriptor.mediaType}</DetailRow>
+        {config.created && <DetailRow label="Created">{new Date(config.created).toLocaleString()}</DetailRow>}
       </div>
 
       {config.config.Env && (
-        <DetailItem label="Environment Variables">
-          <div className="space-y-1 font-mono text-xs">
-            {config.config.Env.map((env, i) => (
-              <div key={i}>{env}</div>
-            ))}
-          </div>
-        </DetailItem>
+        <DetailRow label="Environment Variables">
+          {config.config.Env.map((env, i) => (
+            <div key={i}>{env}</div>
+          ))}
+        </DetailRow>
       )}
 
       <div className="grid grid-cols-2 gap-x-4">
-        <DetailItem label="Entrypoint">
-          <div className="font-mono text-xs">{config.config.Entrypoint?.join(' ') || 'not set'}</div>
-        </DetailItem>
-        <DetailItem label="Command">
-          <div className="font-mono text-xs">{config.config.Cmd?.join(' ') || 'not set'}</div>
-        </DetailItem>
-        <DetailItem label="Working Directory">
-          <div className="font-mono text-xs">{config.config.WorkingDir || 'not set'}</div>
-        </DetailItem>
-        <DetailItem label="Stop Signal">
-          <div className="font-mono text-xs">{config.config.StopSignal || 'not set'}</div>
-        </DetailItem>
+        <DetailRow label="Entrypoint">{config.config.Entrypoint?.join(' ') || 'not set'}</DetailRow>
+        <DetailRow label="Command">{config.config.Cmd?.join(' ') || 'not set'}</DetailRow>
+        <DetailRow label="Working Directory">{config.config.WorkingDir || 'not set'}</DetailRow>
+        <DetailRow label="Stop Signal">{config.config.StopSignal || 'not set'}</DetailRow>
       </div>
 
       {descriptor.annotations && (
@@ -137,12 +109,10 @@ function Descriptor({ item: { descriptor, config, manifest } }: { item: ImageDes
 export function ImageDetail({ image }: Props) {
   return (
     <>
-      <DetailItem label="Reference">{image.reference}</DetailItem>
-      <DetailItem label="Digest">
-        <span className="font-mono">{image.digest}</span>
-      </DetailItem>
-      <DetailItem label="Schema Version">{image.schemaVersion}</DetailItem>
-      <DetailItem label="Media Type">{image.mediaType}</DetailItem>
+      <DetailRow label="Reference">{image.reference}</DetailRow>
+      <DetailRow label="Digest">{image.digest}</DetailRow>
+      <DetailRow label="Schema Version">{image.schemaVersion}</DetailRow>
+      <DetailRow label="Media Type">{image.mediaType}</DetailRow>
 
       {/*<div className="mt-6">*/}
       {/*  <h2 className="mb-2 text-lg font-semibold">Descriptors</h2>*/}

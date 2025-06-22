@@ -1,5 +1,5 @@
+import { OperationButton } from '@/components/ui/operation-button';
 import { ImageInfo } from '@/lib/bridge/images';
-import { cn } from '@/lib/utils';
 import { Button } from '@heroui/button';
 import { formatDistanceToNow } from 'date-fns/formatDistanceToNow';
 import { Folder, Trash2 } from 'lucide-react';
@@ -45,12 +45,8 @@ export function ImageItem({ image: { reference, descriptors }, image, active, on
         </p>
       </div>
       <div className="flex items-center space-x-1">
-        <Button size="sm" variant="light" isIconOnly>
-          <Folder className={cn('h-4 w-4', active ? 'text-white' : 'text-gray-900')} />
-        </Button>
-        <Button size="sm" variant="light" isIconOnly>
-          <Trash2 className={cn('h-4 w-4', active ? 'text-white' : 'text-gray-900')} />
-        </Button>
+        <OperationButton title="Folder" active={active} icon={Folder} />
+        <OperationButton title="Delete" active={active} icon={Trash2} />
       </div>
     </Button>
   );
