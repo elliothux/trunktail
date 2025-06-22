@@ -1,4 +1,5 @@
 import {
+  ComponentProps,
   createContext,
   PropsWithChildren,
   ReactNode,
@@ -22,7 +23,6 @@ export function PortalProvider({ children }: PropsWithChildren) {
   const [portals, setPortals] = useState<Record<string, HTMLDivElement | null>>({});
   const setPortal: PortalContextValue['setPortal'] = useCallback((name, el) => {
     setPortals((portals) => {
-      console.log('setPortal', name, el, portals, portals[name] === el);
       return portals[name] === el ? portals : { ...portals, [name]: el };
     });
   }, []);
@@ -50,7 +50,7 @@ function usePortalContext() {
   return context;
 }
 
-export function PortalRoot({ name, className }: { name: string; className?: string }) {
+export function PortalRoot({ name, ...props }: { name: string } & Omit<ComponentProps<'div'>, 'children'>) {
   const { setPortal } = usePortalContext();
 
   const ref = useRef<HTMLDivElement | null>(null);
@@ -62,7 +62,7 @@ export function PortalRoot({ name, className }: { name: string; className?: stri
     };
   }, [name]);
 
-  return <div ref={ref} className={className} />;
+  return <div ref={ref} {...props} />;
 }
 
 export function Portal({ name, fallback, children }: PropsWithChildren<{ name: string; fallback?: () => ReactNode }>) {

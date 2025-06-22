@@ -1,7 +1,10 @@
 @import 'tailwindcss';
 
 @plugin './lib/hero-ui.ts';
+@plugin 'tailwind-scrollbar-hide';
+
 @source '../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
+
 @custom-variant dark (&:is(.dark *));
 
 html {
@@ -13,5 +16,5 @@ html {
 }
 
 body {
-  @apply bg-gray-50 text-gray-950 dark:bg-gray-900 dark:text-gray-200;
+  @apply bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-100;
 }

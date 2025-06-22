@@ -19,11 +19,8 @@ async fn list_images() -> String {
 
 fn main() {
     Builder::default()
-        .invoke_handler(tauri::generate_handler![
-            ping,
-            ping_async,
-            list_images,
-        ])
+        .invoke_handler(tauri::generate_handler![ping, ping_async, list_images,])
+        .plugin(tauri_plugin_clipboard_manager::init())
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

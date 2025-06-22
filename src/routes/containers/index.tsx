@@ -8,7 +8,6 @@ import {
   FileText,
   Folder,
   Link2,
-  LogOut,
   Monitor,
   Server,
   Terminal,
@@ -97,112 +96,95 @@ function ContainersPage() {
 
   return (
     <>
-      {/* 中间内容区 */}
-      <>
-        <div
-          className="flex h-14 items-center border-b border-gray-800 px-6 text-lg font-semibold"
-          data-tauri-drag-region
-        >
-          Containers <span className="ml-2 text-xs font-normal text-gray-400">2 running</span>
-        </div>
-        <div className="flex-1 overflow-y-auto px-2 py-4">
-          {dockerGroups.map((group, gi) => (
-            <div key={group.label} className="mb-2">
-              <div className="flex items-center gap-1 px-2 py-1 text-sm font-medium text-gray-300">
-                {group.children.length > 0 ? (
-                  gi === selected.group ? (
-                    <ChevronDown className="h-4 w-4" />
-                  ) : (
-                    <ChevronRight className="h-4 w-4" />
-                  )
-                ) : null}
-                <span>{group.label}</span>
-              </div>
-              <div className="ml-6">
-                {group.children.map((child, ci) => (
-                  <div
-                    key={child.name}
-                    className={`flex cursor-pointer items-center justify-between rounded px-2 py-1 hover:bg-gray-800 ${gi === selected.group && ci === selected.child ? 'bg-gray-800' : ''}`}
-                    onClick={() => setSelected({ group: gi, child: ci })}
-                  >
-                    <div className="flex items-center gap-2">
-                      {child.icon}
-                      <div>
-                        <div className="text-sm font-medium">{child.name}</div>
-                        <div className="text-xs text-gray-400">{child.image}</div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Link2 className="h-4 w-4 text-gray-500 hover:text-blue-400" />
-                      <Folder className="h-4 w-4 text-gray-500 hover:text-blue-400" />
-                      <Trash2 className="h-4 w-4 text-gray-500 hover:text-red-400" />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </>
+      <Portal name="title">
+        <p>Containers</p>
+        <p className="text-xs font-normal text-gray-400">2 running</p>
+      </Portal>
 
-      {/* 右侧详情区 */}
+      {dockerGroups.map((group, gi) => (
+        <div key={group.label} className="mb-2">
+          <div className="flex items-center gap-1 px-2 py-1 text-sm font-medium text-gray-300">
+            {group.children.length > 0 ? (
+              gi === selected.group ? (
+                <ChevronDown className="h-4 w-4" />
+              ) : (
+                <ChevronRight className="h-4 w-4" />
+              )
+            ) : null}
+            <span>{group.label}</span>
+          </div>
+          <div className="ml-6">
+            {group.children.map((child, ci) => (
+              <div
+                key={child.name}
+                className={`flex cursor-pointer items-center justify-between rounded px-2 py-1 hover:bg-gray-800 ${gi === selected.group && ci === selected.child ? 'bg-gray-800' : ''}`}
+                onClick={() => setSelected({ group: gi, child: ci })}
+              >
+                <div className="flex items-center gap-2">
+                  {child.icon}
+                  <div>
+                    <div className="text-sm font-medium">{child.name}</div>
+                    <div className="text-xs text-gray-400">{child.image}</div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Link2 className="h-4 w-4 text-gray-500 hover:text-blue-400" />
+                  <Folder className="h-4 w-4 text-gray-500 hover:text-blue-400" />
+                  <Trash2 className="h-4 w-4 text-gray-500 hover:text-red-400" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+
+      <Portal name="right-panel-title">Info</Portal>
       <Portal name="right-panel">
-        <div
-          className="flex h-14 items-center border-b border-gray-800 px-4 text-lg font-bold tracking-wide"
-          data-tauri-drag-region
-        >
-          Info
+        <div className="mb-4">
+          <div className="text-xs text-gray-400">ID</div>
+          <div className="font-mono text-sm">c39ef046811a</div>
         </div>
-        <div className="flex-1 overflow-y-auto p-4">
-          <div className="mb-4">
-            <div className="text-xs text-gray-400">ID</div>
-            <div className="font-mono text-sm">c39ef046811a</div>
-          </div>
-          <div className="mb-4">
-            <div className="text-xs text-gray-400">Status</div>
-            <div className="text-sm text-green-400">Up 49 seconds</div>
-          </div>
-          <div className="mb-4">
-            <div className="text-xs text-gray-400">Image</div>
-            <div className="text-sm">redis:7-alpine</div>
-          </div>
-          <div className="mb-4">
-            <div className="text-xs text-gray-400">Domain</div>
-            <a href="#" className="text-sm text-blue-400 hover:underline">
-              cache.spot-ingestor.org...
-            </a>
-          </div>
-          <div className="mb-4">
-            <div className="flex flex-col gap-2">
-              <button className="flex items-center gap-2 rounded bg-gray-800 px-3 py-1.5 text-sm hover:bg-gray-700">
-                <FileText className="h-4 w-4" /> Logs
-              </button>
-              <button className="flex items-center gap-2 rounded bg-gray-800 px-3 py-1.5 text-sm hover:bg-gray-700">
-                <Bug className="h-4 w-4" /> Debug
-              </button>
-              <button className="flex items-center gap-2 rounded bg-gray-800 px-3 py-1.5 text-sm hover:bg-gray-700">
-                <Terminal className="h-4 w-4" /> Terminal
-              </button>
-              <button className="flex items-center gap-2 rounded bg-gray-800 px-3 py-1.5 text-sm hover:bg-gray-700">
-                <Folder className="h-4 w-4" /> Files
-              </button>
-            </div>
-          </div>
-          <div className="mb-4">
-            <div className="text-xs text-gray-400">Ports</div>
-            <a href="#" className="text-sm text-blue-400 hover:underline">
-              6379
-            </a>
-          </div>
-          <div className="mb-4">
-            <div className="text-xs text-gray-400">Mounts</div>
-            <a href="#" className="text-sm text-blue-400 hover:underline">
-              /data
-            </a>
+        <div className="mb-4">
+          <div className="text-xs text-gray-400">Status</div>
+          <div className="text-sm text-green-400">Up 49 seconds</div>
+        </div>
+        <div className="mb-4">
+          <div className="text-xs text-gray-400">Image</div>
+          <div className="text-sm">redis:7-alpine</div>
+        </div>
+        <div className="mb-4">
+          <div className="text-xs text-gray-400">Domain</div>
+          <a href="#" className="text-sm text-blue-400 hover:underline">
+            cache.spot-ingestor.org...
+          </a>
+        </div>
+        <div className="mb-4">
+          <div className="flex flex-col gap-2">
+            <button className="flex items-center gap-2 rounded bg-gray-800 px-3 py-1.5 text-sm hover:bg-gray-700">
+              <FileText className="h-4 w-4" /> Logs
+            </button>
+            <button className="flex items-center gap-2 rounded bg-gray-800 px-3 py-1.5 text-sm hover:bg-gray-700">
+              <Bug className="h-4 w-4" /> Debug
+            </button>
+            <button className="flex items-center gap-2 rounded bg-gray-800 px-3 py-1.5 text-sm hover:bg-gray-700">
+              <Terminal className="h-4 w-4" /> Terminal
+            </button>
+            <button className="flex items-center gap-2 rounded bg-gray-800 px-3 py-1.5 text-sm hover:bg-gray-700">
+              <Folder className="h-4 w-4" /> Files
+            </button>
           </div>
         </div>
-        <div className="flex items-center gap-2 border-t border-gray-800 p-4 text-xs text-gray-400">
-          <LogOut className="h-5 w-5" /> Personal use only
+        <div className="mb-4">
+          <div className="text-xs text-gray-400">Ports</div>
+          <a href="#" className="text-sm text-blue-400 hover:underline">
+            6379
+          </a>
+        </div>
+        <div className="mb-4">
+          <div className="text-xs text-gray-400">Mounts</div>
+          <a href="#" className="text-sm text-blue-400 hover:underline">
+            /data
+          </a>
         </div>
       </Portal>
     </>
