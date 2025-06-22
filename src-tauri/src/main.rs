@@ -12,11 +12,17 @@ async fn ping_async() -> String {
     container_bridge::ping_async().await
 }
 
+#[command]
+async fn list_images() -> String {
+    container_bridge::list_images().await
+}
+
 fn main() {
     Builder::default()
         .invoke_handler(tauri::generate_handler![
             ping,
             ping_async,
+            list_images,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

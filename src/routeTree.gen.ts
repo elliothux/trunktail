@@ -10,33 +10,141 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as VolumesIndexRouteImport } from './routes/volumes/index'
+import { Route as ServicesIndexRouteImport } from './routes/services/index'
+import { Route as PodsIndexRouteImport } from './routes/pods/index'
+import { Route as MonitorIndexRouteImport } from './routes/monitor/index'
+import { Route as MachinesIndexRouteImport } from './routes/machines/index'
+import { Route as ImagesIndexRouteImport } from './routes/images/index'
+import { Route as ContainersIndexRouteImport } from './routes/containers/index'
+import { Route as CommandsIndexRouteImport } from './routes/commands/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const VolumesIndexRoute = VolumesIndexRouteImport.update({
+  id: '/volumes/',
+  path: '/volumes/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesIndexRoute = ServicesIndexRouteImport.update({
+  id: '/services/',
+  path: '/services/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PodsIndexRoute = PodsIndexRouteImport.update({
+  id: '/pods/',
+  path: '/pods/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MonitorIndexRoute = MonitorIndexRouteImport.update({
+  id: '/monitor/',
+  path: '/monitor/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MachinesIndexRoute = MachinesIndexRouteImport.update({
+  id: '/machines/',
+  path: '/machines/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImagesIndexRoute = ImagesIndexRouteImport.update({
+  id: '/images/',
+  path: '/images/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContainersIndexRoute = ContainersIndexRouteImport.update({
+  id: '/containers/',
+  path: '/containers/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CommandsIndexRoute = CommandsIndexRouteImport.update({
+  id: '/commands/',
+  path: '/commands/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/commands': typeof CommandsIndexRoute
+  '/containers': typeof ContainersIndexRoute
+  '/images': typeof ImagesIndexRoute
+  '/machines': typeof MachinesIndexRoute
+  '/monitor': typeof MonitorIndexRoute
+  '/pods': typeof PodsIndexRoute
+  '/services': typeof ServicesIndexRoute
+  '/volumes': typeof VolumesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/commands': typeof CommandsIndexRoute
+  '/containers': typeof ContainersIndexRoute
+  '/images': typeof ImagesIndexRoute
+  '/machines': typeof MachinesIndexRoute
+  '/monitor': typeof MonitorIndexRoute
+  '/pods': typeof PodsIndexRoute
+  '/services': typeof ServicesIndexRoute
+  '/volumes': typeof VolumesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/commands/': typeof CommandsIndexRoute
+  '/containers/': typeof ContainersIndexRoute
+  '/images/': typeof ImagesIndexRoute
+  '/machines/': typeof MachinesIndexRoute
+  '/monitor/': typeof MonitorIndexRoute
+  '/pods/': typeof PodsIndexRoute
+  '/services/': typeof ServicesIndexRoute
+  '/volumes/': typeof VolumesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/commands'
+    | '/containers'
+    | '/images'
+    | '/machines'
+    | '/monitor'
+    | '/pods'
+    | '/services'
+    | '/volumes'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/commands'
+    | '/containers'
+    | '/images'
+    | '/machines'
+    | '/monitor'
+    | '/pods'
+    | '/services'
+    | '/volumes'
+  id:
+    | '__root__'
+    | '/'
+    | '/commands/'
+    | '/containers/'
+    | '/images/'
+    | '/machines/'
+    | '/monitor/'
+    | '/pods/'
+    | '/services/'
+    | '/volumes/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CommandsIndexRoute: typeof CommandsIndexRoute
+  ContainersIndexRoute: typeof ContainersIndexRoute
+  ImagesIndexRoute: typeof ImagesIndexRoute
+  MachinesIndexRoute: typeof MachinesIndexRoute
+  MonitorIndexRoute: typeof MonitorIndexRoute
+  PodsIndexRoute: typeof PodsIndexRoute
+  ServicesIndexRoute: typeof ServicesIndexRoute
+  VolumesIndexRoute: typeof VolumesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +156,75 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/commands/': {
+      id: '/commands/'
+      path: '/commands'
+      fullPath: '/commands'
+      preLoaderRoute: typeof CommandsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/containers/': {
+      id: '/containers/'
+      path: '/containers'
+      fullPath: '/containers'
+      preLoaderRoute: typeof ContainersIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/images/': {
+      id: '/images/'
+      path: '/images'
+      fullPath: '/images'
+      preLoaderRoute: typeof ImagesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/machines/': {
+      id: '/machines/'
+      path: '/machines'
+      fullPath: '/machines'
+      preLoaderRoute: typeof MachinesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/monitor/': {
+      id: '/monitor/'
+      path: '/monitor'
+      fullPath: '/monitor'
+      preLoaderRoute: typeof MonitorIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pods/': {
+      id: '/pods/'
+      path: '/pods'
+      fullPath: '/pods'
+      preLoaderRoute: typeof PodsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services/': {
+      id: '/services/'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof ServicesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/volumes/': {
+      id: '/volumes/'
+      path: '/volumes'
+      fullPath: '/volumes'
+      preLoaderRoute: typeof VolumesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CommandsIndexRoute: CommandsIndexRoute,
+  ContainersIndexRoute: ContainersIndexRoute,
+  ImagesIndexRoute: ImagesIndexRoute,
+  MachinesIndexRoute: MachinesIndexRoute,
+  MonitorIndexRoute: MonitorIndexRoute,
+  PodsIndexRoute: PodsIndexRoute,
+  ServicesIndexRoute: ServicesIndexRoute,
+  VolumesIndexRoute: VolumesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

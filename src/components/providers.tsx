@@ -1,7 +1,7 @@
+import { PortalProvider } from '@/components/portal';
 import { HeroUIProvider } from '@heroui/system';
 import { NavigateOptions, ToOptions, useRouter } from '@tanstack/react-router';
-import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, StrictMode } from 'react';
 import { Toaster } from 'sonner';
 
 declare module '@react-types/shared' {
@@ -15,13 +15,17 @@ export function Providers({ children }: PropsWithChildren) {
   const router = useRouter();
 
   return (
-    <HeroUIProvider
-      navigate={(to, options) => router.navigate({ to, ...options })}
-      useHref={(to) => router.buildLocation({ to }).href}
-    >
-      {children}
-      <Toaster />
-      <TanStackRouterDevtools position="bottom-right" />
-    </HeroUIProvider>
+    <StrictMode>
+      <HeroUIProvider
+        navigate={(to, options) => router.navigate({ to, ...(options ?? {}) })}
+        useHref={(to) => router.buildLocation({ to }).href}
+      >
+        <PortalProvider>
+          {children}
+          <Toaster />
+          {/*<TanStackRouterDevtools position="bottom-right" />*/}
+        </PortalProvider>
+      </HeroUIProvider>
+    </StrictMode>
   );
 }
