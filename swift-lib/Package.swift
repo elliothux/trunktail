@@ -16,6 +16,7 @@ let package = Package(
     ],
     dependencies: [
          .package(url: "https://github.com/apple/container.git", from: "0.1.0"),
+         .package(url: "https://github.com/apple/containerization.git", from: "0.1.0"),
          .package(url: "https://github.com/Brendonovich/swift-rs.git", from: "1.0.5"),
     ],
     targets: [
@@ -24,6 +25,7 @@ let package = Package(
             dependencies: [
                 .product(name: "SwiftRs", package: "swift-rs"),
                 .product(name: "ContainerClient", package: "container"),
+                .product(name: "ContainerizationOS", package: "containerization"),
             ],
         ),
         .testTarget(

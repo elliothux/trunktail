@@ -1,5 +1,5 @@
 import { OperationButton } from '@/components/ui/operation-button';
-import { ContainerInfo } from '@/lib/bridge/containers';
+import { ContainerInfo, startContainer } from '@/lib/bridge/containers';
 import { Button } from '@heroui/button';
 import { Folder, Link, Play, Square, Trash2 } from 'lucide-react';
 
@@ -42,9 +42,12 @@ export function ContainerItem({
         <OperationButton title="Link" active={active} icon={Link} />
         <OperationButton title="Folder" active={active} icon={Folder} />
         <OperationButton
-          title={status === 'running' ? 'Stop' : 'Run'}
+          title={status === 'running' ? 'Stop container' : 'Start container'}
           active={active}
           icon={status === 'running' ? Square : Play}
+          onClick={() => {
+            startContainer(id).then(console.log).catch(console.error);
+          }}
         />
         <OperationButton title="Delete" active={active} icon={Trash2} />
       </div>

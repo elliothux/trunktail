@@ -8,7 +8,14 @@ interface BridgeInvokeResponse<T> {
 }
 
 export async function invokeBridge<T>(command: string, args?: Record<string, unknown>): Promise<T> {
-  const result = await invoke(command, args);
+  const result = await invoke(
+    command,
+    args == null
+      ? undefined
+      : {
+          params: JSON.stringify(args),
+        },
+  );
   if (typeof result !== 'string') {
     throw new Error(`Expected string response from bridge, got ${typeof result}`);
   }

@@ -26,7 +26,7 @@ function ContainersPage() {
       <Portal name="title">
         <p>Containers</p>
         <p className="text-xs font-normal text-gray-400">
-          {running ? `${running} running` : `${containers} containers`}
+          {running ? `${running} running` : `${containers?.length} containers`}
         </p>
       </Portal>
 

@@ -28,3 +28,5 @@ swift-lib/.build
 
 DESIGN.md
 _container_bridge.swift
+
+external-libs/

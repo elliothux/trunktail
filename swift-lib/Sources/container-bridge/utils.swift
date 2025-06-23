@@ -64,3 +64,29 @@ extension FFIResult where T == FFINone {
     return FFIErrorResult(code: code, msg: msg, data: nil)
   }
 }
+
+class FFIParams {
+  private let dict: [String: Any]?
+
+  init(dict: [String: Any]) {
+    self.dict = dict
+  }
+
+  func get<T>(_ key: String) throws -> T {
+    if dict == nil {
+      throw NSError(
+        domain: "FFIParams", code: 1, userInfo: [NSLocalizedDescriptionKey: "Params is nil"])
+    }
+    guard let value = dict![key] else {
+      throw NSError(
+        domain: "FFIParams", code: 1, userInfo: [NSLocalizedDescriptionKey: "Key \(key) not found"])
+    }
+    return value as! T
+  }
+
+  static func from(_ json: String) throws -> FFIParams {
+    let data = json.data(using: .utf8)
+    let dict = try JSONSerialization.jsonObject(with: data!) as! [String: Any]
+    return FFIParams(dict: dict)
+  }
+}

@@ -1,4 +1,5 @@
 use tauri::async_runtime::channel;
+use swift_rs::SRString;
 
 pub type FFICompletion = extern "C" fn(*const u8, i32, u64);
 
@@ -17,6 +18,22 @@ pub async fn call_async_ffi(
 
     unsafe {
         ffi_fn(sender_ptr as u64, completion);
+    }
+
+    let bytes = receiver.recv().await.unwrap_or_default();
+    String::from_utf8(bytes).unwrap_or_else(|_| "error".to_string())
+}
+
+pub async fn call_async_ffi_with_params(
+    ffi_fn: unsafe extern "C" fn(params: SRString, context: u64, completion: FFICompletion),
+    params: String,
+) -> String {
+    let (sender, mut receiver) = channel::<Vec<u8>>(1);
+    let sender_ptr = Box::into_raw(Box::new(sender));
+    let params_str = SRString::from(params.as_str());
+
+    unsafe {
+        ffi_fn(params_str, sender_ptr as u64, completion);
     }
 
     let bytes = receiver.recv().await.unwrap_or_default();

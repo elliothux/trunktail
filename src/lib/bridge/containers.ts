@@ -99,3 +99,7 @@ export interface ContainerFileSystem {
 export function listContainers() {
   return invokeBridge<ContainerInfo[]>('list_containers');
 }
+
+export function startContainer(id: string) {
+  return invokeBridge<void>('start_container', { id });
+}

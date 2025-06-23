@@ -4,7 +4,7 @@ import Foundation
 import SwiftRs
 
 struct ImageDescriptorInfo: Codable {
-  let descriptor: Descriptor;
+  let descriptor: Descriptor
   let config: ContainerizationOCI.Image
   let manifest: ContainerizationOCI.Manifest
 }
@@ -32,7 +32,7 @@ public func listImages(context: FFIContext, completion: FFICompletion) {
             for descriptor in index.manifests {
               // Don't list attestation manifests
               if let referenceType = descriptor.annotations?["vnd.docker.reference.type"],
-                 referenceType == "attestation-manifest"
+                referenceType == "attestation-manifest"
               {
                 continue
               }
@@ -44,11 +44,12 @@ public func listImages(context: FFIContext, completion: FFICompletion) {
               do {
                 let config = try await img.config(for: platform)
                 let manifest = try await img.manifest(for: platform)
-                descriptors.append(ImageDescriptorInfo(
-                  descriptor: descriptor,
-                  config: config,
-                  manifest: manifest
-                ))
+                descriptors.append(
+                  ImageDescriptorInfo(
+                    descriptor: descriptor,
+                    config: config,
+                    manifest: manifest
+                  ))
               } catch {
                 continue
               }
