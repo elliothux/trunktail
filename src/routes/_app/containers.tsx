@@ -6,13 +6,13 @@ import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 import { useState } from 'react';
 
-export const Route = createFileRoute('/containers/')({
+export const Route = createFileRoute('/_app/containers')({
   component: ContainersPage,
 });
 
 function ContainersPage() {
   const { data: containers } = useQuery({
-    queryKey: ['list_containers'],
+    queryKey: ['containers'],
     queryFn: listContainers,
     refetchOnMount: 'always',
   });

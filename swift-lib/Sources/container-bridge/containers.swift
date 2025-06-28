@@ -55,8 +55,8 @@ public func stopContainer(params: SRString, context: FFIContext, completion: FFI
     do {
       let params = try FFIParams.from(paramsJson)
       let id: String = try params.get("id")
-      let signal: String = try params.get("signal")
-      let timeout: Int32 = try params.get("timeout")  // in milliseconds
+      let signal: String = try params.getOptional("signal") ?? "SIGTERM"
+      let timeout: Int32 = try params.getOptional("timeout") ?? 5000  // in milliseconds
       container = try await ClientContainer.get(id: id)
       if container == nil {
         throw NSError(
@@ -88,7 +88,7 @@ public func killContainer(params: SRString, context: FFIContext, completion: FFI
     do {
       let params = try FFIParams.from(paramsJson)
       let id: String = try params.get("id")
-      let signal: String = try params.get("signal")
+      let signal: String = try params.getOptional("signal") ?? "SIGKILL"
       container = try await ClientContainer.get(id: id)
       if container == nil {
         throw NSError(

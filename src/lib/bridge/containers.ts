@@ -101,5 +101,17 @@ export function listContainers() {
 }
 
 export function startContainer(id: string) {
-  return invokeBridge<void>('start_container', { id });
+  return invokeBridge<ContainerInfo>('start_container', { id });
+}
+
+export function stopContainer(id: string) {
+  return invokeBridge<ContainerInfo>('stop_container', { id });
+}
+
+export function killContainer(id: string) {
+  return invokeBridge<ContainerInfo>('kill_container', { id });
+}
+
+export function deleteContainer(id: string) {
+  return invokeBridge<ContainerInfo>('delete_container', { id });
 }

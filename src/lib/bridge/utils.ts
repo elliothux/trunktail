@@ -1,4 +1,5 @@
 import { invoke } from '@tauri-apps/api/core';
+import { homeDir } from '@tauri-apps/api/path';
 
 interface BridgeInvokeResponse<T> {
   code: number;
@@ -34,4 +35,8 @@ export async function invokeBridge<T>(command: string, args?: Record<string, unk
   }
 
   return response.data;
+}
+
+export async function getServicePath(path: string) {
+  return `${await homeDir()}/Library/Application Support/com.apple.container${path}`;
 }

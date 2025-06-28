@@ -1,6 +1,8 @@
 import { ContainerInfo } from '@/lib/bridge/containers';
 import { Button } from '@heroui/button';
+import { WebviewWindow } from '@tauri-apps/api/webviewWindow';
 import { BookCopy, Bug, ChevronRight, FileText, Terminal } from 'lucide-react';
+import { useCallback } from 'react';
 import { DetailRow } from './ui/detail-row';
 
 interface Props {
@@ -15,8 +17,32 @@ export function ContainerDetail({
   },
   container,
 }: Props) {
+  const onViewLogs = useCallback(async () => {
+    const viewId = `log-viewer-${id}`;
+    const existing = await WebviewWindow.getByLabel(viewId);
+    if (existing) {
+      await existing.destroy();
+    }
+
+    const win = new WebviewWindow(viewId, {
+      url: `${window.location.origin}/logs/${id}`,
+      center: true,
+      width: 800,
+      height: 600,
+      resizable: true,
+      title: `Logs - ${id}`,
+    });
+    win.once('tauri://created', () => {
+      console.log('created');
+      win.show();
+    });
+    win.once('tauri://error', (e) => {
+      console.error('Failed to create login window:', e);
+    });
+  }, [id]);
+
   const operationItems = [
-    { label: 'Logs', icon: BookCopy },
+    { label: 'Logs', icon: BookCopy, action: onViewLogs },
     { label: 'Debug', icon: Bug },
     { label: 'Terminal', icon: Terminal },
     { label: 'Files', icon: FileText },
@@ -37,12 +63,13 @@ export function ContainerDetail({
       </div>
 
       <div className="mt-2 flex flex-col gap-2">
-        {operationItems.map(({ label, icon: Icon }) => (
+        {operationItems.map(({ label, icon: Icon, action }) => (
           <Button
             key={label}
             className="justify-between"
             startContent={<Icon className="h-5 w-5" />}
             endContent={<ChevronRight className="ml-auto h-5 w-5 text-gray-400" />}
+            onPress={action}
           >
             {label}
           </Button>

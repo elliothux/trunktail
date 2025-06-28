@@ -1,3 +1,5 @@
+// TODO: replace this with parallel routes: https://tanstack.com/router/v1/docs/framework/react/guide/parallel-routes
+
 import {
   ComponentProps,
   createContext,

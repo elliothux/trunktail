@@ -79,9 +79,17 @@ class FFIParams {
     }
     guard let value = dict![key] else {
       throw NSError(
-        domain: "FFIParams", code: 1, userInfo: [NSLocalizedDescriptionKey: "Key \(key) not found"])
+        domain: "FFIParams", code: 1,
+        userInfo: [NSLocalizedDescriptionKey: "Key \"\(key)\" not found in FFIParams"])
     }
     return value as! T
+  }
+
+  func getOptional<T>(_ key: String) throws -> T? {
+    if dict == nil {
+      return nil
+    }
+    return dict![key] as? T
   }
 
   static func from(_ json: String) throws -> FFIParams {

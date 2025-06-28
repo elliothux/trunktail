@@ -2,14 +2,68 @@
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "default",
   "description": "Capability for the main window",
-  "windows": ["main"],
+  "windows": ["*"],
   "permissions": [
     "core:default",
     "opener:default",
     "core:window:default",
     "core:window:allow-start-dragging",
+    "core:window:allow-show",
+    "core:window:allow-hide",
+    "core:window:allow-close",
+    "core:window:allow-center",
+    "core:window:allow-set-size",
+    "core:window:allow-set-resizable",
+    "core:window:allow-set-title",
+    "core:window:allow-set-icon",
+    "core:window:allow-destroy",
+    "core:webview:allow-create-webview-window",
+    "core:webview:allow-create-webview",
+    "core:webview:allow-set-webview-auto-resize",
+    "core:webview:allow-set-webview-background-color",
+    "core:webview:allow-set-webview-focus",
+    "core:webview:allow-set-webview-position",
+    "core:webview:allow-set-webview-size",
+    "core:webview:allow-set-webview-zoom",
+    "core:webview:allow-webview-close",
+    "core:webview:allow-webview-hide",
+    "core:webview:allow-webview-show",
+    "core:webview:allow-webview-position",
+    "core:webview:allow-webview-size",
     "clipboard-manager:allow-read-text",
-    "clipboard-manager:allow-write-text"
-  ],
-  "macOSPrivateApi": true
+    "clipboard-manager:allow-write-text",
+    "dialog:allow-ask",
+    "dialog:allow-confirm",
+    "dialog:allow-message",
+    "dialog:allow-open",
+    "dialog:allow-save",
+    "shell:default",
+    "shell:allow-kill",
+    "shell:allow-open",
+    "shell:allow-spawn",
+    "shell:allow-stdin-write",
+    {
+      "identifier": "opener:allow-open-url",
+      "allow": [
+        {
+          "url": "custom:*"
+        }
+      ]
+    },
+    {
+      "identifier": "shell:allow-spawn",
+      "allow": [
+        {
+          "name": "container",
+          "cmd": "container",
+          "args": true
+        },
+        {
+          "name": "script",
+          "cmd": "script",
+          "args": true
+        }
+      ]
+    }
+  ]
 }
