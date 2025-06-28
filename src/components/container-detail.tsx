@@ -1,8 +1,12 @@
+import { ContainerStatusIndicator } from '@/components/container-status-indicator';
 import { ContainerInfo } from '@/lib/bridge/containers';
+import { getServicePath } from '@/lib/bridge/utils';
 import { Button } from '@heroui/button';
 import { WebviewWindow } from '@tauri-apps/api/webviewWindow';
-import { BookCopy, Bug, ChevronRight, FileText, Terminal } from 'lucide-react';
-import { useCallback } from 'react';
+import { Command } from '@tauri-apps/plugin-shell';
+import { BookCopy, ChevronRight, FileText, Terminal } from 'lucide-react';
+import { useMemo } from 'react';
+import { toast } from 'sonner';
 import { DetailRow } from './ui/detail-row';
 
 interface Props {
@@ -17,38 +21,64 @@ export function ContainerDetail({
   },
   container,
 }: Props) {
-  const onViewLogs = useCallback(async () => {
-    const viewId = `log-viewer-${id}`;
-    const existing = await WebviewWindow.getByLabel(viewId);
-    if (existing) {
-      await existing.destroy();
-    }
+  const operationItems = useMemo(
+    () => [
+      {
+        label: 'Logs',
+        icon: BookCopy,
+        action: async () => {
+          const viewId = `log-viewer-${id}`;
+          const existing = await WebviewWindow.getByLabel(viewId);
+          if (existing) {
+            await existing.destroy();
+          }
 
-    const win = new WebviewWindow(viewId, {
-      url: `${window.location.origin}/logs/${id}`,
-      center: true,
-      width: 800,
-      height: 600,
-      resizable: true,
-      title: `Logs - ${id}`,
-    });
-    win.once('tauri://created', () => {
-      console.log('created');
-      win.show();
-    });
-    win.once('tauri://error', (e) => {
-      console.error('Failed to create login window:', e);
-    });
-  }, [id]);
-
-  const operationItems = [
-    { label: 'Logs', icon: BookCopy, action: onViewLogs },
-    { label: 'Debug', icon: Bug },
-    { label: 'Terminal', icon: Terminal },
-    { label: 'Files', icon: FileText },
-  ];
-
-  console.log(container);
+          const win = new WebviewWindow(viewId, {
+            url: `${window.location.origin}/logs/${id}`,
+            center: true,
+            width: 800,
+            height: 600,
+            resizable: true,
+            title: `Logs - ${id}`,
+          });
+          win.once('tauri://created', () => {
+            console.log('created');
+            win.show();
+          });
+          win.once('tauri://error', (e) => {
+            console.error('Failed to create login window:', e);
+          });
+        },
+      },
+      {
+        label: 'Terminal',
+        icon: Terminal,
+        action: async () => {
+          const command = `container exec --tty --interactive ${id} sh`;
+          const result = await Command.create('osascript', [
+            '-e',
+            `tell application "Terminal" to activate`,
+            '-e',
+            `tell application "Terminal" to do script "${command}"`,
+          ]).execute();
+          if (result.code !== 0) {
+            toast.error('Failed to open terminal');
+          }
+        },
+      },
+      {
+        label: 'Files',
+        icon: FileText,
+        action: async () => {
+          const path = await getServicePath(`/containers/${id}`);
+          void Command.create('open', ['-R', path], {
+            cwd: '/',
+          }).execute();
+        },
+      },
+    ],
+    [id],
+  );
 
   return (
     <div className="flex h-full flex-col p-2.5">
@@ -56,7 +86,12 @@ export function ContainerDetail({
         <DetailRow label="ID" copyable>
           {id}
         </DetailRow>
-        <DetailRow label="Status">{status}</DetailRow>
+        <DetailRow label="Status">
+          <div className="flex flex-row items-center justify-start gap-2">
+            <ContainerStatusIndicator status={status} className="mt-0.5" />
+            <p>{status}</p>
+          </div>
+        </DetailRow>
         <DetailRow label="Image" copyable>
           {image.reference}
         </DetailRow>

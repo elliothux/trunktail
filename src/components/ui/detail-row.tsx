@@ -15,7 +15,7 @@ export function DetailRow({ label, children, copyable = false, suffix }: PropsWi
       {copyable ? (
         <SnippetText className="mb-4 max-w-full bg-transparent p-0 font-mono">{children}</SnippetText>
       ) : (
-        <p className="mb-2 max-w-full bg-transparent p-0 font-mono">{children}</p>
+        <div className="mb-2 max-w-full bg-transparent p-0 font-mono text-sm">{children}</div>
       )}
       {suffix}
     </>

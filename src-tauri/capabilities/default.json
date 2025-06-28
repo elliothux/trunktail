@@ -42,11 +42,48 @@
     "shell:allow-open",
     "shell:allow-spawn",
     "shell:allow-stdin-write",
+    "fs:allow-read",
+    "fs:allow-write",
+    "fs:allow-create",
+    "fs:allow-rename",
+    "fs:allow-read-dir",
+    "fs:allow-read-file",
+    "fs:allow-write-file",
+    "fs:allow-copy-file",
+    "fs:allow-write-text-file",
+    "fs:allow-read-text-file",
+    "fs:allow-read-text-file-lines",
+    "fs:allow-read-text-file-lines-next",
     {
       "identifier": "opener:allow-open-url",
       "allow": [
         {
           "url": "custom:*"
+        }
+      ]
+    },
+    {
+      "identifier": "shell:allow-execute",
+      "allow": [
+        {
+          "name": "container",
+          "cmd": "container",
+          "args": true
+        },
+        {
+          "name": "open",
+          "cmd": "open",
+          "args": true
+        },
+        {
+          "name": "script",
+          "cmd": "script",
+          "args": true
+        },
+        {
+          "name": "osascript",
+          "cmd": "osascript",
+          "args": true
         }
       ]
     },
@@ -59,11 +96,22 @@
           "args": true
         },
         {
+          "name": "open",
+          "cmd": "open",
+          "args": true
+        },
+        {
           "name": "script",
           "cmd": "script",
           "args": true
+        },
+        {
+          "name": "osascript",
+          "cmd": "osascript",
+          "args": true
         }
       ]
-    }
+    },
+    "fs:default"
   ]
 }

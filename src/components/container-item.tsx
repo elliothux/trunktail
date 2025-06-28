@@ -1,14 +1,16 @@
+import { ContainerStatusIndicator } from '@/components/container-status-indicator';
 import { OperationButton } from '@/components/ui/operation-button';
 import { ContainerInfo, deleteContainer, killContainer, startContainer, stopContainer } from '@/lib/bridge/containers';
 import { getServicePath } from '@/lib/bridge/utils';
 import { Button } from '@heroui/button';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { invoke } from '@tauri-apps/api/core';
 import { listen } from '@tauri-apps/api/event';
 import { Menu } from '@tauri-apps/api/menu';
+import { writeText } from '@tauri-apps/plugin-clipboard-manager';
 import { confirm, message } from '@tauri-apps/plugin-dialog';
 import { openUrl } from '@tauri-apps/plugin-opener';
-import { Folder, Link, Play, Square, Trash2 } from 'lucide-react';
+import { Command } from '@tauri-apps/plugin-shell';
+import { Ellipsis, Link, Play, Square, Trash2 } from 'lucide-react';
 import { useCallback, useEffect, useMemo } from 'react';
 import { toast } from 'sonner';
 
@@ -33,8 +35,6 @@ export function ContainerItem({
 }: Props) {
   const [name, tag] = reference.split(':');
 
-  console.log('container', container);
-
   const queryClient = useQueryClient();
   const update = useCallback(
     (info: ContainerInfo) => {
@@ -52,7 +52,7 @@ export function ContainerItem({
       toast.success('Container started');
     },
     onError: (e: unknown) => {
-      message(e == null ? 'Unknown error' : e instanceof Error ? e.message : e.toString(), {
+      void message(e == null ? 'Unknown error' : e instanceof Error ? e.message : e.toString(), {
         kind: 'warning',
         title: 'Failed to start container',
       });
@@ -67,7 +67,7 @@ export function ContainerItem({
     },
     onError: (e: unknown) => {
       console.log('e', e);
-      message(e == null ? 'Unknown error' : e instanceof Error ? e.message : e.toString(), {
+      void message(e == null ? 'Unknown error' : e instanceof Error ? e.message : e.toString(), {
         kind: 'warning',
         title: 'Failed to stop container',
       });
@@ -81,7 +81,7 @@ export function ContainerItem({
       toast.success('Container killed');
     },
     onError: (e: unknown) => {
-      message(e == null ? 'Unknown error' : e instanceof Error ? e.message : e.toString(), {
+      void message(e == null ? 'Unknown error' : e instanceof Error ? e.message : e.toString(), {
         kind: 'warning',
         title: 'Failed to kill container',
       });
@@ -95,7 +95,7 @@ export function ContainerItem({
       toast.success('Container deleted');
     },
     onError: (e: unknown) => {
-      message(e == null ? 'Unknown error' : e instanceof Error ? e.message : e.toString(), {
+      void message(e == null ? 'Unknown error' : e instanceof Error ? e.message : e.toString(), {
         kind: 'warning',
         title: 'Failed to delete container',
       });
@@ -104,9 +104,9 @@ export function ContainerItem({
 
   const onOpenFolder = useCallback(async () => {
     const path = await getServicePath(`/containers/${id}`);
-    invoke('show_folder', { path }).then((result) => {
-      console.log('result', result);
-    });
+    void Command.create('open', ['-R', path], {
+      cwd: '/',
+    }).execute();
   }, [id]);
 
   const onDeleteConfirm = useCallback(async () => {
@@ -141,13 +141,21 @@ export function ContainerItem({
           id: 'Open link',
           text: 'Open link',
           action: () => {
-            openUrl(`https://${address}`);
+            void openUrl(`https://${address}`);
           },
           enabled: !!address,
         },
         {
-          id: 'Open folder',
-          text: 'Open folder',
+          id: 'Copy link',
+          text: 'Copy link',
+          action: () => {
+            void writeText(`https://${address}`);
+          },
+          enabled: !!address,
+        },
+        {
+          id: 'Open files',
+          text: 'Open files',
           action: onOpenFolder,
         },
         {
@@ -182,6 +190,12 @@ export function ContainerItem({
     };
   }, []);
 
+  const onOpenMenu = async () => {
+    (await menus).popup().catch((e) => {
+      console.error('Failed to open context menu:', e);
+    });
+  };
+
   return (
     <Button
       as="section"
@@ -189,17 +203,18 @@ export function ContainerItem({
       variant={active ? 'solid' : 'light'}
       color={active ? 'primary' : 'default'}
       onPress={() => onSelect(container)}
-      onContextMenu={async (event) => {
-        event.preventDefault();
-        (await menus).popup().catch((e) => {
-          console.error('Failed to open context menu:', e);
-        });
+      onContextMenu={(e) => {
+        e.preventDefault();
+        void onOpenMenu();
       }}
       size="lg"
     >
       <div>
-        <p className="text-sm">{id}</p>
-        <p className="text-muted-foreground text-xs opacity-80">
+        <div className="flex flex-row items-center justify-start gap-1.5">
+          <ContainerStatusIndicator status={status} className="mt-0.5" />
+          <p className="text-sm">{id}</p>
+        </div>
+        <p className="text-muted-foreground text-xs opacity-75">
           {name}:<span className="text-muted-foreground">{tag}</span>
         </p>
       </div>
@@ -211,7 +226,6 @@ export function ContainerItem({
           onClick={() => openUrl(`https://${address}`)}
           disabled={!address}
         />
-        <OperationButton title="Folder" active={active} icon={Folder} onClick={onOpenFolder} />
         <OperationButton
           title={status === 'running' ? 'Stop container' : 'Start container'}
           active={active}
@@ -226,6 +240,7 @@ export function ContainerItem({
           icon={Trash2}
           onClick={onDeleteConfirm}
         />
+        <OperationButton active={active} icon={Ellipsis} onClick={onOpenMenu} />
       </div>
     </Button>
   );

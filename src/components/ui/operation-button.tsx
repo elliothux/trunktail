@@ -5,7 +5,7 @@ import { Loader2 } from 'lucide-react';
 import { ComponentProps, ComponentType } from 'react';
 
 interface Props {
-  title: string;
+  title?: string;
   active: boolean;
   icon: ComponentType<ComponentProps<'svg'>>;
   isLoading?: boolean;
@@ -15,11 +15,10 @@ interface Props {
 
 export function OperationButton({ title, active, icon, onClick, isLoading, disabled }: Props) {
   const Icon = isLoading ? Loader2 : icon;
-  return (
-    <Tooltip content={title}>
-      <Button size="sm" variant="light" onPress={onClick} isDisabled={disabled} isIconOnly>
-        <Icon className={cn('h-4 w-4', active ? 'text-white' : 'text-gray-900', isLoading ? 'animate-spin' : null)} />
-      </Button>
-    </Tooltip>
+  const button = (
+    <Button size="sm" variant="light" onPress={onClick} isDisabled={disabled} isIconOnly>
+      <Icon className={cn('h-4 w-4', active ? 'text-white' : 'text-gray-900', isLoading ? 'animate-spin' : null)} />
+    </Button>
   );
+  return title ? <Tooltip content={title}>{button}</Tooltip> : button;
 }

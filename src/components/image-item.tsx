@@ -2,7 +2,7 @@ import { OperationButton } from '@/components/ui/operation-button';
 import { ImageInfo } from '@/lib/bridge/images';
 import { Button } from '@heroui/button';
 import { formatDistanceToNow } from 'date-fns/formatDistanceToNow';
-import { Folder, Trash2 } from 'lucide-react';
+import { Trash2 } from 'lucide-react';
 import { default as prettyBytes } from 'pretty-bytes';
 
 interface Props {
@@ -45,7 +45,7 @@ export function ImageItem({ image: { reference, descriptors }, image, active, on
         </p>
       </div>
       <div className="flex items-center space-x-1">
-        <OperationButton title="Folder" active={active} icon={Folder} />
+        {/*<OperationButton title="Folder" active={active} icon={Folder} />*/}
         <OperationButton title="Delete" active={active} icon={Trash2} />
       </div>
     </Button>
