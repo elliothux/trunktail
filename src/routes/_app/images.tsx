@@ -1,9 +1,13 @@
 import { ImageDetail } from '@/components/image-detail';
 import { ImageItem } from '@/components/image-item';
+import { MetadataPreview } from '@/components/metadata-preview';
 import { Portal } from '@/components/portal';
 import { ImageInfo, listImages } from '@/lib/bridge/images';
+import { Button } from '@heroui/button';
+import { useDisclosure } from '@heroui/modal';
 import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
+import { Info } from 'lucide-react';
 import { useState } from 'react';
 
 export const Route = createFileRoute('/_app/images')({
@@ -18,7 +22,8 @@ function ImageList() {
   });
 
   const [image, setImage] = useState<ImageInfo | null>(null);
-  console.log('selected', image);
+
+  const disclosure = useDisclosure();
 
   return (
     <>
@@ -27,10 +32,21 @@ function ImageList() {
         <p className="text-xs font-normal text-gray-400">{images?.length} images</p>
       </Portal>
 
-      {images?.map((item) => <ImageItem key={item.digest} image={item} active={item === image} onSelect={setImage} />)}
+      {images?.map((item) => (
+        <ImageItem key={item.digest} image={item} active={item === image} onSelect={setImage} />
+      ))}
 
-      <Portal name="right-panel-title">Image Info</Portal>
+      <Portal name="right-panel-title">
+        <p>Details</p>
+        {image ? (
+          <Button size="sm" className="ml-auto" variant="light" onPress={disclosure.onOpen} isIconOnly>
+            <Info size={18} />
+          </Button>
+        ) : null}
+      </Portal>
       <Portal name="right-panel">{image ? <ImageDetail image={image} /> : <div>No Selected</div>}</Portal>
+
+      <MetadataPreview metadata={image} disclosure={disclosure} />
     </>
   );
 }

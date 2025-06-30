@@ -120,6 +120,8 @@ export function ContainerItem({
     });
   }, [onDelete]);
 
+  const onViewMetadata = useCallback(() => {}, []);
+
   const address = network?.address.split('/')[0];
 
   const menus = useMemo(() => {
@@ -171,6 +173,11 @@ export function ContainerItem({
           text: 'Delete',
           action: onDeleteConfirm,
           enabled: status !== 'running',
+        },
+        {
+          id: 'View metadata',
+          text: 'View metadata',
+          action: onViewMetadata,
         },
       ],
     });

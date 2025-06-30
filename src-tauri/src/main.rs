@@ -1,47 +1,41 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use tauri::{command, Builder};
-use std::process::Command;
+
+macro_rules! tauri_command_async {
+    // No parameters
+    ($fn_name:ident) => {
+        #[command]
+        async fn $fn_name() -> String {
+            container_bridge::$fn_name().await
+        }
+    };
+    // One parameter
+    ($fn_name:ident, $param:ident) => {
+        #[command]
+        async fn $fn_name($param: String) -> String {
+            container_bridge::$fn_name($param).await
+        }
+    };
+}
 
 #[command]
 fn ping() -> String {
     container_bridge::ping()
 }
 
-#[command]
-async fn ping_async() -> String {
-    container_bridge::ping_async().await
-}
-
-#[command]
-async fn list_images() -> String {
-    container_bridge::list_images().await
-}
-
-#[command]
-async fn list_containers() -> String {
-    container_bridge::list_containers().await
-}
-
-#[command]
-async fn start_container(params: String) -> String {
-    container_bridge::start_container(params).await
-}
-
-#[command]
-async fn stop_container(params: String) -> String {
-    container_bridge::stop_container(params).await
-}
-
-#[command]
-async fn kill_container(params: String) -> String {
-    container_bridge::kill_container(params).await
-}
-
-#[command]
-async fn delete_container(params: String) -> String {
-    container_bridge::delete_container(params).await
-}
+tauri_command_async!(ping_async);
+tauri_command_async!(list_images);
+tauri_command_async!(list_containers);
+tauri_command_async!(start_container, params);
+tauri_command_async!(stop_container, params);
+tauri_command_async!(kill_container, params);
+tauri_command_async!(delete_container, params);
+tauri_command_async!(delete_image, params);
+tauri_command_async!(save_image, params);
+tauri_command_async!(load_image, params);
+tauri_command_async!(prune_image);
+tauri_command_async!(tag_image, params);
 
 fn main() {
     Builder::default()
@@ -54,6 +48,11 @@ fn main() {
             stop_container,
             kill_container,
             delete_container,
+            delete_image,
+            save_image,
+            load_image,
+            prune_image,
+            tag_image,
         ])
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_clipboard_manager::init())

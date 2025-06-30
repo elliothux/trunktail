@@ -1,7 +1,7 @@
 import { Button } from '@heroui/button';
 import { ScrollShadow } from '@heroui/scroll-shadow';
 import { FileRouteTypes, Link, useLocation } from '@tanstack/react-router';
-import { Activity, Boxes, Command, FileText, UserCircle } from 'lucide-react';
+import { Activity, Command, FileArchive, Package, UserCircle } from 'lucide-react';
 import { ComponentProps, ComponentType } from 'react';
 
 const menus: {
@@ -9,9 +9,9 @@ const menus: {
   icon: ComponentType<ComponentProps<'svg'>>;
   to: FileRouteTypes['to'];
 }[] = [
-  { label: 'Containers', icon: Boxes, to: '/containers' },
+  { label: 'Containers', icon: Package, to: '/containers' },
   // { label: 'Volumes', icon: HardDrive, to: '/volumes' },
-  { label: 'Images', icon: FileText, to: '/images' },
+  { label: 'Images', icon: FileArchive, to: '/images' },
   // { label: 'Pods', icon: Server, to: '/pods' },
   // { label: 'Services', icon: Server, to: '/services' },
   // { label: 'Machines', icon: Monitor, to: '/machines' },

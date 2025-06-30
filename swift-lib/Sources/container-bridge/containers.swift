@@ -140,19 +140,3 @@ public func deleteContainer(params: SRString, context: FFIContext, completion: F
     }
   }
 }
-
-// // exec 方案（基础版，实际参数可扩展）
-// @_cdecl("ffi_exec_container")
-// public func execContainer(id: String, command: UnsafePointer<CChar>, context: FFIContext, completion: FFICompletion) {
-//   Task {
-//     do {
-//       let container = try await ClientContainer.get(id: id)
-//       let cmd = String(cString: command)
-//       let result = try await container.exec(command: cmd)
-//       FFIResult.from(result).returnBytes(context, completion)
-//     } catch {
-//       print("[execContainer] error: \(error)")
-//       FFIErrorResult.from(error.localizedDescription).returnBytes(context, completion)
-//     }
-//   }
-// }

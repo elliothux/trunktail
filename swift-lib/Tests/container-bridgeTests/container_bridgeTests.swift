@@ -127,3 +127,14 @@ struct DecodableImage: Codable {}
   #expect(response.code == 0)
   #expect(response.data != nil)
 }
+
+@Test func testDeleteImage() async throws {
+  let params = SRString("{\"reference\":\"docker.io/library/node:alpine\"}")
+  let jsonString = try await ffiCallWithParams(deleteImage, params)
+  let jsonData = try #require(jsonString.data(using: .utf8))
+  print(jsonString)
+  let response = try #require(
+    try? JSONDecoder().decode(FFIResult<DecodableImage>.self, from: jsonData))
+  #expect(response.code == 0)
+  #expect(response.data != nil)
+}

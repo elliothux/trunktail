@@ -11,8 +11,8 @@ interface Props {
   onSelect: (image: ImageInfo) => void;
 }
 
-export function ImageItem({ image: { reference, descriptors }, image, active, onSelect }: Props) {
-  const [name, tag] = reference.split(':');
+export function ImageItem({ image: { references, descriptors }, image, active, onSelect }: Props) {
+  const [name, tag] = references[0].split(':');
 
   const size = prettyBytes(
     descriptors.reduce(
@@ -45,6 +45,7 @@ export function ImageItem({ image: { reference, descriptors }, image, active, on
         </p>
       </div>
       <div className="flex items-center space-x-1">
+        {/*<OperationButton title="View metadata" active={active} icon={Info} onClick={onViewMetadata} />*/}
         {/*<OperationButton title="Folder" active={active} icon={Folder} />*/}
         <OperationButton title="Delete" active={active} icon={Trash2} />
       </div>

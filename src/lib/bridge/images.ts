@@ -1,11 +1,20 @@
-import { invokeBridge } from '@/lib/bridge/utils';
+import { invokeBridge, parseImageReference } from '@/lib/bridge/utils';
 
 export interface ImageInfo {
-  reference: string;
+  references: string[];
   digest: string;
   schemaVersion: number;
   mediaType: string;
   descriptors: ImageDescriptor[];
+  parsedReferences: ImageReference[];
+}
+
+export interface ImageReference {
+  registry: string;
+  org?: string;
+  repo?: string;
+  name: string;
+  tag: string;
 }
 
 export interface ImageDescriptor {
@@ -88,6 +97,47 @@ export interface Platform {
   os: string;
 }
 
-export function listImages() {
-  return invokeBridge<ImageInfo[]>('list_images');
+export async function listImages() {
+  const images = await invokeBridge<ImageInfo[]>('list_images');
+  return images
+    .sort((a, b) => {
+      const aCreated = a.descriptors[0]?.config?.created;
+      const bCreated = b.descriptors[0]?.config?.created;
+      return new Date(bCreated || 0).getTime() - new Date(aCreated || 0).getTime();
+    })
+    .map((image) => ({
+      ...image,
+      parsedReferences: image.references.map(parseImageReference),
+    }));
+}
+
+interface SaveImageParams {
+  reference: string;
+  output: string;
+  platform?: Platform;
+}
+
+export function saveImage({ platform, ...params }: SaveImageParams) {
+  return invokeBridge<ImageInfo>('save_image', {
+    ...params,
+    // os/arch(/variant)
+    platform: platform ? [platform.os, platform.architecture, platform.variant].filter(Boolean).join('/') : undefined,
+  });
+}
+
+export function loadImage(input: string) {
+  return invokeBridge<ImageInfo>('load_image', { input });
+}
+
+export function pruneImage() {
+  return invokeBridge<ImageInfo[]>('prune_image');
+}
+
+interface TagImageParams {
+  source: string;
+  target: string;
+}
+
+export function tagImage(params: TagImageParams) {
+  return invokeBridge<ImageInfo>('tag_image', params);
 }

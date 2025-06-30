@@ -1,0 +1,12 @@
+.cursor/
+.idea/
+.tanstack/
+.vscode/
+
+/external-libs/
+/node_modules/
+
+/target/
+
+.build/
+.swiftpm/

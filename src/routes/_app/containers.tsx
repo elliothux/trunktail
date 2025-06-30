@@ -1,9 +1,13 @@
 import { ContainerDetail } from '@/components/container-detail';
 import { ContainerItem } from '@/components/container-item';
+import { MetadataPreview } from '@/components/metadata-preview';
 import { Portal } from '@/components/portal';
 import { ContainerInfo, listContainers } from '@/lib/bridge/containers';
+import { Button } from '@heroui/button';
+import { useDisclosure } from '@heroui/modal';
 import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
+import { Info } from 'lucide-react';
 import { useState } from 'react';
 
 export const Route = createFileRoute('/_app/containers')({
@@ -20,6 +24,8 @@ function ContainersPage() {
   const [container, setContainer] = useState<ContainerInfo | null>(null);
 
   const running = containers?.filter((i) => i.status === 'running')?.length;
+
+  const disclosure = useDisclosure();
 
   return (
     <>
@@ -43,10 +49,19 @@ function ContainersPage() {
         ))}
       </>
 
-      <Portal name="right-panel-title">Info</Portal>
+      <Portal name="right-panel-title">
+        <p>Details</p>
+        {container ? (
+          <Button size="sm" className="ml-auto" variant="light" onPress={disclosure.onOpen} isIconOnly>
+            <Info size={18} />
+          </Button>
+        ) : null}
+      </Portal>
       <Portal name="right-panel">
         {container ? <ContainerDetail container={container} /> : <div>No Selected</div>}
       </Portal>
+
+      <MetadataPreview metadata={container} disclosure={disclosure} />
     </>
   );
 }

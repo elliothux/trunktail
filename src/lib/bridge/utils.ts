@@ -1,5 +1,6 @@
 import { invoke } from '@tauri-apps/api/core';
 import { homeDir } from '@tauri-apps/api/path';
+import { ImageReference } from './images';
 
 interface BridgeInvokeResponse<T> {
   code: number;
@@ -8,7 +9,7 @@ interface BridgeInvokeResponse<T> {
   data?: T;
 }
 
-export async function invokeBridge<T>(command: string, args?: Record<string, unknown>): Promise<T> {
+export async function invokeBridge<T>(command: string, args?: object): Promise<T> {
   const result = await invoke(
     command,
     args == null
@@ -39,4 +40,30 @@ export async function invokeBridge<T>(command: string, args?: Record<string, unk
 
 export async function getServicePath(path: string) {
   return `${await homeDir()}/Library/Application Support/com.apple.container${path}`;
+}
+
+export function parseImageReference(reference: string): ImageReference {
+  const components = reference.split('/');
+  if (components.length === 3) {
+    // docker.io/library/postgres:latest
+    const [name, tag] = components[2].split(':');
+    return {
+      registry: components[0],
+      repo: components[1],
+      name,
+      tag,
+    };
+  } else if (components.length === 4) {
+    // ghcr.io/apple/containerization/vminit:0.1.0
+    const [name, tag] = components[3].split(':');
+    return {
+      registry: components[0],
+      org: components[1],
+      repo: components[2],
+      name,
+      tag,
+    };
+  }
+
+  throw new Error(`Invalid reference: ${reference}`);
 }

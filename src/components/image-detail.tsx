@@ -7,6 +7,32 @@ interface Props {
   image: ImageInfo;
 }
 
+export function ImageDetail({ image }: Props) {
+  console.log(image);
+
+  return (
+    <div className="flex h-full flex-col p-2.5">
+      <DetailRow label="Reference" copyable>
+        {image.references[0]}
+      </DetailRow>
+      <DetailRow label="Digest" copyable>
+        {image.digest}
+      </DetailRow>
+      <DetailRow label="Schema Version">{image.schemaVersion}</DetailRow>
+      <DetailRow label="Media Type" copyable>
+        {image.mediaType}
+      </DetailRow>
+
+      {/*<div className="mt-6">*/}
+      {/*  <h2 className="mb-2 text-lg font-semibold">Descriptors</h2>*/}
+      {/*  {image.descriptors.map((item, i) => (*/}
+      {/*    <Descriptor key={item.descriptor.digest} item={item} />*/}
+      {/*  ))}*/}
+      {/*</div>*/}
+    </div>
+  );
+}
+
 function HistoryItem({ item }: { item: OCIImageHistory }) {
   return (
     <div className="flex gap-4">
@@ -103,23 +129,5 @@ function Descriptor({ item: { descriptor, config, manifest } }: { item: ImageDes
       {/*  </>*/}
       {/*)}*/}
     </div>
-  );
-}
-
-export function ImageDetail({ image }: Props) {
-  return (
-    <>
-      <DetailRow label="Reference">{image.reference}</DetailRow>
-      <DetailRow label="Digest">{image.digest}</DetailRow>
-      <DetailRow label="Schema Version">{image.schemaVersion}</DetailRow>
-      <DetailRow label="Media Type">{image.mediaType}</DetailRow>
-
-      {/*<div className="mt-6">*/}
-      {/*  <h2 className="mb-2 text-lg font-semibold">Descriptors</h2>*/}
-      {/*  {image.descriptors.map((item, i) => (*/}
-      {/*    <Descriptor key={item.descriptor.digest} item={item} />*/}
-      {/*  ))}*/}
-      {/*</div>*/}
-    </>
   );
 }
