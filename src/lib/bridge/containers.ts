@@ -1,5 +1,5 @@
-import { Platform } from '@/lib/bridge/images';
-import { invokeBridge } from '@/lib/bridge/utils';
+import { ImageReference, Platform } from '@/lib/bridge/images';
+import { invokeBridge, parseImageReference } from '@/lib/bridge/utils';
 
 export interface ContainerInfo {
   status: ContainerStatus;
@@ -43,6 +43,7 @@ export interface ContainerResources {
 
 export interface ContainerImage {
   reference: string;
+  parsedReference: ImageReference;
   descriptor: {
     mediaType: string;
     size: number;
@@ -96,22 +97,32 @@ export interface ContainerFileSystem {
   options: string[];
 }
 
-export function listContainers() {
-  return invokeBridge<ContainerInfo[]>('list_containers');
+function handleContainer(container: ContainerInfo): ContainerInfo {
+  container.configuration.image.parsedReference = parseImageReference(container.configuration.image.reference);
+  return container;
 }
 
-export function startContainer(id: string) {
-  return invokeBridge<ContainerInfo>('start_container', { id });
+export async function listContainers() {
+  const containers = await invokeBridge<ContainerInfo[]>('list_containers');
+  return containers.map(handleContainer);
 }
 
-export function stopContainer(id: string) {
-  return invokeBridge<ContainerInfo>('stop_container', { id });
+export async function startContainer(id: string) {
+  const container = await invokeBridge<ContainerInfo>('start_container', { id });
+  return handleContainer(container);
 }
 
-export function killContainer(id: string) {
-  return invokeBridge<ContainerInfo>('kill_container', { id });
+export async function stopContainer(id: string) {
+  const container = await invokeBridge<ContainerInfo>('stop_container', { id });
+  return handleContainer(container);
 }
 
-export function deleteContainer(id: string) {
-  return invokeBridge<ContainerInfo>('delete_container', { id });
+export async function killContainer(id: string) {
+  const container = await invokeBridge<ContainerInfo>('kill_container', { id });
+  return handleContainer(container);
+}
+
+export async function deleteContainer(id: string) {
+  const container = await invokeBridge<ContainerInfo>('delete_container', { id });
+  return handleContainer(container);
 }

@@ -21,6 +21,7 @@ export function ContainerDetail({
   },
   container,
 }: Props) {
+  console.log(container);
   const operationItems = useMemo(
     () => [
       {

@@ -1,3 +1,4 @@
+import { ImageIcon } from '@/components/image-icon';
 import { OperationButton } from '@/components/ui/operation-button';
 import { ImageInfo } from '@/lib/bridge/images';
 import { Button } from '@heroui/button';
@@ -11,8 +12,8 @@ interface Props {
   onSelect: (image: ImageInfo) => void;
 }
 
-export function ImageItem({ image: { references, descriptors }, image, active, onSelect }: Props) {
-  const [name, tag] = references[0].split(':');
+export function ImageItem({ image: { parsedReferences, descriptors, digest }, image, active, onSelect }: Props) {
+  const { name, tag, org } = parsedReferences[0];
 
   const size = prettyBytes(
     descriptors.reduce(
@@ -27,12 +28,13 @@ export function ImageItem({ image: { references, descriptors }, image, active, o
   return (
     <Button
       as="section"
-      className="mb-1 flex w-full items-center justify-between px-4"
+      className="mb-1 flex w-full items-center justify-start px-4"
       variant={active ? 'solid' : 'light'}
       color={active ? 'primary' : 'default'}
       onPress={() => onSelect(image)}
       size="lg"
     >
+      <ImageIcon name={name} org={org} digest={digest} />
       <div>
         <p className="text-sm">
           {name}:<span className="text-muted-foreground">{tag}</span>
@@ -44,7 +46,7 @@ export function ImageItem({ image: { references, descriptors }, image, active, o
           )}
         </p>
       </div>
-      <div className="flex items-center space-x-1">
+      <div className="ml-auto flex items-center space-x-1">
         {/*<OperationButton title="View metadata" active={active} icon={Info} onClick={onViewMetadata} />*/}
         {/*<OperationButton title="Folder" active={active} icon={Folder} />*/}
         <OperationButton title="Delete" active={active} icon={Trash2} />

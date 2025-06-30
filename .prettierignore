@@ -5,7 +5,7 @@
 
 /external-libs/
 /node_modules/
-
+/public/
 /target/
 
 .build/

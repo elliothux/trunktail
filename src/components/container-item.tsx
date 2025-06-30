@@ -13,6 +13,7 @@ import { Command } from '@tauri-apps/plugin-shell';
 import { Ellipsis, Link, Play, Square, Trash2 } from 'lucide-react';
 import { useCallback, useEffect, useMemo } from 'react';
 import { toast } from 'sonner';
+import { ImageIcon } from '@/components/image-icon';
 
 interface Props {
   container: ContainerInfo;
@@ -25,7 +26,10 @@ export function ContainerItem({
     status,
     configuration: {
       id,
-      image: { reference },
+      image: {
+        descriptor: { digest },
+        parsedReference: { name, tag, org },
+      },
     },
     networks: [network],
   },
@@ -33,8 +37,6 @@ export function ContainerItem({
   active,
   onSelect,
 }: Props) {
-  const [name, tag] = reference.split(':');
-
   const queryClient = useQueryClient();
   const update = useCallback(
     (info: ContainerInfo) => {
@@ -206,7 +208,7 @@ export function ContainerItem({
   return (
     <Button
       as="section"
-      className="mb-1 flex w-full items-center justify-between px-4"
+      className="mb-1 flex w-full items-center justify-start px-4"
       variant={active ? 'solid' : 'light'}
       color={active ? 'primary' : 'default'}
       onPress={() => onSelect(container)}
@@ -216,6 +218,7 @@ export function ContainerItem({
       }}
       size="lg"
     >
+      <ImageIcon name={name} org={org} digest={digest} />
       <div>
         <div className="flex flex-row items-center justify-start gap-1.5">
           <ContainerStatusIndicator status={status} className="mt-0.5" />
@@ -225,7 +228,7 @@ export function ContainerItem({
           {name}:<span className="text-muted-foreground">{tag}</span>
         </p>
       </div>
-      <div className="flex items-center space-x-1">
+      <div className="flex items-center space-x-1 ml-auto">
         <OperationButton
           title="Link"
           active={active}

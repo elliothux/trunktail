@@ -97,6 +97,13 @@ export interface Platform {
   os: string;
 }
 
+function handleImage(image: ImageInfo): ImageInfo {
+  return {
+    ...image,
+    parsedReferences: image.references.map(parseImageReference),
+  };
+}
+
 export async function listImages() {
   const images = await invokeBridge<ImageInfo[]>('list_images');
   return images
@@ -105,10 +112,7 @@ export async function listImages() {
       const bCreated = b.descriptors[0]?.config?.created;
       return new Date(bCreated || 0).getTime() - new Date(aCreated || 0).getTime();
     })
-    .map((image) => ({
-      ...image,
-      parsedReferences: image.references.map(parseImageReference),
-    }));
+    .map(handleImage);
 }
 
 interface SaveImageParams {
@@ -117,20 +121,23 @@ interface SaveImageParams {
   platform?: Platform;
 }
 
-export function saveImage({ platform, ...params }: SaveImageParams) {
-  return invokeBridge<ImageInfo>('save_image', {
+export async function saveImage({ platform, ...params }: SaveImageParams) {
+  const image = await invokeBridge<ImageInfo>('save_image', {
     ...params,
     // os/arch(/variant)
     platform: platform ? [platform.os, platform.architecture, platform.variant].filter(Boolean).join('/') : undefined,
   });
+  return handleImage(image);
 }
 
-export function loadImage(input: string) {
-  return invokeBridge<ImageInfo>('load_image', { input });
+export async function loadImage(input: string) {
+  const image = await invokeBridge<ImageInfo>('load_image', { input });
+  return handleImage(image);
 }
 
-export function pruneImage() {
-  return invokeBridge<ImageInfo[]>('prune_image');
+export async function pruneImage() {
+  const images = await invokeBridge<ImageInfo[]>('prune_image');
+  return images.map(handleImage);
 }
 
 interface TagImageParams {
@@ -138,6 +145,7 @@ interface TagImageParams {
   target: string;
 }
 
-export function tagImage(params: TagImageParams) {
-  return invokeBridge<ImageInfo>('tag_image', params);
+export async function tagImage(params: TagImageParams) {
+  const image = await invokeBridge<ImageInfo>('tag_image', params);
+  return handleImage(image);
 }
