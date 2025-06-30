@@ -31,11 +31,11 @@ tauri_command_async!(start_container, params);
 tauri_command_async!(stop_container, params);
 tauri_command_async!(kill_container, params);
 tauri_command_async!(delete_container, params);
-tauri_command_async!(delete_image, params);
 tauri_command_async!(save_image, params);
 tauri_command_async!(load_image, params);
 tauri_command_async!(prune_image);
 tauri_command_async!(tag_image, params);
+tauri_command_async!(delete_images, params);
 
 fn main() {
     Builder::default()
@@ -48,7 +48,7 @@ fn main() {
             stop_container,
             kill_container,
             delete_container,
-            delete_image,
+            delete_images,
             save_image,
             load_image,
             prune_image,

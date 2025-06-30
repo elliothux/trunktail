@@ -9,16 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root';
-import { Route as AppCommandsRouteImport } from './routes/_app/commands';
-import { Route as AppContainersRouteImport } from './routes/_app/containers';
-import { Route as AppImagesRouteImport } from './routes/_app/images';
-import { Route as AppMonitorRouteImport } from './routes/_app/monitor';
-import { Route as AppPodsRouteImport } from './routes/_app/pods';
 import { Route as AppRouteRouteImport } from './routes/_app/route';
-import { Route as AppServicesRouteImport } from './routes/_app/services';
-import { Route as AppVolumesRouteImport } from './routes/_app/volumes';
 import { Route as IndexRouteImport } from './routes/index';
 import { Route as LogsContainerRouteImport } from './routes/logs.$container';
+import { Route as AppVolumesRouteImport } from './routes/_app/volumes';
+import { Route as AppServicesRouteImport } from './routes/_app/services';
+import { Route as AppPodsRouteImport } from './routes/_app/pods';
+import { Route as AppMonitorRouteImport } from './routes/_app/monitor';
+import { Route as AppImagesRouteImport } from './routes/_app/images';
+import { Route as AppContainersRouteImport } from './routes/_app/containers';
+import { Route as AppCommandsRouteImport } from './routes/_app/commands';
 
 const AppRouteRoute = AppRouteRouteImport.update({
   id: '/_app',

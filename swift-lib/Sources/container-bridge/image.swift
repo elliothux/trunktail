@@ -16,6 +16,7 @@ struct ImageFullInfo: Codable {
   let mediaType: String
   let descriptors: [ImageDescriptorInfo]
   let annotations: [String: String]?
+  let isInfra: Bool
 }
 
 func getImageInfo(img: ClientImage) async throws -> ImageFullInfo {
@@ -52,7 +53,8 @@ func getImageInfo(img: ClientImage) async throws -> ImageFullInfo {
     schemaVersion: index.schemaVersion,
     mediaType: index.mediaType,
     descriptors: descriptors,
-    annotations: index.annotations
+    annotations: index.annotations,
+    isInfra: Utility.isInfraImage(name: img.reference)
   )
 }
 
@@ -91,25 +93,6 @@ public func listImages(context: FFIContext, completion: FFICompletion) {
         .returnBytes(context, completion)
     } catch {
       print("[listImages] error: \(error)")
-      FFIErrorResult.from(error.localizedDescription)
-        .returnBytes(context, completion)
-    }
-  }
-}
-
-@_cdecl("ffi_delete_image")
-public func deleteImage(params: SRString, context: FFIContext, completion: FFICompletion) {
-  let paramsJson = params.toString()
-  Task {
-    do {
-      let params = try FFIParams.from(paramsJson)
-      let reference: String = try params.get("reference")
-      let clientImage = try await ClientImage.get(reference: reference)
-      let image = try await getImageInfo(img: clientImage)
-      try await ClientImage.delete(reference: reference)
-      FFIResult.from(image).returnBytes(context, completion)
-    } catch {
-      print("[deleteImage] error: \(error)")
       FFIErrorResult.from(error.localizedDescription)
         .returnBytes(context, completion)
     }
@@ -220,6 +203,44 @@ public func tagImage(params: SRString, context: FFIContext, completion: FFICompl
     }
     catch {
       print("[tagImage] error: \(error)")
+      FFIErrorResult.from(error.localizedDescription)
+        .returnBytes(context, completion)
+    }
+  }
+}
+
+@_cdecl("ffi_delete_images")
+public func deleteImages(params: SRString, context: FFIContext, completion: FFICompletion) {
+  let paramsJson = params.toString()
+  Task {
+    do {
+      let params = try FFIParams.from(paramsJson)
+      let references: [String] = try params.get("references")
+      let (clientImages, _) = try await ClientImage.get(names: references)
+
+      var images: [ImageFullInfo] = []
+      try await withThrowingTaskGroup(of: ImageFullInfo.self) { group in
+        for image in clientImages {
+          group.addTask {
+            try await getImageInfo(img: image)
+          }
+        }
+        for try await info in group {
+          images.append(info)
+        }
+      }
+
+      await withThrowingTaskGroup(of: Void.self) { group in
+        for image in clientImages {
+          group.addTask {
+            try await ClientImage.delete(reference: image.reference, garbageCollect: false)
+          }
+        }
+      }
+      let _ = try await ClientImage.pruneImages()
+      FFIResult.from(images).returnBytes(context, completion)
+    } catch {
+      print("[deleteImages] error: \(error)")
       FFIErrorResult.from(error.localizedDescription)
         .returnBytes(context, completion)
     }

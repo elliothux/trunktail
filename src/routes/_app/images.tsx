@@ -2,7 +2,7 @@ import { ImageDetail } from '@/components/image-detail';
 import { ImageItem } from '@/components/image-item';
 import { MetadataPreview } from '@/components/metadata-preview';
 import { Portal } from '@/components/portal';
-import { ImageInfo, listImages } from '@/lib/bridge/images';
+import { listImages } from '@/lib/bridge/images';
 import { Button } from '@heroui/button';
 import { useDisclosure } from '@heroui/modal';
 import { useQuery } from '@tanstack/react-query';
@@ -16,14 +16,16 @@ export const Route = createFileRoute('/_app/images')({
 
 function ImageList() {
   const { data: images } = useQuery({
-    queryKey: ['list_images'],
+    queryKey: ['images'],
     queryFn: listImages,
     refetchOnMount: 'always',
   });
 
-  const [image, setImage] = useState<ImageInfo | null>(null);
+  const [current, setCurrent] = useState<string | null>(null);
 
   const disclosure = useDisclosure();
+
+  const image = images?.find((i) => i.digest === current) ?? null;
 
   return (
     <>
@@ -33,7 +35,7 @@ function ImageList() {
       </Portal>
 
       {images?.map((item) => (
-        <ImageItem key={item.digest} image={item} active={item === image} onSelect={setImage} />
+        <ImageItem key={item.digest} image={item} active={current === item.digest} onSelect={setCurrent} />
       ))}
 
       <Portal name="right-panel-title">

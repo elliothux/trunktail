@@ -1,6 +1,6 @@
 import { invoke } from '@tauri-apps/api/core';
 import { homeDir } from '@tauri-apps/api/path';
-import { ImageReference } from './images';
+import { ImageDescriptor, ImageReference } from './images';
 
 interface BridgeInvokeResponse<T> {
   code: number;
@@ -66,4 +66,16 @@ export function parseImageReference(reference: string): ImageReference {
   }
 
   throw new Error(`Invalid reference: ${reference}`);
+}
+
+export function stringifyImageReference({ registry, org, repo, name, tag }: ImageReference): string {
+  return [registry, org, repo, `${name}:${tag}`].filter(Boolean).join('/');
+}
+
+export function calcImageSize(descriptors: ImageDescriptor[]) {
+  return descriptors.reduce(
+    (acc, { descriptor, manifest }) =>
+      acc + descriptor.size + manifest.config.size + manifest.layers.reduce((acc, layer) => acc + layer.size, 0),
+    0,
+  );
 }

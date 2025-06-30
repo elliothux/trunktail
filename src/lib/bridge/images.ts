@@ -6,6 +6,7 @@ export interface ImageInfo {
   schemaVersion: number;
   mediaType: string;
   descriptors: ImageDescriptor[];
+  isInfra: boolean;
   parsedReferences: ImageReference[];
 }
 
@@ -98,10 +99,8 @@ export interface Platform {
 }
 
 function handleImage(image: ImageInfo): ImageInfo {
-  return {
-    ...image,
-    parsedReferences: image.references.map(parseImageReference),
-  };
+  image.parsedReferences = image.references.map(parseImageReference).sort((a, b) => a.tag.localeCompare(b.tag));
+  return image;
 }
 
 export async function listImages() {
@@ -148,4 +147,9 @@ interface TagImageParams {
 export async function tagImage(params: TagImageParams) {
   const image = await invokeBridge<ImageInfo>('tag_image', params);
   return handleImage(image);
+}
+
+export async function deleteImages(references: string[]) {
+  const deleted = await invokeBridge<ImageInfo[]>('delete_images', { references });
+  return deleted.map(handleImage);
 }

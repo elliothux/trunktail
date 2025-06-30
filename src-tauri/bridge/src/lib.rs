@@ -21,11 +21,11 @@ unsafe extern "C" {
     pub fn ffi_stop_container(params: SRString, context: u64, completion: FFICompletion);
     pub fn ffi_kill_container(params: SRString, context: u64, completion: FFICompletion);
     pub fn ffi_delete_container(params: SRString, context: u64, completion: FFICompletion);
-    pub fn ffi_delete_image(params: SRString, context: u64, completion: FFICompletion);
     pub fn ffi_save_image(params: SRString, context: u64, completion: FFICompletion);
     pub fn ffi_load_image(params: SRString, context: u64, completion: FFICompletion);
     pub fn ffi_prune_image(context: u64, completion: FFICompletion);
     pub fn ffi_tag_image(params: SRString, context: u64, completion: FFICompletion);
+    pub fn ffi_delete_images(params: SRString, context: u64, completion: FFICompletion);
 }
 
 pub async fn ping_async() -> String {
@@ -56,10 +56,6 @@ pub async fn delete_container(params: String) -> String {
     call_async_ffi_with_params(ffi_delete_container, params).await
 }
 
-pub async fn delete_image(params: String) -> String {
-    call_async_ffi_with_params(ffi_delete_image, params).await
-}
-
 pub async fn save_image(params: String) -> String {
     call_async_ffi_with_params(ffi_save_image, params).await
 }
@@ -74,4 +70,8 @@ pub async fn prune_image() -> String {
 
 pub async fn tag_image(params: String) -> String {
     call_async_ffi_with_params(ffi_tag_image, params).await
+}
+
+pub async fn delete_images(params: String) -> String {
+    call_async_ffi_with_params(ffi_delete_images, params).await
 }

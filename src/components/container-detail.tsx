@@ -1,12 +1,9 @@
 import { ContainerStatusIndicator } from '@/components/container-status-indicator';
+import { useContainerOperations } from '@/hooks/use-container-operations';
 import { ContainerInfo } from '@/lib/bridge/containers';
-import { getServicePath } from '@/lib/bridge/utils';
 import { Button } from '@heroui/button';
-import { WebviewWindow } from '@tauri-apps/api/webviewWindow';
-import { Command } from '@tauri-apps/plugin-shell';
 import { BookCopy, ChevronRight, FileText, Terminal } from 'lucide-react';
 import { useMemo } from 'react';
-import { toast } from 'sonner';
 import { DetailRow } from './ui/detail-row';
 
 interface Props {
@@ -21,65 +18,30 @@ export function ContainerDetail({
   },
   container,
 }: Props) {
-  console.log(container);
+  const { onOpenFolder, onOpenLogs, onOpenTerminal } = useContainerOperations(container);
+
   const operationItems = useMemo(
     () => [
       {
         label: 'Logs',
         icon: BookCopy,
-        action: async () => {
-          const viewId = `log-viewer-${id}`;
-          const existing = await WebviewWindow.getByLabel(viewId);
-          if (existing) {
-            await existing.destroy();
-          }
-
-          const win = new WebviewWindow(viewId, {
-            url: `${window.location.origin}/logs/${id}`,
-            center: true,
-            width: 800,
-            height: 600,
-            resizable: true,
-            title: `Logs - ${id}`,
-          });
-          win.once('tauri://created', () => {
-            console.log('created');
-            win.show();
-          });
-          win.once('tauri://error', (e) => {
-            console.error('Failed to create login window:', e);
-          });
-        },
+        action: onOpenFolder,
       },
       {
         label: 'Terminal',
         icon: Terminal,
-        action: async () => {
-          const command = `container exec --tty --interactive ${id} sh`;
-          const result = await Command.create('osascript', [
-            '-e',
-            `tell application "Terminal" to activate`,
-            '-e',
-            `tell application "Terminal" to do script "${command}"`,
-          ]).execute();
-          if (result.code !== 0) {
-            toast.error('Failed to open terminal');
-          }
-        },
+        action: onOpenTerminal,
       },
       {
         label: 'Files',
         icon: FileText,
-        action: async () => {
-          const path = await getServicePath(`/containers/${id}`);
-          void Command.create('open', ['-R', path], {
-            cwd: '/',
-          }).execute();
-        },
+        action: onOpenFolder,
       },
     ],
-    [id],
+    [onOpenFolder, onOpenLogs, onOpenTerminal],
   );
+
+  console.log(container);
 
   return (
     <div className="flex h-full flex-col p-2.5">

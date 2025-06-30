@@ -128,9 +128,9 @@ struct DecodableImage: Codable {}
   #expect(response.data != nil)
 }
 
-@Test func testDeleteImage() async throws {
-  let params = SRString("{\"reference\":\"docker.io/library/node:alpine\"}")
-  let jsonString = try await ffiCallWithParams(deleteImage, params)
+@Test func testDeleteImages() async throws {
+  let params = SRString("{\"references\":[\"docker.io/library/redis:latest\"]}")
+  let jsonString = try await ffiCallWithParams(deleteImages, params)
   let jsonData = try #require(jsonString.data(using: .utf8))
   print(jsonString)
   let response = try #require(

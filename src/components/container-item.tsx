@@ -1,24 +1,19 @@
 import { ContainerStatusIndicator } from '@/components/container-status-indicator';
+import { ImageIcon } from '@/components/image-icon';
 import { OperationButton } from '@/components/ui/operation-button';
-import { ContainerInfo, deleteContainer, killContainer, startContainer, stopContainer } from '@/lib/bridge/containers';
-import { getServicePath } from '@/lib/bridge/utils';
+import { useContainerOperations } from '@/hooks/use-container-operations';
+import { ContainerInfo } from '@/lib/bridge/containers';
 import { Button } from '@heroui/button';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { listen } from '@tauri-apps/api/event';
 import { Menu } from '@tauri-apps/api/menu';
 import { writeText } from '@tauri-apps/plugin-clipboard-manager';
-import { confirm, message } from '@tauri-apps/plugin-dialog';
 import { openUrl } from '@tauri-apps/plugin-opener';
-import { Command } from '@tauri-apps/plugin-shell';
 import { Ellipsis, Link, Play, Square, Trash2 } from 'lucide-react';
-import { useCallback, useEffect, useMemo } from 'react';
-import { toast } from 'sonner';
-import { ImageIcon } from '@/components/image-icon';
+import { useMemo } from 'react';
 
 interface Props {
   container: ContainerInfo;
   active: boolean;
-  onSelect: (image: ContainerInfo) => void;
+  onSelect: (id: string) => void;
 }
 
 export function ContainerItem({
@@ -37,94 +32,20 @@ export function ContainerItem({
   active,
   onSelect,
 }: Props) {
-  const queryClient = useQueryClient();
-  const update = useCallback(
-    (info: ContainerInfo) => {
-      queryClient.setQueryData(['containers'], (old: ContainerInfo[]) => {
-        return old.map((i) => (i.configuration.id === id ? info : i));
-      });
-    },
-    [queryClient, id],
-  );
-
-  const { mutate: onStart, isPending: isStarting } = useMutation({
-    mutationFn: () => startContainer(id),
-    onSuccess: (container) => {
-      update(container);
-      toast.success('Container started');
-    },
-    onError: (e: unknown) => {
-      void message(e == null ? 'Unknown error' : e instanceof Error ? e.message : e.toString(), {
-        kind: 'warning',
-        title: 'Failed to start container',
-      });
-    },
-  });
-
-  const { mutate: onStop, isPending: isStopping } = useMutation({
-    mutationFn: () => stopContainer(id),
-    onSuccess: (container) => {
-      update(container);
-      toast.success('Container stopped');
-    },
-    onError: (e: unknown) => {
-      console.log('e', e);
-      void message(e == null ? 'Unknown error' : e instanceof Error ? e.message : e.toString(), {
-        kind: 'warning',
-        title: 'Failed to stop container',
-      });
-    },
-  });
-
-  const { mutate: onKill, isPending: isKilling } = useMutation({
-    mutationFn: () => killContainer(id),
-    onSuccess: (container) => {
-      update(container);
-      toast.success('Container killed');
-    },
-    onError: (e: unknown) => {
-      void message(e == null ? 'Unknown error' : e instanceof Error ? e.message : e.toString(), {
-        kind: 'warning',
-        title: 'Failed to kill container',
-      });
-    },
-  });
-
-  const { mutate: onDelete, isPending: isDeleting } = useMutation({
-    mutationFn: () => deleteContainer(id),
-    onSuccess: (container) => {
-      update(container);
-      toast.success('Container deleted');
-    },
-    onError: (e: unknown) => {
-      void message(e == null ? 'Unknown error' : e instanceof Error ? e.message : e.toString(), {
-        kind: 'warning',
-        title: 'Failed to delete container',
-      });
-    },
-  });
-
-  const onOpenFolder = useCallback(async () => {
-    const path = await getServicePath(`/containers/${id}`);
-    void Command.create('open', ['-R', path], {
-      cwd: '/',
-    }).execute();
-  }, [id]);
-
-  const onDeleteConfirm = useCallback(async () => {
-    confirm('Are you sure you want to delete this container?', {
-      title: 'Delete container',
-      kind: 'error',
-    }).then((result) => {
-      if (result) {
-        onDelete();
-      }
-    });
-  }, [onDelete]);
-
-  const onViewMetadata = useCallback(() => {}, []);
-
-  const address = network?.address.split('/')[0];
+  const {
+    onStart,
+    onStop,
+    onKill,
+    onOpenFolder,
+    onDeleteConfirm,
+    onOpenLogs,
+    onOpenTerminal,
+    isStarting,
+    isStopping,
+    isKilling,
+    isDeleting,
+    address,
+  } = useContainerOperations(container);
 
   const menus = useMemo(() => {
     const running = status === 'running';
@@ -158,9 +79,19 @@ export function ContainerItem({
           enabled: !!address,
         },
         {
-          id: 'Open files',
-          text: 'Open files',
+          id: 'View files',
+          text: 'View files',
           action: onOpenFolder,
+        },
+        {
+          id: 'View logs',
+          text: 'View logs',
+          action: onOpenLogs,
+        },
+        {
+          id: 'Open terminal',
+          text: 'Open terminal',
+          action: onOpenTerminal,
         },
         {
           id: 'Kill',
@@ -176,31 +107,12 @@ export function ContainerItem({
           action: onDeleteConfirm,
           enabled: status !== 'running',
         },
-        {
-          id: 'View metadata',
-          text: 'View metadata',
-          action: onViewMetadata,
-        },
       ],
     });
-  }, [status, id, address, onStart, onStop, onKill, onDelete, isStarting, isStopping, isKilling, isDeleting]);
-
-  useEffect(() => {
-    const unlisten = listen<string>('menu-event', (event) => {
-      if (!event.payload.startsWith('ctx')) return;
-      switch (event.payload) {
-        default:
-          console.log('Unimplemented application menu id:', event.payload);
-      }
-    });
-
-    return () => {
-      unlisten.then((unlisten) => unlisten());
-    };
-  }, []);
+  }, [status, id, address, onStart, onStop, onKill, isStarting, isStopping, isKilling, isDeleting]);
 
   const onOpenMenu = async () => {
-    (await menus).popup().catch((e) => {
+    (await menus).popup().catch((e: unknown) => {
       console.error('Failed to open context menu:', e);
     });
   };
@@ -211,7 +123,7 @@ export function ContainerItem({
       className="mb-1 flex w-full items-center justify-start px-4"
       variant={active ? 'solid' : 'light'}
       color={active ? 'primary' : 'default'}
-      onPress={() => onSelect(container)}
+      onPress={() => onSelect(id)}
       onContextMenu={(e) => {
         e.preventDefault();
         void onOpenMenu();
@@ -228,7 +140,7 @@ export function ContainerItem({
           {name}:<span className="text-muted-foreground">{tag}</span>
         </p>
       </div>
-      <div className="flex items-center space-x-1 ml-auto">
+      <div className="ml-auto flex items-center space-x-1">
         <OperationButton
           title="Link"
           active={active}

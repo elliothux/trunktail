@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils';
+import { openPathWithFinder } from '@/utils';
 import { Button } from '@heroui/button';
 import { createFileRoute } from '@tanstack/react-router';
 import { getCurrentWindow } from '@tauri-apps/api/window';
@@ -106,9 +107,7 @@ function LogsPage() {
               okLabel: 'View in Finder',
             });
             if (viewInFinder) {
-              void Command.create('open', ['-R', path], {
-                cwd: '/',
-              }).execute();
+              void openPathWithFinder(path);
             }
           }}
           isIconOnly

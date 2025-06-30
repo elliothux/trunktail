@@ -21,11 +21,13 @@ function ContainersPage() {
     refetchOnMount: 'always',
   });
 
-  const [container, setContainer] = useState<ContainerInfo | null>(null);
+  const [current, setCurrent] = useState<string | null>(null);
 
   const running = containers?.filter((i) => i.status === 'running')?.length;
 
   const disclosure = useDisclosure();
+
+  const container = containers?.find((i) => i.configuration.id === current) ?? null;
 
   return (
     <>
@@ -41,10 +43,8 @@ function ContainersPage() {
           <ContainerItem
             key={item.configuration.id}
             container={item}
-            active={item === container}
-            onSelect={() => {
-              setContainer(item);
-            }}
+            active={item.configuration.id === current}
+            onSelect={setCurrent}
           />
         ))}
       </>
