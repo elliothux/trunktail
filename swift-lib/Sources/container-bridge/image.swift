@@ -114,12 +114,13 @@ public func saveImage(params: SRString, context: FFIContext, completion: FFIComp
       if platformString != nil {
         let platformComponents = platformString!.split(separator: "/")
         if platformComponents.count == 3 {
-          platform = Platform.init(arch: String(platformComponents[1]), os: String(platformComponents[0]), variant: String(platformComponents[2]))
-        }
-        else if platformComponents.count == 2 {
-          platform = Platform.init(arch: String(platformComponents[1]), os: String(platformComponents[0]), variant: nil)
-        }
-        else {
+          platform = Platform.init(
+            arch: String(platformComponents[1]), os: String(platformComponents[0]),
+            variant: String(platformComponents[2]))
+        } else if platformComponents.count == 2 {
+          platform = Platform.init(
+            arch: String(platformComponents[1]), os: String(platformComponents[0]), variant: nil)
+        } else {
           throw NSError(
             domain: "FFIParams", code: 1,
             userInfo: [NSLocalizedDescriptionKey: "Invalid platform string"])
@@ -130,8 +131,7 @@ public func saveImage(params: SRString, context: FFIContext, completion: FFIComp
       let image = try await getImageInfo(img: clientImage)
       try await clientImage.save(out: output, platform: platform)
       FFIResult.from(image).returnBytes(context, completion)
-    }
-    catch {
+    } catch {
       print("[saveImage] error: \(error)")
       FFIErrorResult.from(error.localizedDescription)
         .returnBytes(context, completion)
@@ -149,8 +149,7 @@ public func loadImage(params: SRString, context: FFIContext, completion: FFIComp
       let clientImages = try await ClientImage.load(from: input)
       let image = try await getImageInfo(img: clientImages[0])
       FFIResult.from(image).returnBytes(context, completion)
-    }
-    catch {
+    } catch {
       print("[loadImage] error: \(error)")
       FFIErrorResult.from(error.localizedDescription)
         .returnBytes(context, completion)
@@ -177,8 +176,7 @@ public func pruneImages(context: FFIContext, completion: FFICompletion) {
         }
       }
       FFIResult.from(images).returnBytes(context, completion)
-    }
-    catch {
+    } catch {
       print("[pullImage] error: \(error)")
       FFIErrorResult.from(error.localizedDescription)
         .returnBytes(context, completion)
@@ -200,8 +198,7 @@ public func tagImage(params: SRString, context: FFIContext, completion: FFICompl
       let reference = try ClientImage.normalizeReference(target)
       try await image.tag(new: reference)
       FFIResult.from(try await getImageInfo(img: image)).returnBytes(context, completion)
-    }
-    catch {
+    } catch {
       print("[tagImage] error: \(error)")
       FFIErrorResult.from(error.localizedDescription)
         .returnBytes(context, completion)

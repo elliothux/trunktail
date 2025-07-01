@@ -32,8 +32,8 @@ function ContainersPage() {
   return (
     <>
       <Portal name="title">
-        <p>Containers</p>
-        <p className="text-xs font-normal text-gray-400">
+        <p className="pointer-events-none select-none">Containers</p>
+        <p className="pointer-events-none select-none text-xs font-normal text-gray-400">
           {running ? `${running} running` : `${containers?.length} containers`}
         </p>
       </Portal>

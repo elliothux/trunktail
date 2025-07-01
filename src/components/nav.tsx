@@ -15,7 +15,7 @@ const menus: {
   // { label: 'Pods', icon: Server, to: '/pods' },
   // { label: 'Services', icon: Server, to: '/services' },
   // { label: 'Machines', icon: Monitor, to: '/machines' },
-  { label: 'Monitor', icon: Activity, to: '/monitor' },
+  // { label: 'Monitor', icon: Activity, to: '/monitor' },
   { label: 'Commands', icon: Command, to: '/commands' },
 ];
 

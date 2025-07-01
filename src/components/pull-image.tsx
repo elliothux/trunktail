@@ -43,7 +43,7 @@ export function PullImage({ disclosure: { isOpen, onOpenChange, onClose } }: Pro
         command.on('error', reject);
       });
       if (result.code !== 0) {
-        throw new Error('Failed to pull image');
+        throw new Error(`Failed to pull image: code ${result.code}`);
       }
     },
     onSettled: () => {
@@ -56,6 +56,11 @@ export function PullImage({ disclosure: { isOpen, onOpenChange, onClose } }: Pro
       void queryClient.refetchQueries({ queryKey: ['images'] });
       void message(`${image} has been pulled successfully`, {
         title: 'Pull finished',
+      });
+    },
+    onError: (error) => {
+      void message(error.message ?? 'Failed to pull image', {
+        title: 'Pull failed',
       });
     },
   });
