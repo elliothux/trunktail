@@ -23,7 +23,7 @@ unsafe extern "C" {
     pub fn ffi_delete_container(params: SRString, context: u64, completion: FFICompletion);
     pub fn ffi_save_image(params: SRString, context: u64, completion: FFICompletion);
     pub fn ffi_load_image(params: SRString, context: u64, completion: FFICompletion);
-    pub fn ffi_prune_image(context: u64, completion: FFICompletion);
+    pub fn ffi_prune_images(context: u64, completion: FFICompletion);
     pub fn ffi_tag_image(params: SRString, context: u64, completion: FFICompletion);
     pub fn ffi_delete_images(params: SRString, context: u64, completion: FFICompletion);
 }
@@ -64,8 +64,8 @@ pub async fn load_image(params: String) -> String {
     call_async_ffi_with_params(ffi_load_image, params).await
 }
 
-pub async fn prune_image() -> String {
-    call_async_ffi(ffi_prune_image).await
+pub async fn prune_images() -> String {
+    call_async_ffi(ffi_prune_images).await
 }
 
 pub async fn tag_image(params: String) -> String {

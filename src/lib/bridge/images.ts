@@ -134,8 +134,8 @@ export async function loadImage(input: string) {
   return handleImage(image);
 }
 
-export async function pruneImage() {
-  const images = await invokeBridge<ImageInfo[]>('prune_image');
+export async function pruneImages() {
+  const images = await invokeBridge<ImageInfo[]>('prune_images');
   return images.map(handleImage);
 }
 

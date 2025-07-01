@@ -72,7 +72,7 @@ export function stringifyImageReference({ registry, org, repo, name, tag }: Imag
   return [registry, org, repo, `${name}:${tag}`].filter(Boolean).join('/');
 }
 
-export function calcImageSize(descriptors: ImageDescriptor[]) {
+export function calcImageBytes(descriptors: ImageDescriptor[]) {
   return descriptors.reduce(
     (acc, { descriptor, manifest }) =>
       acc + descriptor.size + manifest.config.size + manifest.layers.reduce((acc, layer) => acc + layer.size, 0),

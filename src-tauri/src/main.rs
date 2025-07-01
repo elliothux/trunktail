@@ -33,7 +33,7 @@ tauri_command_async!(kill_container, params);
 tauri_command_async!(delete_container, params);
 tauri_command_async!(save_image, params);
 tauri_command_async!(load_image, params);
-tauri_command_async!(prune_image);
+tauri_command_async!(prune_images);
 tauri_command_async!(tag_image, params);
 tauri_command_async!(delete_images, params);
 
@@ -51,7 +51,7 @@ fn main() {
             delete_images,
             save_image,
             load_image,
-            prune_image,
+            prune_images,
             tag_image,
         ])
         .plugin(tauri_plugin_dialog::init())

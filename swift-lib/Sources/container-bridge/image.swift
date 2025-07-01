@@ -158,8 +158,8 @@ public func loadImage(params: SRString, context: FFIContext, completion: FFIComp
   }
 }
 
-@_cdecl("ffi_prune_image")
-public func pruneImage(context: FFIContext, completion: FFICompletion) {
+@_cdecl("ffi_prune_images")
+public func pruneImages(context: FFIContext, completion: FFICompletion) {
   Task {
     do {
       let clientImages = try await ClientImage.list()

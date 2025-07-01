@@ -1,19 +1,23 @@
 import { deleteImages, ImageInfo, saveImage } from '@/lib/bridge/images';
-import { calcImageSize } from '@/lib/bridge/utils';
+import { calcImageBytes } from '@/lib/bridge/utils';
 import { openPathWithFinder } from '@/utils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { confirm, message, save } from '@tauri-apps/plugin-dialog';
 import { default as prettyBytes } from 'pretty-bytes';
 import { useCallback } from 'react';
-import { toast } from 'sonner';
 
 export function useImageOperations({ references, descriptors, digest, isInfra, references: [reference] }: ImageInfo) {
   const queryClient = useQueryClient();
   const { mutate: onDelete, isPending: isDeleting } = useMutation({
     mutationFn: () => deleteImages(references),
-    onSuccess: () => {
-      toast.success('Images deleted');
+    onSuccess: (images) => {
+      const totalBytes = images.reduce((bytes, { descriptors }) => {
+        return bytes + calcImageBytes(descriptors);
+      }, 0);
       void queryClient.setQueryData(['images'], (images: ImageInfo[]) => images.filter((i) => i.digest !== digest));
+      void message(`Reclaimed ${prettyBytes(totalBytes)} in disk space`, {
+        title: 'Image deleted',
+      });
     },
     onError: (e: unknown) => {
       void message(e == null ? 'Unknown error' : e instanceof Error ? e.message : e.toString(), {
@@ -68,7 +72,7 @@ export function useImageOperations({ references, descriptors, digest, isInfra, r
     });
   }, [onDelete]);
 
-  const size = prettyBytes(calcImageSize(descriptors));
+  const size = prettyBytes(calcImageBytes(descriptors));
   const createdAt = descriptors[0]?.config.created ?? 'N/A';
 
   return {

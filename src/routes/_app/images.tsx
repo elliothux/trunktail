@@ -2,13 +2,16 @@ import { ImageDetail } from '@/components/image-detail';
 import { ImageItem } from '@/components/image-item';
 import { MetadataPreview } from '@/components/metadata-preview';
 import { Portal } from '@/components/portal';
-import { listImages, loadImage } from '@/lib/bridge/images';
+import { listImages, loadImage, pruneImages } from '@/lib/bridge/images';
+import { calcImageBytes } from '@/lib/bridge/utils';
 import { Button } from '@heroui/button';
 import { useDisclosure } from '@heroui/modal';
+import { Tooltip } from '@heroui/tooltip';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
-import { open } from '@tauri-apps/plugin-dialog';
-import { HardDriveDownload, Info } from 'lucide-react';
+import { message, open } from '@tauri-apps/plugin-dialog';
+import { FolderSync, HardDriveDownload, Info, Loader2 } from 'lucide-react';
+import { default as prettyBytes } from 'pretty-bytes';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
@@ -50,6 +53,23 @@ function ImageList() {
     },
   });
 
+  const { mutate: purge, isPending: isPurging } = useMutation({
+    mutationFn: pruneImages,
+    onSuccess: (images) => {
+      if (images.length) {
+        void queryClient.refetchQueries({ queryKey: ['images'] });
+        const bytes = images.reduce((bytes, { descriptors }) => {
+          return bytes + calcImageBytes(descriptors);
+        }, 0);
+        void message(`Reclaimed ${prettyBytes(bytes)} in disk space`, {
+          title: `${images.length} images purged`,
+        });
+      } else {
+        toast.success('No images to purge');
+      }
+    },
+  });
+
   const disclosure = useDisclosure();
 
   const image = images?.find((i) => i.digest === current) ?? null;
@@ -57,14 +77,21 @@ function ImageList() {
   return (
     <>
       <Portal name="title">
-        <div className="flex w-full items-center justify-between">
-          <div>
+        <div className="flex w-full items-center justify-between gap-3">
+          <div className="mr-auto">
             <p>Images</p>
             <p className="text-xs font-normal text-gray-400">{images?.length} images</p>
           </div>
-          <Button size="sm" variant="flat" onPress={() => importImage()} isIconOnly>
-            <HardDriveDownload size={18} />
-          </Button>
+          <Tooltip content="Purge unreferenced images">
+            <Button size="sm" variant="light" onPress={() => purge()} isIconOnly>
+              {isPurging ? <Loader2 className="animate-spin" size={18} /> : <FolderSync size={18} />}
+            </Button>
+          </Tooltip>
+          <Tooltip content="Import an OCI archieve">
+            <Button size="sm" variant="flat" onPress={() => importImage()} isIconOnly>
+              {isImporting ? <Loader2 className="animate-spin" size={18} /> : <HardDriveDownload size={18} />}
+            </Button>
+          </Tooltip>
         </div>
       </Portal>
 
@@ -82,7 +109,7 @@ function ImageList() {
       </Portal>
       <Portal name="right-panel">{image ? <ImageDetail image={image} /> : <div>No Selected</div>}</Portal>
 
-      <MetadataPreview metadata={image} disclosure={disclosure} />
+      <MetadataPreview title="Image Metadata" metadata={image} disclosure={disclosure} />
     </>
   );
 }

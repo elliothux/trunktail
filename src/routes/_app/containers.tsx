@@ -61,7 +61,7 @@ function ContainersPage() {
         {container ? <ContainerDetail container={container} /> : <div>No Selected</div>}
       </Portal>
 
-      <MetadataPreview metadata={container} disclosure={disclosure} />
+      <MetadataPreview title="Container Metadata" metadata={container} disclosure={disclosure} />
     </>
   );
 }

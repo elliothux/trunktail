@@ -7,7 +7,7 @@ import { Button } from '@heroui/button';
 import { Chip } from '@heroui/chip';
 import { useDisclosure } from '@heroui/modal';
 import { formatDistanceToNow } from 'date-fns/formatDistanceToNow';
-import { Download, Tag, Trash2 } from 'lucide-react';
+import { Download, FileDown, Tag, Trash2 } from 'lucide-react';
 
 interface Props {
   image: ImageInfo;
@@ -66,7 +66,7 @@ export function ImageItem({ image: { parsedReferences, digest, isInfra }, image,
           <OperationButton
             title="Export as OCI archive"
             active={active}
-            icon={Download}
+            icon={FileDown}
             onClick={onExport}
             isLoading={isExporting}
           />
