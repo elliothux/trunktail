@@ -25,7 +25,7 @@ export function ContainerDetail({
       {
         label: 'Logs',
         icon: BookCopy,
-        action: onOpenFolder,
+        action: onOpenLogs,
       },
       {
         label: 'Terminal',
