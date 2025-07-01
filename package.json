@@ -17,6 +17,7 @@
     "@heroui/button": "^2.2.22-beta.2",
     "@heroui/chip": "^2.2.19-beta.0",
     "@heroui/code": "^2.2.17-beta.2",
+    "@heroui/input": "^2.4.23-beta.0",
     "@heroui/modal": "^2.2.19-beta.2",
     "@heroui/scroll-shadow": "^2.3.15-beta.2",
     "@heroui/system": "^2.4.18-beta.2",

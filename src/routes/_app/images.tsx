@@ -2,6 +2,7 @@ import { ImageDetail } from '@/components/image-detail';
 import { ImageItem } from '@/components/image-item';
 import { MetadataPreview } from '@/components/metadata-preview';
 import { Portal } from '@/components/portal';
+import { PullImage } from '@/components/pull-image';
 import { listImages, loadImage, pruneImages } from '@/lib/bridge/images';
 import { calcImageBytes } from '@/lib/bridge/utils';
 import { Button } from '@heroui/button';
@@ -10,7 +11,7 @@ import { Tooltip } from '@heroui/tooltip';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 import { message, open } from '@tauri-apps/plugin-dialog';
-import { FolderSync, HardDriveDownload, Info, Loader2 } from 'lucide-react';
+import { FolderSync, HardDriveDownload, Info, Loader2, Plus } from 'lucide-react';
 import { default as prettyBytes } from 'pretty-bytes';
 import { useState } from 'react';
 import { toast } from 'sonner';
@@ -70,7 +71,8 @@ function ImageList() {
     },
   });
 
-  const disclosure = useDisclosure();
+  const metadataDisclosure = useDisclosure();
+  const pullImageDisclosure = useDisclosure();
 
   const image = images?.find((i) => i.digest === current) ?? null;
 
@@ -88,8 +90,13 @@ function ImageList() {
             </Button>
           </Tooltip>
           <Tooltip content="Import an OCI archieve">
-            <Button size="sm" variant="flat" onPress={() => importImage()} isIconOnly>
+            <Button size="sm" variant="light" onPress={() => importImage()} isIconOnly>
               {isImporting ? <Loader2 className="animate-spin" size={18} /> : <HardDriveDownload size={18} />}
+            </Button>
+          </Tooltip>
+          <Tooltip content="Pull an image">
+            <Button size="sm" variant="flat" onPress={pullImageDisclosure.onOpen} isIconOnly>
+              <Plus size={18} />
             </Button>
           </Tooltip>
         </div>
@@ -102,14 +109,15 @@ function ImageList() {
       <Portal name="right-panel-title">
         <p>Details</p>
         {image ? (
-          <Button size="sm" className="ml-auto" variant="light" onPress={disclosure.onOpen} isIconOnly>
+          <Button size="sm" className="ml-auto" variant="light" onPress={metadataDisclosure.onOpen} isIconOnly>
             <Info size={18} />
           </Button>
         ) : null}
       </Portal>
       <Portal name="right-panel">{image ? <ImageDetail image={image} /> : <div>No Selected</div>}</Portal>
 
-      <MetadataPreview title="Image Metadata" metadata={image} disclosure={disclosure} />
+      <MetadataPreview title="Image Metadata" metadata={image} disclosure={metadataDisclosure} />
+      <PullImage disclosure={pullImageDisclosure} />
     </>
   );
 }

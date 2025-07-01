@@ -2,7 +2,7 @@ import { ContainerDetail } from '@/components/container-detail';
 import { ContainerItem } from '@/components/container-item';
 import { MetadataPreview } from '@/components/metadata-preview';
 import { Portal } from '@/components/portal';
-import { ContainerInfo, listContainers } from '@/lib/bridge/containers';
+import { listContainers } from '@/lib/bridge/containers';
 import { Button } from '@heroui/button';
 import { useDisclosure } from '@heroui/modal';
 import { useQuery } from '@tanstack/react-query';
