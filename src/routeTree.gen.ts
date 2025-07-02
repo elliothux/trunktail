@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root';
+import { Route as SystemLogsRouteImport } from './routes/system-logs';
 import { Route as AppRouteRouteImport } from './routes/_app/route';
 import { Route as IndexRouteImport } from './routes/index';
 import { Route as LogsContainerRouteImport } from './routes/logs.$container';
@@ -20,6 +21,11 @@ import { Route as AppImagesRouteImport } from './routes/_app/images';
 import { Route as AppContainersRouteImport } from './routes/_app/containers';
 import { Route as AppCommandsRouteImport } from './routes/_app/commands';
 
+const SystemLogsRoute = SystemLogsRouteImport.update({
+  id: '/system-logs',
+  path: '/system-logs',
+  getParentRoute: () => rootRouteImport,
+} as any);
 const AppRouteRoute = AppRouteRouteImport.update({
   id: '/_app',
   getParentRoute: () => rootRouteImport,
@@ -73,6 +79,7 @@ const AppCommandsRoute = AppCommandsRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute;
   '': typeof AppRouteRouteWithChildren;
+  '/system-logs': typeof SystemLogsRoute;
   '/commands': typeof AppCommandsRoute;
   '/containers': typeof AppContainersRoute;
   '/images': typeof AppImagesRoute;
@@ -85,6 +92,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute;
   '': typeof AppRouteRouteWithChildren;
+  '/system-logs': typeof SystemLogsRoute;
   '/commands': typeof AppCommandsRoute;
   '/containers': typeof AppContainersRoute;
   '/images': typeof AppImagesRoute;
@@ -98,6 +106,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport;
   '/': typeof IndexRoute;
   '/_app': typeof AppRouteRouteWithChildren;
+  '/system-logs': typeof SystemLogsRoute;
   '/_app/commands': typeof AppCommandsRoute;
   '/_app/containers': typeof AppContainersRoute;
   '/_app/images': typeof AppImagesRoute;
@@ -112,6 +121,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | ''
+    | '/system-logs'
     | '/commands'
     | '/containers'
     | '/images'
@@ -124,6 +134,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | ''
+    | '/system-logs'
     | '/commands'
     | '/containers'
     | '/images'
@@ -136,6 +147,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_app'
+    | '/system-logs'
     | '/_app/commands'
     | '/_app/containers'
     | '/_app/images'
@@ -149,6 +161,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute;
   AppRouteRoute: typeof AppRouteRouteWithChildren;
+  SystemLogsRoute: typeof SystemLogsRoute;
   LogsContainerRoute: typeof LogsContainerRoute;
 }
 
@@ -166,6 +179,13 @@ declare module '@tanstack/react-router' {
       path: '';
       fullPath: '';
       preLoaderRoute: typeof AppRouteRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    '/system-logs': {
+      id: '/system-logs';
+      path: '/system-logs';
+      fullPath: '/system-logs';
+      preLoaderRoute: typeof SystemLogsRouteImport;
       parentRoute: typeof rootRouteImport;
     };
     '/_app/commands': {
@@ -252,6 +272,7 @@ const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(AppRouteRouteCh
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRouteRoute: AppRouteRouteWithChildren,
+  SystemLogsRoute: SystemLogsRoute,
   LogsContainerRoute: LogsContainerRoute,
 };
 export const routeTree = rootRouteImport._addFileChildren(rootRouteChildren)._addFileTypes<FileRouteTypes>();

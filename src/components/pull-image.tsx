@@ -68,7 +68,7 @@ export function PullImage({ disclosure: { isOpen, onOpenChange, onClose } }: Pro
   useEffect(() => {
     return () => {
       if (processRef.current) {
-        processRef.current.kill();
+        void processRef.current.kill();
         processRef.current = null;
       }
     };

@@ -3,7 +3,8 @@ import { PortalRoot } from '@/components/portal';
 import { Providers } from '@/components/providers';
 import { ScrollShadow } from '@heroui/scroll-shadow';
 import { Outlet, createFileRoute } from '@tanstack/react-router';
-import { GripVertical, LogOut } from 'lucide-react';
+import { openUrl } from '@tauri-apps/plugin-opener';
+import { ExternalLink, Github, GripVertical, LogOut } from 'lucide-react';
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 
 export const Route = createFileRoute('/_app')({
@@ -49,9 +50,15 @@ function App() {
               data-tauri-drag-region
             />
             <PortalRoot name="right-panel" className="flex-1 overflow-x-hidden overflow-y-auto p-4" />
-            <div className="flex items-center gap-2 border-t border-gray-800 p-4 text-xs text-gray-400">
-              <LogOut className="h-5 w-5" />
-              <span>Personal use only</span>
+            <div
+              className="flex cursor-pointer items-center gap-2 border-t border-gray-800 px-4 h-12 text-xs text-gray-400 hover:text-gray-800"
+              onClick={() => {
+                openUrl('https://github.com/elliothux/trunktail');
+              }}
+            >
+              <Github size={16} />
+              <span>Github</span>
+              <ExternalLink size={16} className="ml-auto" />
             </div>
           </Panel>
         </PanelGroup>

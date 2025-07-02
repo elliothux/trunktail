@@ -36,6 +36,7 @@ tauri_command_async!(load_image, params);
 tauri_command_async!(prune_images);
 tauri_command_async!(tag_image, params);
 tauri_command_async!(delete_images, params);
+tauri_command_async!(system_status);
 
 fn main() {
     Builder::default()
@@ -53,6 +54,7 @@ fn main() {
             load_image,
             prune_images,
             tag_image,
+            system_status,
         ])
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_clipboard_manager::init())

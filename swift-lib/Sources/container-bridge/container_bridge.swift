@@ -2,7 +2,7 @@ import Foundation
 import SwiftRs
 
 @_cdecl("ffi_ping")
-public func ffi_ping() -> SRString {
+public func ping() -> SRString {
   return SRString("pong")
 }
 

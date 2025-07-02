@@ -25,6 +25,7 @@ let package = Package(
             dependencies: [
                 .product(name: "SwiftRs", package: "swift-rs"),
                 .product(name: "ContainerClient", package: "container"),
+                .product(name: "ContainerPlugin", package: "container"),
                 .product(name: "ContainerizationOS", package: "containerization"),
             ],
         ),

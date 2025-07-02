@@ -13,7 +13,7 @@ public func listContainers(context: FFIContext, completion: FFICompletion) {
         .returnBytes(context, completion)
     } catch {
       print("[listContainers] error: \(error)")
-      FFIErrorResult.from(error.localizedDescription)
+      FFIErrorResult.from("\(error)")
         .returnBytes(context, completion)
     }
   }
@@ -42,7 +42,7 @@ public func startContainer(params: SRString, context: FFIContext, completion: FF
     } catch {
       try? await container?.stop()
       print("[startContainer] error: \(error)")
-      FFIErrorResult.from(error.localizedDescription).returnBytes(context, completion)
+      FFIErrorResult.from("\(error)").returnBytes(context, completion)
     }
   }
 }
@@ -75,7 +75,7 @@ public func stopContainer(params: SRString, context: FFIContext, completion: FFI
     } catch {
       try? await container?.stop()
       print("[stopContainer] error: \(error)")
-      FFIErrorResult.from(error.localizedDescription).returnBytes(context, completion)
+      FFIErrorResult.from("\(error)").returnBytes(context, completion)
     }
   }
 }
@@ -104,7 +104,7 @@ public func killContainer(params: SRString, context: FFIContext, completion: FFI
     } catch {
       try? await container?.stop()
       print("[killContainer] error: \(error)")
-      FFIErrorResult.from(error.localizedDescription).returnBytes(context, completion)
+      FFIErrorResult.from("\(error)").returnBytes(context, completion)
     }
   }
 }
@@ -136,7 +136,7 @@ public func deleteContainer(params: SRString, context: FFIContext, completion: F
     } catch {
       try? await container?.stop()
       print("[deleteContainer] error: \(error)")
-      FFIErrorResult.from(error.localizedDescription).returnBytes(context, completion)
+      FFIErrorResult.from("\(error)").returnBytes(context, completion)
     }
   }
 }

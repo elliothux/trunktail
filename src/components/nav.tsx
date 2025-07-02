@@ -1,8 +1,10 @@
 import { Button } from '@heroui/button';
 import { ScrollShadow } from '@heroui/scroll-shadow';
 import { FileRouteTypes, Link, useLocation } from '@tanstack/react-router';
-import { Activity, Command, FileArchive, Package, UserCircle } from 'lucide-react';
+import { Command, FileArchive, Package } from 'lucide-react';
 import { ComponentProps, ComponentType } from 'react';
+import { Logo } from './logo';
+import { SystemInfo } from './system-info';
 
 const menus: {
   label: string;
@@ -28,7 +30,7 @@ export function Nav() {
         className="flex h-14 items-center border-b border-gray-800 px-4 text-lg font-bold tracking-wide"
         data-tauri-drag-region
       >
-        Dashboard
+        <Logo className="w-28 pointer-events-none select-none" />
       </div>
       <ScrollShadow as="nav" className="flex flex-1 shrink grow flex-col items-stretch justify-start gap-0.5 p-2.5">
         {menus.map(({ label, icon: Icon, to }) => {
@@ -47,9 +49,7 @@ export function Nav() {
           );
         })}
       </ScrollShadow>
-      <div className="mt-auto flex items-center gap-2 border-t border-gray-800 p-4 text-xs text-gray-400">
-        <UserCircle className="h-6 w-6" /> elliot@coca...
-      </div>
+      <SystemInfo />
     </>
   );
 }

@@ -26,6 +26,7 @@ unsafe extern "C" {
     pub fn ffi_prune_images(context: u64, completion: FFICompletion);
     pub fn ffi_tag_image(params: SRString, context: u64, completion: FFICompletion);
     pub fn ffi_delete_images(params: SRString, context: u64, completion: FFICompletion);
+    pub fn ffi_system_status(context: u64, completion: FFICompletion);
 }
 
 pub async fn ping_async() -> String {
@@ -74,4 +75,8 @@ pub async fn tag_image(params: String) -> String {
 
 pub async fn delete_images(params: String) -> String {
     call_async_ffi_with_params(ffi_delete_images, params).await
+}
+
+pub async fn system_status() -> String {
+    call_async_ffi(ffi_system_status).await
 }

@@ -93,7 +93,7 @@ public func listImages(context: FFIContext, completion: FFICompletion) {
         .returnBytes(context, completion)
     } catch {
       print("[listImages] error: \(error)")
-      FFIErrorResult.from(error.localizedDescription)
+      FFIErrorResult.from("\(error)")
         .returnBytes(context, completion)
     }
   }
@@ -133,7 +133,7 @@ public func saveImage(params: SRString, context: FFIContext, completion: FFIComp
       FFIResult.from(image).returnBytes(context, completion)
     } catch {
       print("[saveImage] error: \(error)")
-      FFIErrorResult.from(error.localizedDescription)
+      FFIErrorResult.from("\(error)")
         .returnBytes(context, completion)
     }
   }
@@ -151,7 +151,7 @@ public func loadImage(params: SRString, context: FFIContext, completion: FFIComp
       FFIResult.from(image).returnBytes(context, completion)
     } catch {
       print("[loadImage] error: \(error)")
-      FFIErrorResult.from(error.localizedDescription)
+      FFIErrorResult.from("\(error)")
         .returnBytes(context, completion)
     }
   }
@@ -178,7 +178,7 @@ public func pruneImages(context: FFIContext, completion: FFICompletion) {
       FFIResult.from(images).returnBytes(context, completion)
     } catch {
       print("[pullImage] error: \(error)")
-      FFIErrorResult.from(error.localizedDescription)
+      FFIErrorResult.from("\(error)")
         .returnBytes(context, completion)
     }
   }
@@ -200,7 +200,7 @@ public func tagImage(params: SRString, context: FFIContext, completion: FFICompl
       FFIResult.from(try await getImageInfo(img: image)).returnBytes(context, completion)
     } catch {
       print("[tagImage] error: \(error)")
-      FFIErrorResult.from(error.localizedDescription)
+      FFIErrorResult.from("\(error)")
         .returnBytes(context, completion)
     }
   }
@@ -238,7 +238,7 @@ public func deleteImages(params: SRString, context: FFIContext, completion: FFIC
       FFIResult.from(images).returnBytes(context, completion)
     } catch {
       print("[deleteImages] error: \(error)")
-      FFIErrorResult.from(error.localizedDescription)
+      FFIErrorResult.from("\(error)")
         .returnBytes(context, completion)
     }
   }

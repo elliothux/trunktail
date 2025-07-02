@@ -79,10 +79,10 @@ function ImageList() {
   return (
     <>
       <Portal name="title">
-        <div className="flex w-full items-center justify-between gap-3">
-          <div className="mr-auto">
-            <p>Images</p>
-            <p className="text-xs font-normal text-gray-400">{images?.length} images</p>
+        <div className="flex w-full items-center justify-between gap-3" data-tauri-drag-region>
+          <div className="mr-auto pointer-events-none select-none">
+            <p className="pointer-events-none select-none">Images</p>
+            <p className="pointer-events-none select-none text-xs font-normal text-gray-400">{images?.length} images</p>
           </div>
           <Tooltip content="Purge unreferenced images">
             <Button size="sm" variant="light" onPress={() => purge()} isIconOnly>

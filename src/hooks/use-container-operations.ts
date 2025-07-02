@@ -2,11 +2,11 @@ import { ContainerInfo, deleteContainer, killContainer, startContainer, stopCont
 import { getServicePath } from '@/lib/bridge/utils';
 import { openPathWithFinder } from '@/utils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { WebviewWindow } from '@tauri-apps/api/webviewWindow';
 import { confirm, message } from '@tauri-apps/plugin-dialog';
 import { Command } from '@tauri-apps/plugin-shell';
 import { useCallback } from 'react';
 import { toast } from 'sonner';
+import { openWebviewWindow } from '@/utils';
 
 export function useContainerOperations({ status, configuration: { id }, networks: [network] }: ContainerInfo) {
   const queryClient = useQueryClient();
@@ -93,26 +93,10 @@ export function useContainerOperations({ status, configuration: { id }, networks
   }, [onDelete]);
 
   const onOpenLogs = useCallback(async () => {
-    const viewId = `log-viewer-${id}`;
-    const existing = await WebviewWindow.getByLabel(viewId);
-    if (existing) {
-      await existing.destroy();
-    }
-
-    const win = new WebviewWindow(viewId, {
+    await openWebviewWindow({
       url: `${window.location.origin}/logs/${id}`,
-      center: true,
-      width: 800,
-      height: 600,
-      resizable: true,
+      viewId: `log-viewer-${id}`,
       title: `Logs - ${id}`,
-    });
-    win.once('tauri://created', () => {
-      console.log('created');
-      win.show();
-    });
-    win.once('tauri://error', (e) => {
-      console.error('Failed to create login window:', e);
     });
   }, [id]);
 

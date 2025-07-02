@@ -9,6 +9,12 @@ interface BridgeInvokeResponse<T> {
   data?: T;
 }
 
+let serverErrorCallback: () => void;
+
+export function onContainerServiceError(callback: () => void) {
+  serverErrorCallback = callback;
+}
+
 export async function invokeBridge<T>(command: string, args?: object): Promise<T> {
   const result = await invoke(
     command,
@@ -30,6 +36,9 @@ export async function invokeBridge<T>(command: string, args?: object): Promise<T
   }
 
   if (response.code !== 0 || response.data === undefined) {
+    if (response.message?.includes('XPC connection error')) {
+      serverErrorCallback?.();
+    }
     throw new Error(
       `Bridge command "${command}" failed with code ${response.code}: ${response.message || 'Unknown error'}`,
     );

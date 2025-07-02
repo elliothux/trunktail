@@ -10,7 +10,9 @@ export const Route = createFileRoute('/_app/commands')({
 function CommandPage() {
   return (
     <>
-      <Portal name="title">Commands</Portal>
+      <Portal name="title">
+        <p className="pointer-events-none select-none">Commands</p>
+      </Portal>
 
       <div className="p-6 max-w-6xl mx-auto">
         <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
