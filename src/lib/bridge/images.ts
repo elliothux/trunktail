@@ -99,7 +99,9 @@ export interface Platform {
 }
 
 function handleImage(image: ImageInfo): ImageInfo {
-  image.parsedReferences = image.references.map(parseImageReference).sort((a, b) => a.tag.localeCompare(b.tag));
+  const refs = image.references.map(parseImageReference).sort((a, b) => a.tag.localeCompare(b.tag));
+  image.parsedReferences = refs;
+  image.isInfra = refs[0].org === 'apple' && refs[0].name === 'vminit';
   return image;
 }
 

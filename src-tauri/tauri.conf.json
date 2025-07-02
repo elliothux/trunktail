@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "container-dashbord",
+  "productName": "Trunktail",
   "version": "0.1.0",
-  "identifier": "com.container-dashbord.app",
+  "identifier": "com.trunktail.elliot.app",
   "build": {
     "beforeDevCommand": "bun run dev",
     "devUrl": "http://localhost:1420",
@@ -12,7 +12,7 @@
   "app": {
     "windows": [
       {
-        "title": "container-dashbord",
+        "title": "Trunktail",
         "width": 1280,
         "height": 800,
         "decorations": false,

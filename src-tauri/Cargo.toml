@@ -1,8 +1,8 @@
 [package]
-name = "container-dashbord"
+name = "Trunktail"
 version = "0.1.0"
-description = "A Tauri App"
-authors = ["elliot"]
+description = "A container management GUI for macOS"
+authors = ["elliothu.my@gmai.com"]
 edition = "2021"
 
 [build-dependencies]
