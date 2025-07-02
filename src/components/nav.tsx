@@ -21,7 +21,12 @@ const menus: {
   { label: 'Commands', icon: Command, to: '/commands' },
 ];
 
-export function Nav() {
+interface Props {
+  width: number;
+  collapsed: boolean;
+}
+
+export function Nav({ width, collapsed }: Props) {
   const { pathname } = useLocation();
 
   return (
@@ -35,21 +40,23 @@ export function Nav() {
       <ScrollShadow as="nav" className="flex flex-1 shrink grow flex-col items-stretch justify-start gap-0.5 p-2.5">
         {menus.map(({ label, icon: Icon, to }) => {
           const isActive = pathname === to;
+          const icon = <Icon className="h-5 w-5" />;
           return (
             <Button
               key={label}
-              startContent={<Icon className="h-5 w-5" />}
+              startContent={collapsed ? null : icon}
               as={Link}
               to={to}
               variant={isActive ? 'solid' : 'light'}
-              className="shrink-0 grow-0 justify-start"
+              className={collapsed ? 'w-full' : 'justify-start'}
+              isIconOnly={collapsed}
             >
-              {label}
+              {collapsed ? icon : label}
             </Button>
           );
         })}
       </ScrollShadow>
-      <SystemInfo />
+      <SystemInfo compact={width <= 170} collapsed={collapsed} />
     </>
   );
 }

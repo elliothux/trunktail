@@ -9,9 +9,9 @@ interface Props {
 
 export function ContainerStatusIndicator({ status, size = 8, className }: Props) {
   return (
-    <div
+    <span
       className={cn(
-        'rounded-full',
+        'rounded-full inline-block',
         status === ContainerStatus.running
           ? 'bg-green-500'
           : status === ContainerStatus.stopped

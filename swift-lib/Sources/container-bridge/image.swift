@@ -16,7 +16,6 @@ struct ImageFullInfo: Codable {
   let mediaType: String
   let descriptors: [ImageDescriptorInfo]
   let annotations: [String: String]?
-  let isInfra: Bool
 }
 
 func getImageInfo(img: ClientImage) async throws -> ImageFullInfo {
@@ -54,7 +53,6 @@ func getImageInfo(img: ClientImage) async throws -> ImageFullInfo {
     mediaType: index.mediaType,
     descriptors: descriptors,
     annotations: index.annotations,
-    isInfra: Utility.isInfraImage(name: img.reference)
   )
 }
 

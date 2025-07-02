@@ -84,6 +84,11 @@
           "name": "osascript",
           "cmd": "osascript",
           "args": true
+        },
+        {
+          "name": "command",
+          "cmd": "command",
+          "args": true
         }
       ]
     },
@@ -108,6 +113,11 @@
         {
           "name": "osascript",
           "cmd": "osascript",
+          "args": true
+        },
+        {
+          "name": "command",
+          "cmd": "command",
           "args": true
         }
       ]

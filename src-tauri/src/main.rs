@@ -24,6 +24,18 @@ fn ping() -> String {
     container_bridge::ping()
 }
 
+#[command]
+fn is_apple_silicon() -> bool {
+    #[cfg(target_arch = "aarch64")]
+    {
+        true
+    }
+    #[cfg(not(target_arch = "aarch64"))]
+    {
+        false
+    }
+}
+
 tauri_command_async!(ping_async);
 tauri_command_async!(list_images);
 tauri_command_async!(list_containers);
@@ -55,6 +67,7 @@ fn main() {
             prune_images,
             tag_image,
             system_status,
+            is_apple_silicon,
         ])
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_clipboard_manager::init())

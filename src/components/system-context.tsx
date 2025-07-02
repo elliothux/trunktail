@@ -1,9 +1,14 @@
 import { createContext, PropsWithChildren, useContext, useMemo, useState } from 'react';
 import { systemStatus, SystemStatus } from '@/lib/bridge/system';
 import { useQuery } from '@tanstack/react-query';
+import { Command } from '@tauri-apps/plugin-shell';
+import { invoke } from '@tauri-apps/api/core';
 
 const SystemContext = createContext<{
   status: SystemStatus;
+  version: string;
+  command: string;
+  supported: boolean;
 } | null>(null);
 
 export function SystemProvider({ children }: PropsWithChildren) {
@@ -13,11 +18,48 @@ export function SystemProvider({ children }: PropsWithChildren) {
     refetchInterval: ({ state: { data: status } }) => (status === SystemStatus.Running ? 5000 : 500),
   });
 
+  const { data: version = 'unknown' } = useQuery({
+    queryKey: ['system-version'],
+    queryFn: async () => {
+      const result = await Command.create('container', ['--version']).execute();
+      if (result.code !== 0) {
+        throw new Error('Failed to get system version');
+      }
+      const version = result.stdout.split('version')[1]?.trim();
+      if (!version) {
+        throw new Error('Failed to get system version');
+      }
+      return version;
+    },
+  });
+
+  const { data: command = 'unknown' } = useQuery({
+    queryKey: ['system-command'],
+    queryFn: async () => {
+      const result = await Command.create('command', ['-v', 'container']).execute();
+      if (result.code !== 0) {
+        throw new Error('Failed to get system command');
+      }
+      return result.stdout.trim();
+    },
+  });
+
+  const { data: isAppleSilicon = false } = useQuery({
+    queryKey: ['system-arch'],
+    queryFn: async () => {
+      const result = await invoke('is_apple_silicon');
+      return typeof result === 'boolean' ? result : false;
+    },
+  });
+
   const value = useMemo(
     () => ({
       status,
+      version,
+      command,
+      supported: isAppleSilicon,
     }),
-    [status],
+    [status, version, command, isAppleSilicon],
   );
 
   return <SystemContext value={value}>{children}</SystemContext>;

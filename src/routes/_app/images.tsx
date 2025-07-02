@@ -1,6 +1,7 @@
 import { ImageDetail } from '@/components/image-detail';
 import { ImageItem } from '@/components/image-item';
 import { MetadataPreview } from '@/components/metadata-preview';
+import { NoSelected } from '@/components/no-selected';
 import { Portal } from '@/components/portal';
 import { PullImage } from '@/components/pull-image';
 import { listImages, loadImage, pruneImages } from '@/lib/bridge/images';
@@ -114,7 +115,7 @@ function ImageList() {
           </Button>
         ) : null}
       </Portal>
-      <Portal name="right-panel">{image ? <ImageDetail image={image} /> : <div>No Selected</div>}</Portal>
+      <Portal name="right-panel">{image ? <ImageDetail image={image} /> : <NoSelected />}</Portal>
 
       <MetadataPreview title="Image Metadata" metadata={image} disclosure={metadataDisclosure} />
       <PullImage disclosure={pullImageDisclosure} />

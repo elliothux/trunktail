@@ -1,6 +1,7 @@
 import { ContainerDetail } from '@/components/container-detail';
 import { ContainerItem } from '@/components/container-item';
 import { MetadataPreview } from '@/components/metadata-preview';
+import { NoSelected } from '@/components/no-selected';
 import { Portal } from '@/components/portal';
 import { listContainers } from '@/lib/bridge/containers';
 import { Button } from '@heroui/button';
@@ -57,9 +58,7 @@ function ContainersPage() {
           </Button>
         ) : null}
       </Portal>
-      <Portal name="right-panel">
-        {container ? <ContainerDetail container={container} /> : <div>No Selected</div>}
-      </Portal>
+      <Portal name="right-panel">{container ? <ContainerDetail container={container} /> : <NoSelected />}</Portal>
 
       <MetadataPreview title="Container Metadata" metadata={container} disclosure={disclosure} />
     </>

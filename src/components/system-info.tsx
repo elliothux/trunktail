@@ -7,83 +7,122 @@ import { Button } from '@heroui/button';
 import { Ellipsis, Play, RotateCcw, Square, BookCopy, Info, Loader2 } from 'lucide-react';
 import { useSystemOperations } from '@/hooks/use-system-operations';
 import { openWebviewWindow } from '@/utils';
+import { useDisclosure } from '@heroui/modal';
+import { About } from './about';
+import { cn } from '@/lib/utils';
+import { PropsWithChildren } from 'react';
 
-export function SystemInfo() {
+export function SystemInfo({ compact, collapsed }: { compact: boolean; collapsed: boolean }) {
   const { status } = useContainerSystem();
   const isRunning = status === SystemStatus.Running;
+
+  const indicator = (
+    <>
+      <ContainerStatusIndicator status={isRunning ? ContainerStatus.running : ContainerStatus.stopped} />
+      <span className={cn('pointer-events-none select-none', compact ? 'capitalize' : null)}>
+        {compact ? '' : 'System '}
+        {isRunning ? 'running' : ' stopped'}
+      </span>
+    </>
+  );
+
   return (
     <div className="flex items-center gap-2 border-t border-gray-800 px-3 h-12 text-xs text-gray-400">
-      <ContainerStatusIndicator status={isRunning ? ContainerStatus.running : ContainerStatus.stopped} />
-      <span className="pointer-events-none select-none">{isRunning ? 'System running' : 'System stopped'}</span>
-      <SystemMenu />
+      {collapsed ? null : indicator}
+      <SystemMenu triggerClassName={collapsed ? 'w-full' : undefined}>{compact ? indicator : null}</SystemMenu>
     </div>
   );
 }
 
-function SystemMenu() {
-  const { status } = useContainerSystem();
+function SystemMenu({ triggerClassName, children }: PropsWithChildren<{ triggerClassName?: string }>) {
+  const { status, command } = useContainerSystem();
   const { start, isStarting, stop, isStopping, restart, isRestarting } = useSystemOperations();
 
+  const aboutDisclosure = useDisclosure();
+
   const isRunning = status === SystemStatus.Running;
+
   return (
-    <Dropdown className="mt-auto" placement="right-end">
-      <DropdownTrigger>
-        <Button size="sm" className="ml-auto" variant="light" isIconOnly>
-          <Ellipsis size={16} />
-        </Button>
-      </DropdownTrigger>
-      <DropdownMenu aria-label="Dynamic Actions">
-        <DropdownItem
-          key="start"
-          color={isRunning ? 'danger' : 'default'}
-          variant={isRunning ? 'flat' : 'solid'}
-          startContent={
-            isStarting || isStopping ? (
-              <Loader2 className="animate-spin" size={16} />
-            ) : isRunning ? (
-              <Square size={16} />
-            ) : (
-              <Play size={16} />
-            )
-          }
-          onPress={() => {
-            if (isStarting || isStopping || isRestarting) {
-              return;
+    <>
+      <Dropdown className="mt-auto" placement="right-end" isDisabled={command === 'unknown'}>
+        <DropdownTrigger>
+          <Button size="sm" className={cn('ml-auto', triggerClassName)} variant="light" isIconOnly>
+            <Ellipsis size={16} />
+          </Button>
+        </DropdownTrigger>
+        <DropdownMenu
+          aria-label="Dynamic Actions"
+          disabledKeys={[
+            'custom',
+            isRunning ? '' : 'restart',
+            isRestarting ? 'restart' : '',
+            isStarting || isStopping || isRestarting ? 'start' : '',
+          ]}
+        >
+          {children != null ? (
+            <DropdownItem
+              key="custom"
+              className="opacity-100"
+              classNames={{
+                title: 'flex flex-row items-center justify-start gap-[11px] pl-1',
+              }}
+            >
+              {children}
+            </DropdownItem>
+          ) : null}
+          <DropdownItem
+            key="start"
+            color={isRunning ? 'danger' : 'default'}
+            variant={isRunning ? 'flat' : 'solid'}
+            startContent={
+              isStarting || isStopping ? (
+                <Loader2 className="animate-spin" size={16} />
+              ) : isRunning ? (
+                <Square size={16} />
+              ) : (
+                <Play size={16} />
+              )
             }
-            isRunning ? stop() : start();
-          }}
-        >
-          {isRunning ? 'Stop server' : 'Start server'}
-        </DropdownItem>
-        <DropdownItem
-          key="restart"
-          startContent={isRestarting ? <Loader2 className="animate-spin" size={16} /> : <RotateCcw size={16} />}
-          onPress={() => {
-            if (isStarting || isStopping || isRestarting) {
-              return;
-            }
-            restart();
-          }}
-        >
-          Restart server
-        </DropdownItem>
-        <DropdownItem
-          key="logs"
-          startContent={<BookCopy size={16} />}
-          onPress={() => {
-            openWebviewWindow({
-              url: `${window.location.origin}/system-logs`,
-              viewId: 'system-logs',
-              title: 'Container server logs',
-            });
-          }}
-        >
-          View logs
-        </DropdownItem>
-        <DropdownItem key="about" startContent={<Info size={16} />}>
-          About trunktail
-        </DropdownItem>
-      </DropdownMenu>
-    </Dropdown>
+            onPress={() => {
+              if (isStarting || isStopping || isRestarting) {
+                return;
+              }
+              isRunning ? stop() : start();
+            }}
+          >
+            {isRunning ? 'Stop server' : 'Start server'}
+          </DropdownItem>
+          <DropdownItem
+            key="restart"
+            startContent={isRestarting ? <Loader2 className="animate-spin" size={16} /> : <RotateCcw size={16} />}
+            onPress={() => {
+              if (isStarting || isStopping || isRestarting) {
+                return;
+              }
+              restart();
+            }}
+          >
+            Restart server
+          </DropdownItem>
+          <DropdownItem
+            key="logs"
+            startContent={<BookCopy size={16} />}
+            onPress={() => {
+              openWebviewWindow({
+                url: `${window.location.origin}/system-logs`,
+                viewId: 'system-logs',
+                title: 'Container server logs',
+              });
+            }}
+          >
+            View logs
+          </DropdownItem>
+          <DropdownItem key="about" startContent={<Info size={16} />} onPress={aboutDisclosure.onOpen}>
+            About trunktail
+          </DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
+      <About disclosure={aboutDisclosure} />
+    </>
   );
 }
