@@ -1,12 +1,10 @@
 import { ContainerInfo, deleteContainer, killContainer, startContainer, stopContainer } from '@/lib/bridge/containers';
 import { getServicePath } from '@/lib/bridge/utils';
-import { openPathWithFinder } from '@/utils';
+import { createCommand, openPathWithFinder, openWebviewWindow } from '@/utils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { confirm, message } from '@tauri-apps/plugin-dialog';
-import { Command } from '@tauri-apps/plugin-shell';
 import { useCallback } from 'react';
 import { toast } from 'sonner';
-import { openWebviewWindow } from '@/utils';
 
 export function useContainerOperations({ status, configuration: { id }, networks: [network] }: ContainerInfo) {
   const queryClient = useQueryClient();
@@ -102,7 +100,7 @@ export function useContainerOperations({ status, configuration: { id }, networks
 
   const onOpenTerminal = useCallback(async () => {
     const command = `container exec --tty --interactive ${id} sh`;
-    const result = await Command.create('osascript', [
+    const result = await createCommand('osascript', [
       '-e',
       `tell application "Terminal" to activate`,
       '-e',

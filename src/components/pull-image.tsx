@@ -1,13 +1,14 @@
+import { cn } from '@/lib/utils';
+import { createCommand } from '@/utils';
+import { Button } from '@heroui/button';
+import { Input } from '@heroui/input';
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@heroui/modal';
 import type { UseDisclosureReturn } from '@heroui/use-disclosure';
-import { Input } from '@heroui/input';
-import { Button } from '@heroui/button';
-import { useCallback, useEffect, useRef, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Download, Loader2, X } from 'lucide-react';
-import { Child, ChildProcess, Command, TerminatedPayload } from '@tauri-apps/plugin-shell';
-import { cn } from '@/lib/utils';
 import { message } from '@tauri-apps/plugin-dialog';
+import { Child, TerminatedPayload } from '@tauri-apps/plugin-shell';
+import { Download, Loader2 } from 'lucide-react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 interface Props {
   disclosure: UseDisclosureReturn;
@@ -33,7 +34,7 @@ export function PullImage({ disclosure: { isOpen, onOpenChange, onClose } }: Pro
     reset,
   } = useMutation({
     mutationFn: async (reference: string) => {
-      const command = Command.create('script', ['-q', '/dev/null', 'container', 'images', 'pull', reference]);
+      const command = createCommand('script', ['-q', '/dev/null', 'container', 'images', 'pull', reference]);
       command.stdout.on('data', (line) => updateLog(line, 'stdout'));
       command.stderr.on('data', (line) => updateLog(line, 'stderr'));
       processRef.current = await command.spawn();
@@ -92,7 +93,7 @@ export function PullImage({ disclosure: { isOpen, onOpenChange, onClose } }: Pro
                 {isPulling ? (
                   <div
                     className={cn(
-                      'h-10 rounded-xl bg-gray-950 text-xs p-3 truncate',
+                      'h-10 truncate rounded-xl bg-gray-950 p-3 text-xs',
                       log?.type === 'stderr' ? 'text-red-400' : 'text-[#0f0]',
                     )}
                   >

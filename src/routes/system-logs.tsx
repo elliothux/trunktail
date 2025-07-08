@@ -1,11 +1,11 @@
+import { LogLine, Logs } from '@/components/logs';
+import { cleanTerminalOutput, createCommand } from '@/utils';
 import { createFileRoute } from '@tanstack/react-router';
 import { getCurrentWindow } from '@tauri-apps/api/window';
-import { createRef, useEffect, useState } from 'react';
-import { Child, Command } from '@tauri-apps/plugin-shell';
-import { LogLine, Logs } from '@/components/logs';
-import { Toaster } from 'sonner';
 import { message } from '@tauri-apps/plugin-dialog';
-import { cleanTerminalOutput } from '@/utils';
+import { Child } from '@tauri-apps/plugin-shell';
+import { createRef, useEffect, useState } from 'react';
+import { Toaster } from 'sonner';
 
 export const Route = createFileRoute('/system-logs')({
   component: SystemLogsPage,
@@ -44,7 +44,7 @@ function SystemLogsPage() {
         });
       };
 
-      const result = await Command.create('script', ['-q', '/dev/null', 'container', 'system', 'logs']).execute();
+      const result = await createCommand('script', ['-q', '/dev/null', 'container', 'system', 'logs']).execute();
       if (result.code !== 0) {
         void message(result.stderr || 'Unknown error', {
           kind: 'error',
@@ -61,7 +61,7 @@ function SystemLogsPage() {
         },
       ]);
 
-      const command = Command.create('script', ['-q', '/dev/null', 'container', 'system', 'logs', '--follow']);
+      const command = createCommand('script', ['-q', '/dev/null', 'container', 'system', 'logs', '--follow']);
       command.stdout.on('data', (line) =>
         setLogs((prev) => [...prev, { line: cleanTerminalOutput(line), type: 'stdout' }]),
       );

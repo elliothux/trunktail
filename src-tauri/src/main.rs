@@ -51,7 +51,15 @@ tauri_command_async!(delete_images, params);
 tauri_command_async!(system_status);
 
 fn main() {
-    Builder::default()
+    #[cfg(debug_assertions)]
+    let devtools = tauri_plugin_devtools::init();
+    let mut builder = Builder::default();
+    #[cfg(debug_assertions)]
+    {
+        builder = builder.plugin(devtools);
+    }
+
+    builder
         .invoke_handler(tauri::generate_handler![
             ping,
             ping_async,

@@ -1,16 +1,16 @@
-import { useContainerSystem } from './system-context';
-import { SystemStatus } from '@/lib/bridge/system';
-import { ContainerStatusIndicator } from './container-status-indicator';
-import { ContainerStatus } from '@/lib/bridge/containers';
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from '@heroui/dropdown';
-import { Button } from '@heroui/button';
-import { Ellipsis, Play, RotateCcw, Square, BookCopy, Info, Loader2 } from 'lucide-react';
 import { useSystemOperations } from '@/hooks/use-system-operations';
-import { openWebviewWindow } from '@/utils';
-import { useDisclosure } from '@heroui/modal';
-import { About } from './about';
+import { ContainerStatus } from '@/lib/bridge/containers';
+import { SystemStatus } from '@/lib/bridge/system';
 import { cn } from '@/lib/utils';
+import { openWebviewWindow } from '@/utils';
+import { Button } from '@heroui/button';
+import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/dropdown';
+import { useDisclosure } from '@heroui/modal';
+import { BookCopy, Ellipsis, Info, Loader2, Play, RotateCcw, Square } from 'lucide-react';
 import { PropsWithChildren } from 'react';
+import { About } from './about';
+import { ContainerStatusIndicator } from './container-status-indicator';
+import { useContainerSystem } from './system-context';
 
 export function SystemInfo({ compact, collapsed }: { compact: boolean; collapsed: boolean }) {
   const { status } = useContainerSystem();
@@ -27,7 +27,7 @@ export function SystemInfo({ compact, collapsed }: { compact: boolean; collapsed
   );
 
   return (
-    <div className="flex items-center gap-2 border-t border-gray-800 px-3 h-12 text-xs text-gray-400">
+    <div className="flex h-12 items-center gap-2 border-t border-gray-800 px-3 text-xs text-gray-400">
       {collapsed ? null : indicator}
       <SystemMenu triggerClassName={collapsed ? 'w-full' : undefined}>{compact ? indicator : null}</SystemMenu>
     </div>

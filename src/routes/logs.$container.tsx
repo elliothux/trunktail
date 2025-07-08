@@ -1,12 +1,11 @@
-import { LogLine } from '@/components/logs';
+import { LogLine, Logs } from '@/components/logs';
+import { cleanTerminalOutput, createCommand } from '@/utils';
 import { createFileRoute } from '@tanstack/react-router';
 import { getCurrentWindow } from '@tauri-apps/api/window';
 import { message } from '@tauri-apps/plugin-dialog';
-import { Child, Command } from '@tauri-apps/plugin-shell';
+import { Child } from '@tauri-apps/plugin-shell';
 import { createRef, useEffect, useState } from 'react';
 import { Toaster } from 'sonner';
-import { Logs } from '@/components/logs';
-import { cleanTerminalOutput } from '@/utils';
 
 export const Route = createFileRoute('/logs/$container')({
   component: LogsPage,
@@ -56,7 +55,7 @@ function LogsPage() {
       return;
     }
 
-    const command = Command.create('script', ['-q', '/dev/null', 'container', 'logs', container, '--follow']);
+    const command = createCommand('script', ['-q', '/dev/null', 'container', 'logs', container, '--follow']);
     command.stdout.on('data', (line) =>
       setLogs((prev) => [...prev, { line: cleanTerminalOutput(line), type: 'stdout' }]),
     );

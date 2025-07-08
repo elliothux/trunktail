@@ -1,13 +1,12 @@
-import { useMutation } from '@tanstack/react-query';
-import { Command } from '@tauri-apps/plugin-shell';
-import { useQueryClient } from '@tanstack/react-query';
-import { useCallback } from 'react';
 import { SystemStatus } from '@/lib/bridge/system';
-import { toast } from 'sonner';
+import { createCommand } from '@/utils';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { message } from '@tauri-apps/plugin-dialog';
+import { useCallback } from 'react';
+import { toast } from 'sonner';
 
-const startCommand = () => Command.create('container', ['system', 'start']);
-const stopCommand = () => Command.create('container', ['system', 'stop']);
+const startCommand = () => createCommand('container', ['system', 'start']);
+const stopCommand = () => createCommand('container', ['system', 'stop']);
 
 export function useSystemOperations() {
   const queryClient = useQueryClient();

@@ -1,13 +1,12 @@
-import { Modal, ModalBody, ModalContent, ModalHeader } from '@heroui/modal';
-import { UseDisclosureReturn } from '@heroui/use-disclosure';
 import { Card, CardBody } from '@heroui/card';
 import { Link } from '@heroui/link';
-import { useContainerSystem } from './system-context';
-import { Logo } from './logo';
-import { useEffect, useState } from 'react';
-import { getVersion, getTauriVersion } from '@tauri-apps/api/app';
+import { Modal, ModalBody, ModalContent, ModalHeader } from '@heroui/modal';
 import { ScrollShadow } from '@heroui/scroll-shadow';
+import { UseDisclosureReturn } from '@heroui/use-disclosure';
 import { useQuery } from '@tanstack/react-query';
+import { getTauriVersion, getVersion } from '@tauri-apps/api/app';
+import { Logo } from './logo';
+import { useContainerSystem } from './system-context';
 
 interface Props {
   disclosure: UseDisclosureReturn;
@@ -33,14 +32,14 @@ function AboutDetail() {
   });
 
   const openSourceLibraries = [
-    { name: 'React', description: 'UI Library', url: 'https://reactjs.org' },
-    { name: 'TanStack', description: 'Query, Router, etc.', url: 'https://tanstack.com' },
-    { name: 'Tauri', description: 'Desktop App Framework', url: 'https://tauri.app' },
-    { name: 'HeroUI', description: 'Component Library', url: 'https://www.heroui.com' },
-    { name: 'Vite', description: 'Build Tool', url: 'https://vitejs.dev' },
     { name: 'TypeScript', description: 'Type-safe JavaScript', url: 'https://www.typescriptlang.org' },
-    { name: 'Swift', description: 'Native Bridge', url: 'https://swift.org' },
     { name: 'Rust', description: 'System Backend', url: 'https://www.rust-lang.org' },
+    { name: 'Swift', description: 'Native Bridge', url: 'https://swift.org' },
+    { name: 'Tauri', description: 'Desktop App Framework', url: 'https://tauri.app' },
+    { name: 'React', description: 'UI Library', url: 'https://reactjs.org' },
+    { name: 'Vite', description: 'Build Tool', url: 'https://vitejs.dev' },
+    { name: 'TanStack', description: 'Query, Router, etc.', url: 'https://tanstack.com' },
+    { name: 'HeroUI', description: 'Component Library', url: 'https://www.heroui.com' },
   ];
 
   return (
@@ -48,7 +47,7 @@ function AboutDetail() {
       <ModalHeader className="flex flex-col gap-1">
         <div className="pt-2">
           <Logo className="w-32" />
-          <p className="text-sm text-default-500 mt-2">Container Management Tool</p>
+          <p className="text-default-500 mt-2 text-sm">Container Management Tool</p>
         </div>
       </ModalHeader>
 
@@ -58,7 +57,7 @@ function AboutDetail() {
             {/* Version Information */}
             <Card>
               <CardBody>
-                <h3 className="text-lg font-semibold mb-3">Version Information</h3>
+                <h3 className="mb-3 text-lg font-semibold">Version Information</h3>
                 <div className="flex flex-col gap-4 text-sm">
                   <div>
                     <span className="text-default-500">App Version:</span>
@@ -83,7 +82,7 @@ function AboutDetail() {
             {/* Developer Information */}
             <Card>
               <CardBody>
-                <h3 className="text-lg font-semibold mb-3">Developer</h3>
+                <h3 className="mb-3 text-lg font-semibold">Developer</h3>
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
                     <span className="text-default-500">GitHub:</span>
@@ -116,14 +115,14 @@ function AboutDetail() {
             {/* Open Source Libraries */}
             <Card>
               <CardBody>
-                <h3 className="text-lg font-semibold mb-3">Built with Open Source</h3>
-                <div className="grid md:grid-cols-2 gap-2">
+                <h3 className="mb-3 text-lg font-semibold">Built with Open Source</h3>
+                <div className="grid gap-2 md:grid-cols-2">
                   {openSourceLibraries.map((lib) => (
                     <div
                       key={lib.name}
-                      className="flex items-center justify-between p-2 rounded-lg hover:bg-default-100 transition-colors"
+                      className="hover:bg-default-100 flex items-center justify-between rounded-lg p-2 transition-colors"
                     >
-                      <div className="flex-1 min-w-0">
+                      <div className="min-w-0 flex-1">
                         <Link
                           href={lib.url}
                           target="_blank"
@@ -134,7 +133,7 @@ function AboutDetail() {
                         >
                           {lib.name}
                         </Link>
-                        <p className="text-xs text-default-500 truncate">{lib.description}</p>
+                        <p className="text-default-500 truncate text-xs">{lib.description}</p>
                       </div>
                     </div>
                   ))}
@@ -143,8 +142,8 @@ function AboutDetail() {
             </Card>
 
             {/* Footer */}
-            <div className="text-center text-xs text-default-400">
-              <p>Made with ❤️ by for the open source community</p>
+            <div className="text-default-400 text-center text-xs">
+              <p>Made with ❤️ for the open source community</p>
             </div>
           </div>
         </ScrollShadow>

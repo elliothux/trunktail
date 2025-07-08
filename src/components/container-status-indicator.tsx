@@ -11,7 +11,7 @@ export function ContainerStatusIndicator({ status, size = 8, className }: Props)
   return (
     <span
       className={cn(
-        'rounded-full inline-block',
+        'inline-block rounded-full',
         status === ContainerStatus.running
           ? 'bg-green-500'
           : status === ContainerStatus.stopped

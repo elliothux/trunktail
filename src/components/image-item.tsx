@@ -7,7 +7,7 @@ import { Button } from '@heroui/button';
 import { Chip } from '@heroui/chip';
 import { useDisclosure } from '@heroui/modal';
 import { formatDistanceToNow } from 'date-fns/formatDistanceToNow';
-import { Download, FileDown, Tag, Trash2 } from 'lucide-react';
+import { FileDown, Tag, Trash2 } from 'lucide-react';
 
 interface Props {
   image: ImageInfo;

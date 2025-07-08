@@ -1,13 +1,12 @@
 import { cn } from '@/lib/utils';
-import { ArrowDownToLine, ClipboardCopy, Loader2 } from 'lucide-react';
-import { Button } from '@heroui/button';
-import { save } from '@tauri-apps/plugin-dialog';
-import { writeTextFile } from '@tauri-apps/plugin-fs';
-import { writeText } from '@tauri-apps/plugin-clipboard-manager';
-import { toast } from 'sonner';
-import { confirm } from '@tauri-apps/plugin-dialog';
 import { openPathWithFinder } from '@/utils';
+import { Button } from '@heroui/button';
+import { writeText } from '@tauri-apps/plugin-clipboard-manager';
+import { confirm, save } from '@tauri-apps/plugin-dialog';
+import { writeTextFile } from '@tauri-apps/plugin-fs';
+import { ArrowDownToLine, ClipboardCopy, Loader2 } from 'lucide-react';
 import { useEffect, useRef } from 'react';
+import { toast } from 'sonner';
 
 export interface LogLine {
   line: string;

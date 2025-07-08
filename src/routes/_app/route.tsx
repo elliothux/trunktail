@@ -8,9 +8,9 @@ import { ScrollShadow } from '@heroui/scroll-shadow';
 import { Outlet, createFileRoute } from '@tanstack/react-router';
 import { openUrl } from '@tauri-apps/plugin-opener';
 import { ExternalLink, Github, GripVertical } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 import { useLocalStorage } from 'usehooks-ts';
-import { useEffect, useState } from 'react';
 
 export const Route = createFileRoute('/_app')({
   component: () => (
@@ -98,7 +98,7 @@ function App() {
               />
               <PortalRoot name="right-panel" className="flex-1 overflow-x-hidden overflow-y-auto p-4" />
               <div
-                className="flex cursor-pointer items-center gap-2 border-t border-gray-800 px-4 h-12 text-xs text-gray-400 hover:text-gray-800"
+                className="flex h-12 cursor-pointer items-center gap-2 border-t border-gray-800 px-4 text-xs text-gray-400 hover:text-gray-800"
                 onClick={() => {
                   openUrl('https://github.com/elliothux/trunktail');
                 }}

@@ -7,6 +7,7 @@
     "dev": "vite --port 1420",
     "dev:tauri": "export SDKROOT=$(xcrun --sdk macosx --show-sdk-path) && tauri dev",
     "build": "tsc && vite build",
+    "build:tauri": "export SDKROOT=$(xcrun --sdk macosx --show-sdk-path) && tauri build",
     "preview": "vite preview",
     "lint:fix": "oxlint --fix",
     "format:fix": "prettier . --write --experimental-cli",
@@ -52,7 +53,6 @@
     "zod": "^3.25.61"
   },
   "devDependencies": {
-    "@prettier/plugin-oxc": "^0.0.4",
     "@tauri-apps/cli": "^2.5.0",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",

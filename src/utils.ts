@@ -1,9 +1,33 @@
-import { Command } from '@tauri-apps/plugin-shell';
 import { WebviewWindow } from '@tauri-apps/api/webviewWindow';
 import { message } from '@tauri-apps/plugin-dialog';
+import { Command, SpawnOptions } from '@tauri-apps/plugin-shell';
+
+const COMMAND_PATH = [
+  '/opt/homebrew/bin',
+  '/usr/local/bin',
+  '/usr/local/sbin',
+  '/usr/bin',
+  '/usr/sbin',
+  '/bin',
+  '/sbin',
+  '/opt/bin',
+  '/opt/local/bin',
+  '/opt/local/sbin',
+  '/snap/bin',
+]
+  .filter(Boolean)
+  .join(':');
+
+export function createCommand(program: string, args: string | string[] = [], options: SpawnOptions = {}) {
+  return Command.create(program, args, {
+    env: { PATH: COMMAND_PATH },
+    cwd: '/',
+    ...options,
+  });
+}
 
 export function openPathWithFinder(path: string) {
-  return Command.create('open', ['-R', path], {
+  return createCommand('open', ['-R', path], {
     cwd: '/',
   }).execute();
 }

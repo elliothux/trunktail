@@ -1,14 +1,14 @@
-import { Download, Loader, OctagonAlert, Play, TriangleAlert } from 'lucide-react';
-import { useContainerSystem } from './system-context';
-import { Button } from '@heroui/button';
 import { useSystemOperations } from '@/hooks/use-system-operations';
+import { Button } from '@heroui/button';
 import { openUrl } from '@tauri-apps/plugin-opener';
+import { Download, Loader, OctagonAlert, Play } from 'lucide-react';
+import { useContainerSystem } from './system-context';
 
 export function StartScreen() {
   const { command, supported } = useContainerSystem();
 
   return (
-    <div className="flex flex-col items-center justify-center h-full">
+    <div className="flex h-full flex-col items-center justify-center">
       {supported ? command ? <NotRunning /> : <InstallAssistant /> : <Unsupport />}
     </div>
   );
@@ -18,7 +18,7 @@ function Unsupport() {
   return (
     <>
       <OctagonAlert size={32} className="text-red-500" />
-      <p className="text-default-500 max-w-[400px] text-sm text-center mt-2">
+      <p className="text-default-500 mt-2 max-w-[400px] text-center text-sm">
         This app is not supported on your device because it relies on the library apple/containerization, which only
         supports Apple Silicon (M1/M2/M3 and later) chips.
       </p>
@@ -31,7 +31,7 @@ function NotRunning() {
 
   return (
     <>
-      <p className="text-default-500 max-w-[400px] text-center mt-2">Container server is not running</p>
+      <p className="text-default-500 mt-2 max-w-[400px] text-center">Container server is not running</p>
       <Button
         color="primary"
         className="mt-2"
@@ -51,7 +51,7 @@ const pkgLink = 'https://github.com/apple/container/releases/download/0.2.0/cont
 function InstallAssistant() {
   return (
     <>
-      <p className="text-default-500 max-w-[400px] text-center mt-2">Container server is not installed.</p>
+      <p className="text-default-500 mt-2 max-w-[400px] text-center">Container server is not installed.</p>
       <Button
         color="primary"
         className="mt-2"

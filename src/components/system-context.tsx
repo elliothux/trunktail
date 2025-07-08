@@ -1,8 +1,8 @@
-import { createContext, PropsWithChildren, useContext, useMemo, useState } from 'react';
 import { systemStatus, SystemStatus } from '@/lib/bridge/system';
+import { createCommand } from '@/utils';
 import { useQuery } from '@tanstack/react-query';
-import { Command } from '@tauri-apps/plugin-shell';
 import { invoke } from '@tauri-apps/api/core';
+import { createContext, PropsWithChildren, useContext, useMemo } from 'react';
 
 const SystemContext = createContext<{
   status: SystemStatus;
@@ -21,7 +21,7 @@ export function SystemProvider({ children }: PropsWithChildren) {
   const { data: version = 'unknown' } = useQuery({
     queryKey: ['system-version'],
     queryFn: async () => {
-      const result = await Command.create('container', ['--version']).execute();
+      const result = await createCommand('container', ['--version']).execute();
       if (result.code !== 0) {
         throw new Error('Failed to get system version');
       }
@@ -36,7 +36,7 @@ export function SystemProvider({ children }: PropsWithChildren) {
   const { data: command = 'unknown' } = useQuery({
     queryKey: ['system-command'],
     queryFn: async () => {
-      const result = await Command.create('command', ['-v', 'container']).execute();
+      const result = await createCommand('command', ['-v', 'container']).execute();
       if (result.code !== 0) {
         throw new Error('Failed to get system command');
       }
