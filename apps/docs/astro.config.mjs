@@ -4,10 +4,17 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-  base: '/trunktail/',
-  redirects: {
-    '/': '/commands',
-  },
+  site: 'https://elliothux.github.io/trunktail',
+  base: process.env.NODE_ENV === 'production' ? '/trunktail/' : '/',
+  redirects:
+    process.env.NODE_ENV === 'production'
+      ? {
+          '/': '/trunktail/commands/',
+          '/trunktail/': '/trunktail/commands/',
+        }
+      : {
+          '/': '/commands/',
+        },
   integrations: [
     starlight({
       title: 'Apple Container Docs',
