@@ -1,0 +1,162 @@
+---
+title: Image Commands
+description: Commands for managing container images
+---
+
+Commands for managing container images
+
+### build
+
+Build an image from a Dockerfile
+
+**Usage:**
+```bash
+container build [<options>] [<context-dir>]
+```
+
+**Options:**
+
+- `-c, --cpus <cpus>` - Number of CPUs to allocate to the container (default: `2`)
+- `-m, --memory <memory>` - Amount of memory in bytes, kilobytes (K), megabytes (M), or gigabytes (G) for the container, with MB granularity (for example, 1024K will result in 1MB being allocated for the container) (default: `2048MB`)
+- `--build-arg <key=val>` - Set build-time variables
+- `-f, --file <path>` - Path to Dockerfile (default: `Dockerfile`)
+- `-l, --label <key=val>` - Set a label
+- `--no-cache` - Do not use cache
+- `-o, --output <value>` - Output configuration for the build (default: `type=oci`)
+- `--arch <value>` - set the build architecture (default: `arm64`)
+- `--os <value>` - set the build os (default: `linux`)
+- `--progress <type>` - Progress type - one of [auto|plain|tty] (default: `auto`)
+- `--vsock-port <port>` - Builder-shim vsock port (default: `8088`)
+- `-t, --tag <n>` - Name for the built image
+- `--target <stage>` - Set the target build stage
+- `-q, --quiet` - Suppress build output
+
+### images
+
+**Aliases:** `image`, `i`
+
+Manage images
+
+**Usage:**
+```bash
+container images <subcommand>
+```
+
+#### Subcommands
+
+#### inspect
+
+Display information about one or more images
+
+**Usage:**
+```bash
+container images inspect [--debug] <images> ...
+```
+
+#### list
+
+**Aliases:** `ls`
+
+List images
+
+**Usage:**
+```bash
+container images list [--quiet] [--verbose] [--format <format>] [--debug]
+```
+
+**Options:**
+
+- `-q, --quiet` - Only output the image name
+- `-v, --verbose` - Verbose output
+- `--format <format>` - Format of the output (values: json, table) (default: `table`)
+
+#### load
+
+Load images from an OCI compatible tar archive
+
+**Usage:**
+```bash
+container images load [--debug] --input <input>
+```
+
+**Options:**
+
+- `-i, --input <input>` **(required)** - Path to the tar archive to load images from
+
+#### prune
+
+Remove unreferenced and dangling images
+
+**Usage:**
+```bash
+container images prune [--debug]
+```
+
+#### pull
+
+Pull an image
+
+**Usage:**
+```bash
+container images pull [--debug] [--scheme <scheme>] [--disable-progress-updates] [--platform <platform>] <reference>
+```
+
+**Options:**
+
+- `--scheme <scheme>` - Scheme to use when connecting to the container registry. One of (http, https, auto) (default: `auto`)
+- `--disable-progress-updates` - Disable progress bar updates
+- `--platform <platform>` - Platform string in the form 'os/arch/variant'. Example 'linux/arm64/v8', 'linux/amd64'
+
+#### push
+
+Push an image
+
+**Usage:**
+```bash
+container images push [--debug] [--scheme <scheme>] [--disable-progress-updates] [--platform <platform>] <reference>
+```
+
+**Options:**
+
+- `--scheme <scheme>` - Scheme to use when connecting to the container registry. One of (http, https, auto) (default: `auto`)
+- `--disable-progress-updates` - Disable progress bar updates
+- `--platform <platform>` - Platform string in the form 'os/arch/variant'. Example 'linux/arm64/v8', 'linux/amd64'
+
+#### delete
+
+**Aliases:** `rm`
+
+Remove one or more images
+
+**Usage:**
+```bash
+container images delete [--all] [<images> ...] [--debug]
+```
+
+**Options:**
+
+- `-a, --all` - Remove all images
+
+#### save
+
+Save an image as an OCI compatible tar archive
+
+**Usage:**
+```bash
+container images save [--debug] [--platform <platform>] --output <o> <reference>
+```
+
+**Options:**
+
+- `--platform <platform>` - Platform string in the form 'os/arch/variant'. Example 'linux/arm64/v8', 'linux/amd64'
+- `-o, --output <o>` **(required)** - Path to save the image tar archive
+
+#### tag
+
+Tag an image
+
+**Usage:**
+```bash
+container images tag <source> <target> [--debug]
+```
+

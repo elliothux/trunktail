@@ -1,0 +1,119 @@
+---
+title: Container CLI Commands
+description: Complete reference for container CLI commands
+---
+
+A container platform for macOS
+
+## Usage
+
+```bash
+container [--debug] <subcommand>
+```
+
+## Global Options
+
+- `--debug` - Enable debug output [environment: CONTAINER_DEBUG]
+- `--version` - Show the version
+- `-h, --help` - Show help information
+
+## Command Categories
+
+### [Container](/commands/container)
+
+Commands for managing containers
+
+### [Image](/commands/image)
+
+Commands for managing container images
+
+### [Registry](/commands/registry)
+
+Commands for managing container registries
+
+### [System](/commands/system)
+
+Commands for managing system components
+
+## Common Examples
+
+### Run a container
+
+Run an interactive Ubuntu container with bash shell
+
+```bash
+container run -it ubuntu:latest bash
+```
+
+### List all containers
+
+Show both running and stopped containers
+
+```bash
+container list --all
+```
+
+### Build an image
+
+Build an image from current directory with tag
+
+```bash
+container build -t myapp:latest .
+```
+
+### Pull an image
+
+Download the latest nginx image
+
+```bash
+container images pull nginx:latest
+```
+
+### View container logs
+
+Follow the logs of a running container
+
+```bash
+container logs --follow mycontainer
+```
+
+### Execute command in container
+
+Execute an interactive bash session in running container
+
+```bash
+container exec -it mycontainer bash
+```
+
+### Stop all containers
+
+Stop all running containers
+
+```bash
+container stop --all
+```
+
+### Remove unused images
+
+Clean up dangling and unreferenced images
+
+```bash
+container images prune
+```
+
+### Check system status
+
+Show the status of container services
+
+```bash
+container system status
+```
+
+### Create a network volume
+
+Mount a host directory into the container
+
+```bash
+container run -v /host/path:/container/path myimage
+```
+

@@ -7,11 +7,16 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "generate-docs": "tsx scripts/generate-docs.ts"
   },
   "dependencies": {
     "@astrojs/starlight": "^0.34.4",
+    "@trunktail/commands": "workspace:*",
     "astro": "^5.6.1",
     "sharp": "^0.34.2"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.1"
   }
 }

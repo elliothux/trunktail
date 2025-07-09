@@ -1,0 +1,88 @@
+---
+title: Registry Commands
+description: Commands for managing container registries
+---
+
+Commands for managing container registries
+
+### registry
+
+**Aliases:** `r`
+
+Manage registry configurations
+
+**Usage:**
+```bash
+container registry <subcommand>
+```
+
+#### Subcommands
+
+#### login
+
+Login to a registry
+
+**Usage:**
+```bash
+container registry login [--username <username>] [--password-stdin] <server> [--scheme <scheme>]
+```
+
+**Options:**
+
+- `-u, --username <username>` - Username
+- `--password-stdin` - Take the password from stdin
+- `--scheme <scheme>` - Scheme to use when connecting to the container registry. One of (http, https, auto) (default: `auto`)
+
+#### logout
+
+Log out from a registry
+
+**Usage:**
+```bash
+container registry logout <registry> [--debug]
+```
+
+#### default
+
+Manage the default image registry
+
+**Usage:**
+```bash
+container registry default <subcommand>
+```
+
+##### Subcommands
+
+##### set
+
+Set the default registry
+
+**Usage:**
+```bash
+container registry default set [--debug] [--scheme <scheme>] <host>
+```
+
+**Options:**
+
+- `--scheme <scheme>` - Scheme to use when connecting to the container registry. One of (http, https, auto) (default: `auto`)
+
+##### unset
+
+**Aliases:** `clear`
+
+Unset the default registry
+
+**Usage:**
+```bash
+container registry default unset
+```
+
+##### inspect
+
+Display the default registry domain
+
+**Usage:**
+```bash
+container registry default inspect
+```
+

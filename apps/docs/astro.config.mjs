@@ -6,7 +6,7 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   integrations: [
     starlight({
-      title: 'Container Docs',
+      title: 'Apple Container Docs',
       description: 'Documentation for the @apple/container by trunktail.',
       social: [
         { icon: 'github', label: 'GitHub', href: 'https://github.com/elliothux/trunktail' },
@@ -14,10 +14,13 @@ export default defineConfig({
       ],
       sidebar: [
         {
-          label: 'Guides',
+          label: 'CLI Commands',
           items: [
-            // Each item here is one entry in the navigation menu.
-            { label: 'Example Guide', slug: 'guides/example' },
+            { label: 'Overview', slug: 'commands' },
+            { label: 'Container', slug: 'commands/container' },
+            { label: 'Image', slug: 'commands/image' },
+            { label: 'Registry', slug: 'commands/registry' },
+            { label: 'System', slug: 'commands/system' },
           ],
         },
         {
