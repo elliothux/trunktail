@@ -1,15 +1,20 @@
 import type { Command, CommandCategory, CommandOption } from '@trunktail/commands';
 import { containerCommands } from '@trunktail/commands';
-import { existsSync, mkdirSync, rmSync, writeFileSync } from 'fs';
+import { existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from 'fs';
 import { join } from 'path';
 
 const docsDir = join(process.cwd(), 'src', 'content', 'docs');
 const commandsDir = join(docsDir, 'commands');
 
-// Clean up existing commands directory
 if (existsSync(commandsDir)) {
-  rmSync(commandsDir, { recursive: true, force: true });
-  console.log('Cleaned up existing commands directory');
+  const categoryFiles = containerCommands.categories.map((cat) => cat.name.toLowerCase().replace(/\s+/g, '-') + '.mdx');
+  const files = readdirSync(commandsDir);
+  files.forEach((file) => {
+    if (categoryFiles.includes(file)) {
+      rmSync(join(commandsDir, file), { force: true });
+      console.log('Deleted category file:', file);
+    }
+  });
 }
 
 // Ensure directories exist
@@ -100,6 +105,10 @@ description: Complete reference for container CLI commands
 ---
 
 ${escapeMarkdownText(containerCommands.overview)}
+
+## Install
+
+Download the latest release from [GitHub Releases](https://github.com/apple/container/releases) and follow the instructions for your platform.
 
 ## Usage
 

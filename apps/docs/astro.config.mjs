@@ -4,6 +4,9 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
+  redirects: {
+    '/': '/commands',
+  },
   integrations: [
     starlight({
       title: 'Apple Container Docs',
@@ -14,7 +17,7 @@ export default defineConfig({
       ],
       sidebar: [
         {
-          label: 'CLI Commands',
+          label: 'Container CLI',
           items: [
             { label: 'Overview', slug: 'commands' },
             { label: 'Container', slug: 'commands/container' },
@@ -24,7 +27,7 @@ export default defineConfig({
           ],
         },
         {
-          label: 'Reference',
+          label: 'About',
           autogenerate: { directory: 'reference' },
         },
       ],

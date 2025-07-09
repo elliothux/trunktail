@@ -8,114 +8,114 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root'
-import { Route as SystemLogsRouteImport } from './routes/system-logs'
-import { Route as AppRouteRouteImport } from './routes/_app/route'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as LogsContainerRouteImport } from './routes/logs.$container'
-import { Route as AppVolumesRouteImport } from './routes/_app/volumes'
-import { Route as AppServicesRouteImport } from './routes/_app/services'
-import { Route as AppPodsRouteImport } from './routes/_app/pods'
-import { Route as AppMonitorRouteImport } from './routes/_app/monitor'
-import { Route as AppImagesRouteImport } from './routes/_app/images'
-import { Route as AppContainersRouteImport } from './routes/_app/containers'
-import { Route as AppCommandsRouteImport } from './routes/_app/commands'
+import { Route as rootRouteImport } from './routes/__root';
+import { Route as AppCommandsRouteImport } from './routes/_app/commands';
+import { Route as AppContainersRouteImport } from './routes/_app/containers';
+import { Route as AppImagesRouteImport } from './routes/_app/images';
+import { Route as AppMonitorRouteImport } from './routes/_app/monitor';
+import { Route as AppPodsRouteImport } from './routes/_app/pods';
+import { Route as AppRouteRouteImport } from './routes/_app/route';
+import { Route as AppServicesRouteImport } from './routes/_app/services';
+import { Route as AppVolumesRouteImport } from './routes/_app/volumes';
+import { Route as IndexRouteImport } from './routes/index';
+import { Route as LogsContainerRouteImport } from './routes/logs.$container';
+import { Route as SystemLogsRouteImport } from './routes/system-logs';
 
 const SystemLogsRoute = SystemLogsRouteImport.update({
   id: '/system-logs',
   path: '/system-logs',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const AppRouteRoute = AppRouteRouteImport.update({
   id: '/_app',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const LogsContainerRoute = LogsContainerRouteImport.update({
   id: '/logs/$container',
   path: '/logs/$container',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const AppVolumesRoute = AppVolumesRouteImport.update({
   id: '/volumes',
   path: '/volumes',
   getParentRoute: () => AppRouteRoute,
-} as any)
+} as any);
 const AppServicesRoute = AppServicesRouteImport.update({
   id: '/services',
   path: '/services',
   getParentRoute: () => AppRouteRoute,
-} as any)
+} as any);
 const AppPodsRoute = AppPodsRouteImport.update({
   id: '/pods',
   path: '/pods',
   getParentRoute: () => AppRouteRoute,
-} as any)
+} as any);
 const AppMonitorRoute = AppMonitorRouteImport.update({
   id: '/monitor',
   path: '/monitor',
   getParentRoute: () => AppRouteRoute,
-} as any)
+} as any);
 const AppImagesRoute = AppImagesRouteImport.update({
   id: '/images',
   path: '/images',
   getParentRoute: () => AppRouteRoute,
-} as any)
+} as any);
 const AppContainersRoute = AppContainersRouteImport.update({
   id: '/containers',
   path: '/containers',
   getParentRoute: () => AppRouteRoute,
-} as any)
+} as any);
 const AppCommandsRoute = AppCommandsRouteImport.update({
   id: '/commands',
   path: '/commands',
   getParentRoute: () => AppRouteRoute,
-} as any)
+} as any);
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/system-logs': typeof SystemLogsRoute
-  '/commands': typeof AppCommandsRoute
-  '/containers': typeof AppContainersRoute
-  '/images': typeof AppImagesRoute
-  '/monitor': typeof AppMonitorRoute
-  '/pods': typeof AppPodsRoute
-  '/services': typeof AppServicesRoute
-  '/volumes': typeof AppVolumesRoute
-  '/logs/$container': typeof LogsContainerRoute
+  '/': typeof IndexRoute;
+  '/system-logs': typeof SystemLogsRoute;
+  '/commands': typeof AppCommandsRoute;
+  '/containers': typeof AppContainersRoute;
+  '/images': typeof AppImagesRoute;
+  '/monitor': typeof AppMonitorRoute;
+  '/pods': typeof AppPodsRoute;
+  '/services': typeof AppServicesRoute;
+  '/volumes': typeof AppVolumesRoute;
+  '/logs/$container': typeof LogsContainerRoute;
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/system-logs': typeof SystemLogsRoute
-  '/commands': typeof AppCommandsRoute
-  '/containers': typeof AppContainersRoute
-  '/images': typeof AppImagesRoute
-  '/monitor': typeof AppMonitorRoute
-  '/pods': typeof AppPodsRoute
-  '/services': typeof AppServicesRoute
-  '/volumes': typeof AppVolumesRoute
-  '/logs/$container': typeof LogsContainerRoute
+  '/': typeof IndexRoute;
+  '/system-logs': typeof SystemLogsRoute;
+  '/commands': typeof AppCommandsRoute;
+  '/containers': typeof AppContainersRoute;
+  '/images': typeof AppImagesRoute;
+  '/monitor': typeof AppMonitorRoute;
+  '/pods': typeof AppPodsRoute;
+  '/services': typeof AppServicesRoute;
+  '/volumes': typeof AppVolumesRoute;
+  '/logs/$container': typeof LogsContainerRoute;
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/_app': typeof AppRouteRouteWithChildren
-  '/system-logs': typeof SystemLogsRoute
-  '/_app/commands': typeof AppCommandsRoute
-  '/_app/containers': typeof AppContainersRoute
-  '/_app/images': typeof AppImagesRoute
-  '/_app/monitor': typeof AppMonitorRoute
-  '/_app/pods': typeof AppPodsRoute
-  '/_app/services': typeof AppServicesRoute
-  '/_app/volumes': typeof AppVolumesRoute
-  '/logs/$container': typeof LogsContainerRoute
+  __root__: typeof rootRouteImport;
+  '/': typeof IndexRoute;
+  '/_app': typeof AppRouteRouteWithChildren;
+  '/system-logs': typeof SystemLogsRoute;
+  '/_app/commands': typeof AppCommandsRoute;
+  '/_app/containers': typeof AppContainersRoute;
+  '/_app/images': typeof AppImagesRoute;
+  '/_app/monitor': typeof AppMonitorRoute;
+  '/_app/pods': typeof AppPodsRoute;
+  '/_app/services': typeof AppServicesRoute;
+  '/_app/volumes': typeof AppVolumesRoute;
+  '/logs/$container': typeof LogsContainerRoute;
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
+  fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
     | '/'
     | '/system-logs'
@@ -126,8 +126,8 @@ export interface FileRouteTypes {
     | '/pods'
     | '/services'
     | '/volumes'
-    | '/logs/$container'
-  fileRoutesByTo: FileRoutesByTo
+    | '/logs/$container';
+  fileRoutesByTo: FileRoutesByTo;
   to:
     | '/'
     | '/system-logs'
@@ -138,7 +138,7 @@ export interface FileRouteTypes {
     | '/pods'
     | '/services'
     | '/volumes'
-    | '/logs/$container'
+    | '/logs/$container';
   id:
     | '__root__'
     | '/'
@@ -151,106 +151,106 @@ export interface FileRouteTypes {
     | '/_app/pods'
     | '/_app/services'
     | '/_app/volumes'
-    | '/logs/$container'
-  fileRoutesById: FileRoutesById
+    | '/logs/$container';
+  fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  AppRouteRoute: typeof AppRouteRouteWithChildren
-  SystemLogsRoute: typeof SystemLogsRoute
-  LogsContainerRoute: typeof LogsContainerRoute
+  IndexRoute: typeof IndexRoute;
+  AppRouteRoute: typeof AppRouteRouteWithChildren;
+  SystemLogsRoute: typeof SystemLogsRoute;
+  LogsContainerRoute: typeof LogsContainerRoute;
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
     '/system-logs': {
-      id: '/system-logs'
-      path: '/system-logs'
-      fullPath: '/system-logs'
-      preLoaderRoute: typeof SystemLogsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/system-logs';
+      path: '/system-logs';
+      fullPath: '/system-logs';
+      preLoaderRoute: typeof SystemLogsRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/_app': {
-      id: '/_app'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof AppRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/_app';
+      path: '';
+      fullPath: '';
+      preLoaderRoute: typeof AppRouteRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/';
+      path: '/';
+      fullPath: '/';
+      preLoaderRoute: typeof IndexRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/logs/$container': {
-      id: '/logs/$container'
-      path: '/logs/$container'
-      fullPath: '/logs/$container'
-      preLoaderRoute: typeof LogsContainerRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/logs/$container';
+      path: '/logs/$container';
+      fullPath: '/logs/$container';
+      preLoaderRoute: typeof LogsContainerRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/_app/volumes': {
-      id: '/_app/volumes'
-      path: '/volumes'
-      fullPath: '/volumes'
-      preLoaderRoute: typeof AppVolumesRouteImport
-      parentRoute: typeof AppRouteRoute
-    }
+      id: '/_app/volumes';
+      path: '/volumes';
+      fullPath: '/volumes';
+      preLoaderRoute: typeof AppVolumesRouteImport;
+      parentRoute: typeof AppRouteRoute;
+    };
     '/_app/services': {
-      id: '/_app/services'
-      path: '/services'
-      fullPath: '/services'
-      preLoaderRoute: typeof AppServicesRouteImport
-      parentRoute: typeof AppRouteRoute
-    }
+      id: '/_app/services';
+      path: '/services';
+      fullPath: '/services';
+      preLoaderRoute: typeof AppServicesRouteImport;
+      parentRoute: typeof AppRouteRoute;
+    };
     '/_app/pods': {
-      id: '/_app/pods'
-      path: '/pods'
-      fullPath: '/pods'
-      preLoaderRoute: typeof AppPodsRouteImport
-      parentRoute: typeof AppRouteRoute
-    }
+      id: '/_app/pods';
+      path: '/pods';
+      fullPath: '/pods';
+      preLoaderRoute: typeof AppPodsRouteImport;
+      parentRoute: typeof AppRouteRoute;
+    };
     '/_app/monitor': {
-      id: '/_app/monitor'
-      path: '/monitor'
-      fullPath: '/monitor'
-      preLoaderRoute: typeof AppMonitorRouteImport
-      parentRoute: typeof AppRouteRoute
-    }
+      id: '/_app/monitor';
+      path: '/monitor';
+      fullPath: '/monitor';
+      preLoaderRoute: typeof AppMonitorRouteImport;
+      parentRoute: typeof AppRouteRoute;
+    };
     '/_app/images': {
-      id: '/_app/images'
-      path: '/images'
-      fullPath: '/images'
-      preLoaderRoute: typeof AppImagesRouteImport
-      parentRoute: typeof AppRouteRoute
-    }
+      id: '/_app/images';
+      path: '/images';
+      fullPath: '/images';
+      preLoaderRoute: typeof AppImagesRouteImport;
+      parentRoute: typeof AppRouteRoute;
+    };
     '/_app/containers': {
-      id: '/_app/containers'
-      path: '/containers'
-      fullPath: '/containers'
-      preLoaderRoute: typeof AppContainersRouteImport
-      parentRoute: typeof AppRouteRoute
-    }
+      id: '/_app/containers';
+      path: '/containers';
+      fullPath: '/containers';
+      preLoaderRoute: typeof AppContainersRouteImport;
+      parentRoute: typeof AppRouteRoute;
+    };
     '/_app/commands': {
-      id: '/_app/commands'
-      path: '/commands'
-      fullPath: '/commands'
-      preLoaderRoute: typeof AppCommandsRouteImport
-      parentRoute: typeof AppRouteRoute
-    }
+      id: '/_app/commands';
+      path: '/commands';
+      fullPath: '/commands';
+      preLoaderRoute: typeof AppCommandsRouteImport;
+      parentRoute: typeof AppRouteRoute;
+    };
   }
 }
 
 interface AppRouteRouteChildren {
-  AppCommandsRoute: typeof AppCommandsRoute
-  AppContainersRoute: typeof AppContainersRoute
-  AppImagesRoute: typeof AppImagesRoute
-  AppMonitorRoute: typeof AppMonitorRoute
-  AppPodsRoute: typeof AppPodsRoute
-  AppServicesRoute: typeof AppServicesRoute
-  AppVolumesRoute: typeof AppVolumesRoute
+  AppCommandsRoute: typeof AppCommandsRoute;
+  AppContainersRoute: typeof AppContainersRoute;
+  AppImagesRoute: typeof AppImagesRoute;
+  AppMonitorRoute: typeof AppMonitorRoute;
+  AppPodsRoute: typeof AppPodsRoute;
+  AppServicesRoute: typeof AppServicesRoute;
+  AppVolumesRoute: typeof AppVolumesRoute;
 }
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
@@ -261,18 +261,14 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppPodsRoute: AppPodsRoute,
   AppServicesRoute: AppServicesRoute,
   AppVolumesRoute: AppVolumesRoute,
-}
+};
 
-const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
-  AppRouteRouteChildren,
-)
+const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(AppRouteRouteChildren);
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRouteRoute: AppRouteRouteWithChildren,
   SystemLogsRoute: SystemLogsRoute,
   LogsContainerRoute: LogsContainerRoute,
-}
-export const routeTree = rootRouteImport
-  ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+};
+export const routeTree = rootRouteImport._addFileChildren(rootRouteChildren)._addFileTypes<FileRouteTypes>();

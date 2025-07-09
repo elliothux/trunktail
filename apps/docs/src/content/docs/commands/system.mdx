@@ -10,6 +10,7 @@ Commands for managing system components
 Manage an image builder instance
 
 **Usage:**
+
 ```bash
 container builder <subcommand>
 ```
@@ -21,6 +22,7 @@ container builder <subcommand>
 Start builder
 
 **Usage:**
+
 ```bash
 builder start [command options]
 ```
@@ -35,6 +37,7 @@ builder start [command options]
 Print builder status
 
 **Usage:**
+
 ```bash
 builder status [command options]
 ```
@@ -48,6 +51,7 @@ builder status [command options]
 Stop builder
 
 **Usage:**
+
 ```bash
 builder stop
 ```
@@ -57,6 +61,7 @@ builder stop
 Delete builder
 
 **Usage:**
+
 ```bash
 builder delete [command options]
 ```
@@ -72,6 +77,7 @@ builder delete [command options]
 Manage system components
 
 **Usage:**
+
 ```bash
 container system <subcommand>
 ```
@@ -83,6 +89,7 @@ container system <subcommand>
 Manage local DNS domains
 
 **Usage:**
+
 ```bash
 container system dns <subcommand>
 ```
@@ -94,6 +101,7 @@ container system dns <subcommand>
 Create a local DNS domain for containers (must run as an administrator)
 
 **Usage:**
+
 ```bash
 container system dns create <domain-name>
 ```
@@ -105,6 +113,7 @@ container system dns create <domain-name>
 Delete a local DNS domain (must run as an administrator)
 
 **Usage:**
+
 ```bash
 container system dns delete <domain-name>
 ```
@@ -116,6 +125,7 @@ container system dns delete <domain-name>
 List local DNS domains
 
 **Usage:**
+
 ```bash
 container system dns list
 ```
@@ -125,6 +135,7 @@ container system dns list
 Set or unset the default local DNS domain
 
 **Usage:**
+
 ```bash
 container system dns default <subcommand>
 ```
@@ -134,6 +145,7 @@ container system dns default <subcommand>
 Fetch system logs for container services
 
 **Usage:**
+
 ```bash
 container system logs [--debug] [--last <last>] [--follow]
 ```
@@ -148,6 +160,7 @@ container system logs [--debug] [--last <last>] [--follow]
 Start container services
 
 **Usage:**
+
 ```bash
 container system start [--path <path>] [--debug] [--enable-kernel-install] [--disable-kernel-install]
 ```
@@ -163,6 +176,7 @@ container system start [--path <path>] [--debug] [--enable-kernel-install] [--di
 Stop all container services
 
 **Usage:**
+
 ```bash
 container system stop [--prefix <prefix>]
 ```
@@ -176,6 +190,7 @@ container system stop [--prefix <prefix>]
 Show the status of container services
 
 **Usage:**
+
 ```bash
 container system status [--prefix <prefix>]
 ```
@@ -189,7 +204,7 @@ container system status [--prefix <prefix>]
 Manage the default kernel configuration
 
 **Usage:**
+
 ```bash
 container system kernel <subcommand>
 ```
-

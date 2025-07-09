@@ -10,6 +10,7 @@ Commands for managing container images
 Build an image from a Dockerfile
 
 **Usage:**
+
 ```bash
 container build [<options>] [<context-dir>]
 ```
@@ -38,6 +39,7 @@ container build [<options>] [<context-dir>]
 Manage images
 
 **Usage:**
+
 ```bash
 container images <subcommand>
 ```
@@ -49,6 +51,7 @@ container images <subcommand>
 Display information about one or more images
 
 **Usage:**
+
 ```bash
 container images inspect [--debug] <images> ...
 ```
@@ -60,6 +63,7 @@ container images inspect [--debug] <images> ...
 List images
 
 **Usage:**
+
 ```bash
 container images list [--quiet] [--verbose] [--format <format>] [--debug]
 ```
@@ -75,6 +79,7 @@ container images list [--quiet] [--verbose] [--format <format>] [--debug]
 Load images from an OCI compatible tar archive
 
 **Usage:**
+
 ```bash
 container images load [--debug] --input <input>
 ```
@@ -88,6 +93,7 @@ container images load [--debug] --input <input>
 Remove unreferenced and dangling images
 
 **Usage:**
+
 ```bash
 container images prune [--debug]
 ```
@@ -97,6 +103,7 @@ container images prune [--debug]
 Pull an image
 
 **Usage:**
+
 ```bash
 container images pull [--debug] [--scheme <scheme>] [--disable-progress-updates] [--platform <platform>] <reference>
 ```
@@ -112,6 +119,7 @@ container images pull [--debug] [--scheme <scheme>] [--disable-progress-updates]
 Push an image
 
 **Usage:**
+
 ```bash
 container images push [--debug] [--scheme <scheme>] [--disable-progress-updates] [--platform <platform>] <reference>
 ```
@@ -129,6 +137,7 @@ container images push [--debug] [--scheme <scheme>] [--disable-progress-updates]
 Remove one or more images
 
 **Usage:**
+
 ```bash
 container images delete [--all] [<images> ...] [--debug]
 ```
@@ -142,6 +151,7 @@ container images delete [--all] [<images> ...] [--debug]
 Save an image as an OCI compatible tar archive
 
 **Usage:**
+
 ```bash
 container images save [--debug] [--platform <platform>] --output <o> <reference>
 ```
@@ -156,7 +166,7 @@ container images save [--debug] [--platform <platform>] --output <o> <reference>
 Tag an image
 
 **Usage:**
+
 ```bash
 container images tag <source> <target> [--debug]
 ```
-

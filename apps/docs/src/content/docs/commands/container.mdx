@@ -10,6 +10,7 @@ Commands for managing containers
 Create a new container
 
 **Usage:**
+
 ```bash
 container create [<options>] <image> [<arguments> ...]
 ```
@@ -54,6 +55,7 @@ container create [<options>] <image> [<arguments> ...]
 Delete one or more containers
 
 **Usage:**
+
 ```bash
 container delete [--force] [--all] [--debug] [<container-ids> ...]
 ```
@@ -68,6 +70,7 @@ container delete [--force] [--all] [--debug] [<container-ids> ...]
 Run a new command in a running container
 
 **Usage:**
+
 ```bash
 container exec [--cwd <cwd>] [--env <env> ...] [--env-file <env-file> ...] [--uid <uid>] [--gid <gid>] [--interactive] [--tty] [--user <user>] [--debug] <container-id> <arguments> ...
 ```
@@ -88,6 +91,7 @@ container exec [--cwd <cwd>] [--env <env> ...] [--env-file <env-file> ...] [--ui
 Display information about one or more containers
 
 **Usage:**
+
 ```bash
 container inspect [--debug] <containers> ...
 ```
@@ -97,6 +101,7 @@ container inspect [--debug] <containers> ...
 Kill one or more running containers
 
 **Usage:**
+
 ```bash
 container kill [--signal <signal>] [--all] [<container-ids> ...] [--debug]
 ```
@@ -113,6 +118,7 @@ container kill [--signal <signal>] [--all] [<container-ids> ...] [--debug]
 List containers
 
 **Usage:**
+
 ```bash
 container list [--all] [--quiet] [--format <format>] [--debug]
 ```
@@ -128,6 +134,7 @@ container list [--all] [--quiet] [--format <format>] [--debug]
 Fetch container stdio or boot logs
 
 **Usage:**
+
 ```bash
 container logs [--debug] [--follow] [--boot] [-n <n>] <container>
 ```
@@ -143,6 +150,7 @@ container logs [--debug] [--follow] [--boot] [-n <n>] <container>
 Run a container
 
 **Usage:**
+
 ```bash
 container run [<options>] <image> [<arguments> ...]
 ```
@@ -186,6 +194,7 @@ container run [<options>] <image> [<arguments> ...]
 Start a container
 
 **Usage:**
+
 ```bash
 container start [--attach] [--interactive] [--debug] <container-id>
 ```
@@ -200,6 +209,7 @@ container start [--attach] [--interactive] [--debug] <container-id>
 Stop one or more running containers
 
 **Usage:**
+
 ```bash
 container stop [--all] [--signal <signal>] [--time <time>] [<container-ids> ...] [--debug]
 ```
@@ -209,4 +219,3 @@ container stop [--all] [--signal <signal>] [--time <time>] [<container-ids> ...]
 - `-a, --all` - Stop all running containers
 - `-s, --signal <signal>` - Signal to send the container(s) (default: `SIGTERM`)
 - `-t, --time <time>` - Seconds to wait before killing the container(s) (default: `5`)
-

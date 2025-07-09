@@ -1,4 +1,4 @@
-# TrunkTail
+# Trunktail
 
 A container platform for macOS - native, fast, and easy to use.
 
@@ -6,7 +6,7 @@ A container platform for macOS - native, fast, and easy to use.
 
 This is a monorepo containing:
 
-- **`apps/trunktail/`** - Main TrunkTail application (Tauri + React)
+- **`apps/trunktail/`** - Main Trunktail application (Tauri + React)
 - **`apps/docs/`** - Documentation site (Astro Starlight)
 - **`packages/commands/`** - Command definitions and types
 
@@ -37,11 +37,11 @@ bun run dev:docs
 
 ### Available Scripts
 
-- `bun run dev` - Start TrunkTail web development server
-- `bun run dev:tauri` - Start TrunkTail native app development
+- `bun run dev` - Start Trunktail web development server
+- `bun run dev:tauri` - Start Trunktail native app development
 - `bun run dev:docs` - Start documentation development server
-- `bun run build` - Build TrunkTail web application
-- `bun run build:tauri` - Build TrunkTail native application
+- `bun run build` - Build Trunktail web application
+- `bun run build:tauri` - Build Trunktail native application
 - `bun run build:docs` - Build documentation site
 - `bun run preview:docs` - Preview built documentation
 - `bun run lint:fix` - Fix linting issues
@@ -51,23 +51,27 @@ bun run dev:docs
 ## Features
 
 ### Container Management
+
 - Create, run, stop, and manage containers
 - Interactive shell sessions
 - Resource limits (CPU, memory)
 - Volume mounting and networking
 
 ### Image Operations
+
 - Build images from Dockerfiles
 - Pull and push to registries
 - Local image management
 - Multi-architecture support
 
 ### Registry Integration
+
 - Authentication with container registries
 - Default registry configuration
 - Multi-registry support
 
 ### System Integration
+
 - Native macOS integration
 - DNS management for containers
 - System service management

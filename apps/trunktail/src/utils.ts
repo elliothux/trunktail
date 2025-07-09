@@ -73,7 +73,7 @@ export function cleanTerminalOutput(text: string): string {
     .replace(/\x1b[><]/g, '')
     .replace(/\x9b[0-9;?]*[a-zA-Z]/g, '')
     .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F-\x9F]/g, '')
-    .replace(/\^[A-Z@\[\\\]^_]/g, '')
+    .replace(/\^[A-Z@[\\\]^_]/g, '')
     .replace(/\r\n/g, '\n')
     .replace(/\r/g, '\n')
     .replace(/\n{3,}/g, '\n\n')
