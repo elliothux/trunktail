@@ -5,10 +5,6 @@ description: Reference guide for Apple Container - Apple's native containerizati
 
 Apple Container is Apple's native containerization framework designed specifically for Apple Silicon Macs. It provides a Swift-based, high-performance alternative to traditional container platforms like Docker, optimized for macOS and Apple's M-series processors.
 
-## Overview
-
-Apple Container enables developers to pull, build, and run OCI-compliant container images without relying on Docker or Podman. Built entirely in Swift and optimized for Apple Silicon, it offers native performance and seamless integration with macOS systems.
-
 ### Key Features
 
 - **Native Performance**: Built specifically for Apple Silicon with no performance trade-offs

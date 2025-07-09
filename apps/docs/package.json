@@ -6,7 +6,8 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "release": "astro build && rm -rf ../../docs && mv dist ../../docs",
+    "upload": "bunx wrangler pages deploy ./dist --project-name trunktail --branch main",
+    "release": "bun run build && bun run upload",
     "preview": "astro preview",
     "astro": "astro",
     "generate-docs": "tsx scripts/generate-docs.ts"

@@ -52,10 +52,10 @@ export async function openWebviewWindow({ url, viewId, title }: OpenWebviewWindo
     resizable: true,
     title,
   });
-  win.once('tauri://created', () => {
+  void win.once('tauri://created', () => {
     win.show();
   });
-  win.once('tauri://error', (e) => {
+  void win.once('tauri://error', (e) => {
     void message(e instanceof Error ? e.message : 'Unknown error', {
       kind: 'error',
       title: 'Failed to open window',

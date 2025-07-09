@@ -1,7 +1,9 @@
 import { Portal } from '@/components/portal';
+import { Button } from '@heroui/button';
 import { createFileRoute } from '@tanstack/react-router';
+import { openUrl } from '@tauri-apps/plugin-opener';
 import { Command, CommandCategory, CommandOption, containerCommands } from '@trunktail/commands';
-import { Folder, SquareTerminal, Terminal } from 'lucide-react';
+import { ExternalLink, Folder, SquareTerminal, Terminal } from 'lucide-react';
 
 export const Route = createFileRoute('/_app/commands')({
   component: CommandPage,
@@ -11,7 +13,19 @@ function CommandPage() {
   return (
     <>
       <Portal name="title">
-        <p className="pointer-events-none select-none">Commands</p>
+        <div className="flex w-full items-center justify-between">
+          <p className="pointer-events-none select-none">Commands</p>
+          <Button
+            size="sm"
+            color="primary"
+            endContent={<ExternalLink size={16} />}
+            onPress={() => {
+              void openUrl('https://trunktail.pages.dev/commands/');
+            }}
+          >
+            View on Website
+          </Button>
+        </div>
       </Portal>
 
       <div className="mx-auto max-w-6xl p-6">
