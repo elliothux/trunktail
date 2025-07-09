@@ -1,7 +1,7 @@
 import { useSystemOperations } from '@/hooks/use-system-operations';
 import { Button } from '@heroui/button';
 import { openUrl } from '@tauri-apps/plugin-opener';
-import { Download, Loader, OctagonAlert, Play } from 'lucide-react';
+import { Download, Loader2, OctagonAlert, Play } from 'lucide-react';
 import { useContainerSystem } from './system-context';
 
 export function StartScreen() {
@@ -35,7 +35,7 @@ function NotRunning() {
       <Button
         color="primary"
         className="mt-2"
-        startContent={isStarting ? <Loader className="animate-spin" size={16} /> : <Play size={16} />}
+        startContent={isStarting ? <Loader2 className="animate-spin" size={16} /> : <Play size={16} />}
         onPress={() => start()}
         isDisabled={isStarting}
       >

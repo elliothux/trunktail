@@ -50,7 +50,7 @@ function NavPanel() {
 
   return (
     <Panel
-      className="flex flex-col border-r"
+      className="flex flex-col border-r bg-gray-100/95 backdrop-blur-lg"
       maxSize={maxSize}
       minSize={minSize}
       collapsedSize={collapsedSize}
@@ -72,7 +72,7 @@ function App() {
     <div className="h-screen">
       <PanelGroup
         direction="horizontal"
-        className="flex w-full border-gray-400 dark:border-gray-800"
+        className="flex w-full border-gray-400 bg-transparent dark:border-gray-800"
         autoSaveId="main-panel-group"
       >
         <NavPanel />
@@ -90,7 +90,7 @@ function App() {
               </ScrollShadow>
             </Panel>
             <ResizeHandle />
-            <Panel className="flex h-full w-full flex-col border-l" minSize={22} maxSize={40}>
+            <Panel className="flex h-full w-full flex-col border-l bg-gray-100/95" minSize={22} maxSize={40}>
               <PortalRoot
                 name="right-panel-title"
                 className="flex h-14 items-center border-b border-gray-800 px-4 text-lg font-bold tracking-wide"

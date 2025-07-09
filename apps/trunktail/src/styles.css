@@ -9,6 +9,7 @@
 
 html {
   color-scheme: light dark;
+  @apply bg-transparent;
 }
 
 * {
@@ -16,5 +17,5 @@ html {
 }
 
 body {
-  @apply bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-100;
+  @apply text-gray-800 dark:text-gray-100 rounded-lg;
 }

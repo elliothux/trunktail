@@ -12,11 +12,12 @@
   "app": {
     "windows": [
       {
-        "title": "Trunktail",
+        "title": "",
         "width": 1280,
         "height": 800,
-        "decorations": false,
-        "transparent": true
+        "decorations": true,
+        "transparent": true,
+        "titleBarStyle": "Overlay"
       }
     ],
     "security": {

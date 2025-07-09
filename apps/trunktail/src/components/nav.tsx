@@ -35,7 +35,7 @@ export function Nav({ width, collapsed }: Props) {
         className="flex h-14 items-center border-b border-gray-800 px-4 text-lg font-bold tracking-wide"
         data-tauri-drag-region
       >
-        <Logo className="pointer-events-none w-28 select-none" />
+        <Logo className="pointer-events-none mt-4 w-20 select-none" />
       </div>
       <ScrollShadow as="nav" className="flex flex-1 shrink grow flex-col items-stretch justify-start gap-0.5 p-2.5">
         {menus.map(({ label, icon: Icon, to }) => {
