@@ -1,6 +1,6 @@
 import { Portal } from '@/components/portal';
-import { Command, CommandCategory, CommandOption, containerCommands } from '@/lib/commands';
 import { createFileRoute } from '@tanstack/react-router';
+import { Command, CommandCategory, CommandOption, containerCommands } from '@trunktail/commands';
 import { Folder, SquareTerminal, Terminal } from 'lucide-react';
 
 export const Route = createFileRoute('/_app/commands')({

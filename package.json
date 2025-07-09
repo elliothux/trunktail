@@ -3,8 +3,11 @@
   "scripts": {
     "dev": "bun run --cwd apps/trunktail dev",
     "dev:tauri": "bun run --cwd apps/trunktail dev:tauri",
+    "dev:docs": "bun run --cwd apps/docs dev",
     "build": "bun run --cwd apps/trunktail build",
     "build:tauri": "bun run --cwd apps/trunktail build:tauri",
+    "build:docs": "bun run --cwd apps/docs build",
+    "preview:docs": "bun run --cwd apps/docs preview",
     "lint:fix": "oxlint --fix",
     "format:fix": "prettier . --write --experimental-cli",
     "format:swift": "swift-format format ./apps/trunktail/swift-lib/Sources/container-bridge/ --recursive -i"
@@ -38,6 +41,7 @@
     "@tauri-apps/plugin-fs": "~2",
     "@tauri-apps/plugin-opener": "~2",
     "@tauri-apps/plugin-shell": "~2",
+    "@trunktail/commands": "workspace:*",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
