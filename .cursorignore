@@ -1,7 +1,7 @@
-swift-lib/.build/
-swift-lib/.swiftpm/
+apps/trunktail/swift-lib/.build/
+apps/trunktail/swift-lib/.swiftpm/
 
-src-tauri/target
+apps/trunktail/src-tauri/target
 
 .tanstack
 .idea

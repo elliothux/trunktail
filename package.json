@@ -1,29 +1,31 @@
 {
   "name": "trunktail",
-  "private": true,
-  "version": "0.1.0",
-  "type": "module",
   "scripts": {
-    "dev": "vite --port 1420",
-    "dev:tauri": "export SDKROOT=$(xcrun --sdk macosx --show-sdk-path) && tauri dev",
-    "build": "tsc && vite build",
-    "build:tauri": "export SDKROOT=$(xcrun --sdk macosx --show-sdk-path) && tauri build",
-    "preview": "vite preview",
+    "dev": "bun run --cwd apps/trunktail dev",
+    "dev:tauri": "bun run --cwd apps/trunktail dev:tauri",
+    "build": "bun run --cwd apps/trunktail build",
+    "build:tauri": "bun run --cwd apps/trunktail build:tauri",
     "lint:fix": "oxlint --fix",
     "format:fix": "prettier . --write --experimental-cli",
-    "format:swift": "swift-format format ./swift-lib/Sources/container-bridge/ --recursive -i"
+    "format:swift": "swift-format format ./apps/trunktail/swift-lib/Sources/container-bridge/ --recursive -i"
   },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "dependencies": {
     "@heroui/badge": "^2.2.14-beta.2",
     "@heroui/button": "^2.2.22-beta.2",
+    "@heroui/card": "^2.2.22-beta.1",
     "@heroui/chip": "^2.2.19-beta.0",
     "@heroui/code": "^2.2.17-beta.2",
     "@heroui/dropdown": "^2.3.23-beta.0",
     "@heroui/input": "^2.4.23-beta.0",
+    "@heroui/link": "^2.2.20-beta.2",
     "@heroui/modal": "^2.2.19-beta.2",
     "@heroui/scroll-shadow": "^2.3.15-beta.2",
     "@heroui/system": "^2.4.18-beta.2",
-    "@heroui/theme": "^2.4.18-beta.2",
+    "@heroui/theme": "^2.4.18-beta.5",
     "@heroui/tooltip": "^2.2.19",
     "@tailwindcss/vite": "^4.1.10",
     "@tanstack/react-query": "^5.81.2",

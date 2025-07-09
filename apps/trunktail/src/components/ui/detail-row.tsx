@@ -1,5 +1,4 @@
-import { ReactNode } from '@tanstack/react-router';
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, ReactNode } from 'react';
 import { SnippetText } from './snippet-text';
 
 interface Props {

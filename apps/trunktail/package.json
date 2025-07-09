@@ -1,0 +1,15 @@
+{
+  "name": "trunktail-app",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 1420",
+    "dev:tauri": "export SDKROOT=$(xcrun --sdk macosx --show-sdk-path) && tauri dev",
+    "build": "tsc && vite build",
+    "build:tauri": "export SDKROOT=$(xcrun --sdk macosx --show-sdk-path) && tauri build"
+  },
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.1.11"
+  }
+}

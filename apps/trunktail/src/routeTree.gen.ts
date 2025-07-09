@@ -78,7 +78,6 @@ const AppCommandsRoute = AppCommandsRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '': typeof AppRouteRouteWithChildren
   '/system-logs': typeof SystemLogsRoute
   '/commands': typeof AppCommandsRoute
   '/containers': typeof AppContainersRoute
@@ -91,7 +90,6 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '': typeof AppRouteRouteWithChildren
   '/system-logs': typeof SystemLogsRoute
   '/commands': typeof AppCommandsRoute
   '/containers': typeof AppContainersRoute
@@ -120,7 +118,6 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | ''
     | '/system-logs'
     | '/commands'
     | '/containers'
@@ -133,7 +130,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | ''
     | '/system-logs'
     | '/commands'
     | '/containers'
@@ -167,11 +163,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/system-logs': {
+      id: '/system-logs'
+      path: '/system-logs'
+      fullPath: '/system-logs'
+      preLoaderRoute: typeof SystemLogsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_app': {
@@ -181,46 +177,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/system-logs': {
-      id: '/system-logs'
-      path: '/system-logs'
-      fullPath: '/system-logs'
-      preLoaderRoute: typeof SystemLogsRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_app/commands': {
-      id: '/_app/commands'
-      path: '/commands'
-      fullPath: '/commands'
-      preLoaderRoute: typeof AppCommandsRouteImport
-      parentRoute: typeof AppRouteRoute
+    '/logs/$container': {
+      id: '/logs/$container'
+      path: '/logs/$container'
+      fullPath: '/logs/$container'
+      preLoaderRoute: typeof LogsContainerRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_app/containers': {
-      id: '/_app/containers'
-      path: '/containers'
-      fullPath: '/containers'
-      preLoaderRoute: typeof AppContainersRouteImport
-      parentRoute: typeof AppRouteRoute
-    }
-    '/_app/images': {
-      id: '/_app/images'
-      path: '/images'
-      fullPath: '/images'
-      preLoaderRoute: typeof AppImagesRouteImport
-      parentRoute: typeof AppRouteRoute
-    }
-    '/_app/monitor': {
-      id: '/_app/monitor'
-      path: '/monitor'
-      fullPath: '/monitor'
-      preLoaderRoute: typeof AppMonitorRouteImport
-      parentRoute: typeof AppRouteRoute
-    }
-    '/_app/pods': {
-      id: '/_app/pods'
-      path: '/pods'
-      fullPath: '/pods'
-      preLoaderRoute: typeof AppPodsRouteImport
+    '/_app/volumes': {
+      id: '/_app/volumes'
+      path: '/volumes'
+      fullPath: '/volumes'
+      preLoaderRoute: typeof AppVolumesRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/services': {
@@ -230,19 +205,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppServicesRouteImport
       parentRoute: typeof AppRouteRoute
     }
-    '/_app/volumes': {
-      id: '/_app/volumes'
-      path: '/volumes'
-      fullPath: '/volumes'
-      preLoaderRoute: typeof AppVolumesRouteImport
+    '/_app/pods': {
+      id: '/_app/pods'
+      path: '/pods'
+      fullPath: '/pods'
+      preLoaderRoute: typeof AppPodsRouteImport
       parentRoute: typeof AppRouteRoute
     }
-    '/logs/$container': {
-      id: '/logs/$container'
-      path: '/logs/$container'
-      fullPath: '/logs/$container'
-      preLoaderRoute: typeof LogsContainerRouteImport
-      parentRoute: typeof rootRouteImport
+    '/_app/monitor': {
+      id: '/_app/monitor'
+      path: '/monitor'
+      fullPath: '/monitor'
+      preLoaderRoute: typeof AppMonitorRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/images': {
+      id: '/_app/images'
+      path: '/images'
+      fullPath: '/images'
+      preLoaderRoute: typeof AppImagesRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/containers': {
+      id: '/_app/containers'
+      path: '/containers'
+      fullPath: '/containers'
+      preLoaderRoute: typeof AppContainersRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/commands': {
+      id: '/_app/commands'
+      path: '/commands'
+      fullPath: '/commands'
+      preLoaderRoute: typeof AppCommandsRouteImport
+      parentRoute: typeof AppRouteRoute
     }
   }
 }
