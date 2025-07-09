@@ -6,6 +6,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
+    "release": "astro build && rm -rf ../../docs && mv dist ../../docs",
     "preview": "astro preview",
     "astro": "astro",
     "generate-docs": "tsx scripts/generate-docs.ts"
