@@ -151,7 +151,7 @@ export function ContainerItem({
         <OperationButton
           title={status === 'running' ? 'Stop container' : 'Start container'}
           active={active}
-          isLoading={isStarting || isStarting}
+          isLoading={isStarting || isStopping}
           icon={status === 'running' ? Square : Play}
           onClick={status === 'running' ? onStop : onStart}
         />

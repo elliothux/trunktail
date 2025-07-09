@@ -83,7 +83,7 @@ function AboutDetail() {
             <Card>
               <CardBody>
                 <h3 className="mb-3 text-lg font-semibold">Developer</h3>
-                <div className="space-y-2">
+                <div className="grid grid-cols-2 space-x-2">
                   <div className="flex items-center gap-2">
                     <span className="text-default-500">GitHub:</span>
                     <Link
@@ -97,7 +97,7 @@ function AboutDetail() {
                     </Link>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-default-500">Twitter:</span>
+                    <span className="text-default-500">X:</span>
                     <Link
                       href="https://x.com/elliothux"
                       target="_blank"

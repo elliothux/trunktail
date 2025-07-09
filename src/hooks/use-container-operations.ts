@@ -10,9 +10,13 @@ export function useContainerOperations({ status, configuration: { id }, networks
   const queryClient = useQueryClient();
   const update = useCallback(
     (info: ContainerInfo) => {
-      queryClient.setQueryData(['containers'], (old: ContainerInfo[]) => {
-        return old.map((i) => (i.configuration.id === id ? info : i));
-      });
+      try {
+        queryClient.setQueryData(['containers'], (old: ContainerInfo[]) => {
+          return old.map((i) => (i.configuration.id === id ? info : i));
+        });
+      } catch (error) {
+        void queryClient.refetchQueries({ queryKey: ['containers'] });
+      }
     },
     [queryClient, id],
   );
