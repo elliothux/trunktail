@@ -17,7 +17,7 @@ export function OperationButton({ title, active, icon, onClick, isLoading, disab
   const Icon = isLoading ? Loader2 : icon;
   const button = (
     <Button size="sm" variant="light" onPress={onClick} isDisabled={disabled} isIconOnly>
-      <Icon className={cn('h-4 w-4', active ? 'text-white' : 'text-gray-900', isLoading ? 'animate-spin' : null)} />
+      <Icon className={cn('h-4 w-4', active ? 'text-white' : 'text-gray-300', isLoading ? 'animate-spin' : null)} />
     </Button>
   );
   return title ? <Tooltip content={title}>{button}</Tooltip> : button;

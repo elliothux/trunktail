@@ -3,8 +3,6 @@ import { Link } from '@heroui/link';
 import { Modal, ModalBody, ModalContent, ModalHeader } from '@heroui/modal';
 import { ScrollShadow } from '@heroui/scroll-shadow';
 import { UseDisclosureReturn } from '@heroui/use-disclosure';
-import { useQuery } from '@tanstack/react-query';
-import { getTauriVersion, getVersion } from '@tauri-apps/api/app';
 import { Logo } from './logo';
 import { useContainerSystem } from './system-context';
 
@@ -21,15 +19,7 @@ export function About({ disclosure: { isOpen, onOpenChange } }: Props) {
 }
 
 function AboutDetail() {
-  const { version, command } = useContainerSystem();
-
-  const { data: appInfo } = useQuery({
-    queryKey: ['app-version'],
-    queryFn: async () => {
-      const [appVersion, tauriVersion] = await Promise.all([getVersion(), getTauriVersion()]);
-      return { appVersion, tauriVersion };
-    },
-  });
+  const { version, command, appInfo } = useContainerSystem();
 
   const openSourceLibraries = [
     { name: 'TypeScript', description: 'Type-safe JavaScript', url: 'https://www.typescriptlang.org' },

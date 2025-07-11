@@ -5,6 +5,7 @@ import { NavigateOptions, ToOptions, useRouter } from '@tanstack/react-router';
 import { PropsWithChildren, StrictMode } from 'react';
 import { Toaster } from 'sonner';
 import { SystemProvider } from './system-context';
+import { Updater } from './updater';
 // import { UpdaterProvider } from './updater-context';
 
 declare module '@react-types/shared' {
@@ -28,8 +29,8 @@ export function Providers({ children }: PropsWithChildren) {
         <QueryClientProvider client={queryClient}>
           <PortalProvider>
             <SystemProvider>
-              {/* <UpdaterProvider>{children}</UpdaterProvider> */}
               {children}
+              <Updater />
             </SystemProvider>
             <Toaster position="bottom-center" richColors />
             {/*<TanStackRouterDevtools position="bottom-right" />*/}

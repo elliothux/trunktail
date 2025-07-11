@@ -120,7 +120,7 @@ export function ContainerItem({
   return (
     <Button
       as="section"
-      className="mb-1 flex w-full items-center justify-start px-4"
+      className="mb-1 flex w-full items-center justify-start px-4 text-white"
       variant={active ? 'solid' : 'light'}
       color={active ? 'primary' : 'default'}
       onPress={() => onSelect(id)}

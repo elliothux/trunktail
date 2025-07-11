@@ -1,14 +1,32 @@
 import { systemStatus, SystemStatus } from '@/lib/bridge/system';
 import { createCommand } from '@/utils';
 import { useQuery } from '@tanstack/react-query';
+import { getTauriVersion, getVersion } from '@tauri-apps/api/app';
 import { invoke } from '@tauri-apps/api/core';
 import { createContext, PropsWithChildren, useContext, useMemo } from 'react';
+
+interface LatestRelease {
+  app: {
+    v: string;
+    u: string;
+    d?: string[];
+  };
+  cli: {
+    v: string;
+    u: string;
+  };
+}
 
 const SystemContext = createContext<{
   status: SystemStatus;
   version: string;
   command: string;
   supported: boolean;
+  appInfo?: {
+    appVersion: string;
+    tauriVersion: string;
+  };
+  latestRelease?: LatestRelease;
 } | null>(null);
 
 export function SystemProvider({ children }: PropsWithChildren) {
@@ -52,14 +70,36 @@ export function SystemProvider({ children }: PropsWithChildren) {
     },
   });
 
+  const { data: appInfo } = useQuery({
+    queryKey: ['app-version'],
+    queryFn: async () => {
+      const [appVersion, tauriVersion] = await Promise.all([getVersion(), getTauriVersion()]);
+      return { appVersion, tauriVersion };
+    },
+  });
+
+  const { data: latestRelease } = useQuery({
+    queryKey: ['latest-release'],
+    queryFn: async () => {
+      const req = await fetch('https://trunktail.pages.dev/latest-release.json');
+      if (!req.ok) {
+        throw new Error('Failed to fetch latest release');
+      }
+      const data = await req.json();
+      return data as LatestRelease;
+    },
+  });
+
   const value = useMemo(
     () => ({
       status,
       version,
       command,
       supported: isAppleSilicon,
+      appInfo,
+      latestRelease,
     }),
-    [status, version, command, isAppleSilicon],
+    [status, version, command, isAppleSilicon, appInfo, latestRelease],
   );
 
   return <SystemContext value={value}>{children}</SystemContext>;

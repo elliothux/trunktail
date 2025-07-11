@@ -64,9 +64,10 @@ export function ContainerDetail({
         {operationItems.map(({ label, icon: Icon, action }) => (
           <Button
             key={label}
-            className="justify-between"
+            className="hover:bg-primary hover:border-primary justify-between border-neutral-600 text-gray-100"
+            variant="bordered"
             startContent={<Icon className="h-5 w-5" />}
-            endContent={<ChevronRight className="ml-auto h-5 w-5 text-gray-400" />}
+            endContent={<ChevronRight className="ml-auto h-5 w-5" />}
             onPress={action}
           >
             {label}
@@ -76,7 +77,7 @@ export function ContainerDetail({
 
       {network ? (
         <>
-          <h3 className="mt-6 text-lg font-semibold">Network</h3>
+          <h3 className="mt-6 text-lg font-semibold text-gray-400">Network</h3>
           <div className="mt-2">
             <DetailRow label="Address" copyable>
               {network.address.split('/')[0]}

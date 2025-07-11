@@ -27,7 +27,7 @@ export function SystemInfo({ compact, collapsed }: { compact: boolean; collapsed
   );
 
   return (
-    <div className="flex h-12 items-center gap-2 border-t border-gray-800 px-3 text-xs text-gray-400">
+    <div className="flex h-12 items-center gap-2 border-t border-gray-600 px-3 text-xs text-gray-400">
       {collapsed ? null : indicator}
       <SystemMenu triggerClassName={collapsed ? 'w-full' : undefined}>{compact ? indicator : null}</SystemMenu>
     </div>
@@ -46,7 +46,7 @@ function SystemMenu({ triggerClassName, children }: PropsWithChildren<{ triggerC
     <>
       <Dropdown className="mt-auto" placement="right-end" isDisabled={command === 'unknown'}>
         <DropdownTrigger>
-          <Button size="sm" className={cn('ml-auto', triggerClassName)} variant="light" isIconOnly>
+          <Button size="sm" className={cn('ml-auto text-gray-300', triggerClassName)} variant="light" isIconOnly>
             <Ellipsis size={16} />
           </Button>
         </DropdownTrigger>

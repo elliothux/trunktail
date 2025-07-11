@@ -9,12 +9,12 @@ export function StartScreen() {
 
   return (
     <div className="flex h-full flex-col items-center justify-center">
-      {supported ? command ? <NotRunning /> : <InstallAssistant /> : <Unsupport />}
+      {supported ? command ? <NotRunning /> : <InstallAssistant /> : <Unsupported />}
     </div>
   );
 }
 
-function Unsupport() {
+function Unsupported() {
   return (
     <>
       <OctagonAlert size={32} className="text-red-500" />
@@ -45,10 +45,10 @@ function NotRunning() {
   );
 }
 
-// TODO: Get latest version from server
-const pkgLink = 'https://github.com/apple/container/releases/download/0.2.0/container-0.2.0-installer-signed.pkg';
-
 function InstallAssistant() {
+  const { latestRelease } = useContainerSystem();
+
+  const url = latestRelease?.cli.u;
   return (
     <>
       <p className="text-default-500 mt-2 max-w-[400px] text-center">Container server is not installed.</p>
@@ -57,8 +57,11 @@ function InstallAssistant() {
         className="mt-2"
         startContent={<Download size={16} />}
         onPress={() => {
-          void openUrl(pkgLink);
+          if (url) {
+            void openUrl(url);
+          }
         }}
+        disabled={url == null}
       >
         Download Installer
       </Button>

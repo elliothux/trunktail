@@ -7,15 +7,11 @@
 
 @custom-variant dark (&:is(.dark *));
 
-html {
-  color-scheme: light dark;
-  @apply bg-transparent;
-}
-
-* {
-  @apply border-gray-200 dark:border-gray-800;
+html,
+body {
+  @apply h-full overflow-hidden overscroll-none bg-transparent;
 }
 
 body {
-  @apply text-gray-800 dark:text-gray-100 rounded-lg;
+  @apply text-gray-800 dark:text-gray-100;
 }

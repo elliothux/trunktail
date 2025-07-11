@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "astro build && cp ../../latest-release.json ./dist/",
     "upload": "bunx wrangler pages deploy ./dist --project-name trunktail --branch main",
     "release": "bun run build && bun run upload",
     "preview": "astro preview",

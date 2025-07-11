@@ -25,7 +25,7 @@ export function ImageItem({ image: { parsedReferences, digest, isInfra }, image,
     <>
       <Button
         as="section"
-        className="mb-1 flex w-full items-center justify-start px-4"
+        className="mb-1 flex w-full items-center justify-start px-4 text-white"
         variant={active ? 'solid' : 'light'}
         color={active ? 'primary' : 'default'}
         onPress={() => onSelect(image.digest)}
@@ -43,7 +43,7 @@ export function ImageItem({ image: { parsedReferences, digest, isInfra }, image,
                 key={i.tag}
                 size="sm"
                 className="mr-1 min-w-6 px-0.5 py-0 text-xs"
-                variant={active ? 'solid' : 'flat'}
+                variant="solid"
                 style={{
                   height: 16,
                   minHeight: 16,

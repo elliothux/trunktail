@@ -86,17 +86,29 @@ function ImageList() {
             <p className="pointer-events-none text-xs font-normal text-gray-400 select-none">{images?.length} images</p>
           </div>
           <Tooltip content="Purge unreferenced images">
-            <Button size="sm" variant="light" onPress={() => purge()} isIconOnly>
+            <Button
+              size="sm"
+              variant="light"
+              className="text-neutral-400 hover:text-white"
+              onPress={() => purge()}
+              isIconOnly
+            >
               {isPurging ? <Loader2 className="animate-spin" size={18} /> : <FolderSync size={18} />}
             </Button>
           </Tooltip>
           <Tooltip content="Import an OCI archieve">
-            <Button size="sm" variant="light" onPress={() => importImage()} isIconOnly>
+            <Button
+              size="sm"
+              variant="light"
+              className="text-neutral-400 hover:text-white"
+              onPress={() => importImage()}
+              isIconOnly
+            >
               {isImporting ? <Loader2 className="animate-spin" size={18} /> : <HardDriveDownload size={18} />}
             </Button>
           </Tooltip>
           <Tooltip content="Pull an image">
-            <Button size="sm" variant="flat" onPress={pullImageDisclosure.onOpen} isIconOnly>
+            <Button size="sm" variant="flat" className="text-white" onPress={pullImageDisclosure.onOpen} isIconOnly>
               <Plus size={18} />
             </Button>
           </Tooltip>

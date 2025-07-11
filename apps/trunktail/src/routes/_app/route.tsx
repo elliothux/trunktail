@@ -23,7 +23,7 @@ export const Route = createFileRoute('/_app')({
 function ResizeHandle() {
   return (
     <PanelResizeHandle className="relative">
-      <GripVertical className="absolute top-1/2 -left-2.5" size={20} />
+      <GripVertical className="absolute top-1/2 -left-2.5 text-gray-200" size={20} />
     </PanelResizeHandle>
   );
 }
@@ -50,7 +50,7 @@ function NavPanel() {
 
   return (
     <Panel
-      className="flex flex-col border-r bg-gray-100/95 backdrop-blur-lg"
+      className="relative flex flex-col border-r border-gray-600"
       maxSize={maxSize}
       minSize={minSize}
       collapsedSize={collapsedSize}
@@ -69,20 +69,20 @@ function App() {
   const { status } = useContainerSystem();
 
   return (
-    <div className="h-screen">
-      <PanelGroup
-        direction="horizontal"
-        className="flex w-full border-gray-400 bg-transparent dark:border-gray-800"
-        autoSaveId="main-panel-group"
-      >
+    <div className="relative h-screen w-full">
+      <div className="dark w-ful absolute top-0 right-0 z-0 h-full bg-black/75">
+        <img src="/bg.png" className="rounded-large relative z-10 -translate-x-1/2 opacity-50" alt="bg" />
+      </div>
+
+      <PanelGroup direction="horizontal" className="relative flex w-full" autoSaveId="main-panel-group">
         <NavPanel />
         <ResizeHandle />
         {status === SystemStatus.Running ? (
           <>
-            <Panel className="flex flex-1 flex-col bg-gray-50">
+            <Panel className="flex flex-1 flex-col">
               <PortalRoot
                 name="title"
-                className="flex h-14 flex-col items-start justify-center border-b px-6 text-lg font-semibold"
+                className="flex h-14 flex-col items-start justify-center border-b border-gray-600 px-6 text-lg font-semibold text-gray-300"
                 data-tauri-drag-region
               />
               <ScrollShadow className="flex-1 px-2 py-4">
@@ -90,15 +90,15 @@ function App() {
               </ScrollShadow>
             </Panel>
             <ResizeHandle />
-            <Panel className="flex h-full w-full flex-col border-l bg-gray-100/95" minSize={22} maxSize={40}>
+            <Panel className="flex h-full w-full flex-col border-l border-gray-600" minSize={22} maxSize={40}>
               <PortalRoot
                 name="right-panel-title"
-                className="flex h-14 items-center border-b border-gray-800 px-4 text-lg font-bold tracking-wide"
+                className="flex h-14 items-center border-b border-gray-600 px-4 text-lg font-bold tracking-wide text-gray-300"
                 data-tauri-drag-region
               />
               <PortalRoot name="right-panel" className="flex-1 overflow-x-hidden overflow-y-auto p-4" />
               <div
-                className="flex h-12 cursor-pointer items-center gap-2 border-t border-gray-800 px-4 text-xs text-gray-400 hover:text-gray-800"
+                className="flex h-12 cursor-pointer items-center gap-2 border-t border-gray-600 px-4 text-xs text-gray-400 hover:text-white"
                 onClick={() => {
                   openUrl('https://github.com/elliothux/trunktail');
                 }}

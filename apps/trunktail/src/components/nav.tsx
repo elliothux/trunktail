@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils';
 import { Button } from '@heroui/button';
 import { ScrollShadow } from '@heroui/scroll-shadow';
 import { FileRouteTypes, Link, useLocation } from '@tanstack/react-router';
@@ -32,7 +33,7 @@ export function Nav({ width, collapsed }: Props) {
   return (
     <>
       <div
-        className="flex h-14 items-center border-b border-gray-800 px-4 text-lg font-bold tracking-wide"
+        className="flex h-14 items-center border-b border-gray-600 px-4 text-lg font-bold tracking-wide"
         data-tauri-drag-region
       >
         <Logo className="pointer-events-none mt-4 w-20 select-none" />
@@ -48,7 +49,8 @@ export function Nav({ width, collapsed }: Props) {
               as={Link}
               to={to}
               variant={isActive ? 'solid' : 'light'}
-              className={collapsed ? 'w-full' : 'justify-start'}
+              color={isActive ? 'primary' : 'default'}
+              className={cn('text-gray-300', collapsed ? 'w-full' : 'justify-start')}
               isIconOnly={collapsed}
             >
               {collapsed ? icon : label}
