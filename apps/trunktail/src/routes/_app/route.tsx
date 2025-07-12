@@ -50,7 +50,7 @@ function NavPanel() {
 
   return (
     <Panel
-      className="relative flex flex-col border-r border-gray-600"
+      className="relative flex flex-col border-r border-neutral-700"
       maxSize={maxSize}
       minSize={minSize}
       collapsedSize={collapsedSize}
@@ -82,7 +82,7 @@ function App() {
             <Panel className="flex flex-1 flex-col">
               <PortalRoot
                 name="title"
-                className="flex h-14 flex-col items-start justify-center border-b border-gray-600 px-6 text-lg font-semibold text-gray-300"
+                className="flex h-14 flex-col items-start justify-center border-b border-neutral-700 px-6 text-lg font-semibold text-gray-300"
                 data-tauri-drag-region
               />
               <ScrollShadow className="flex-1 px-2 py-4">
@@ -90,15 +90,15 @@ function App() {
               </ScrollShadow>
             </Panel>
             <ResizeHandle />
-            <Panel className="flex h-full w-full flex-col border-l border-gray-600" minSize={22} maxSize={40}>
+            <Panel className="flex h-full w-full flex-col border-l border-neutral-700" minSize={22} maxSize={40}>
               <PortalRoot
                 name="right-panel-title"
-                className="flex h-14 items-center border-b border-gray-600 px-4 text-lg font-bold tracking-wide text-gray-300"
+                className="flex h-14 items-center border-b border-neutral-700 px-4 text-lg font-bold tracking-wide text-gray-300"
                 data-tauri-drag-region
               />
               <PortalRoot name="right-panel" className="flex-1 overflow-x-hidden overflow-y-auto p-4" />
               <div
-                className="flex h-12 cursor-pointer items-center gap-2 border-t border-gray-600 px-4 text-xs text-gray-400 hover:text-white"
+                className="flex h-12 cursor-pointer items-center gap-2 border-t border-neutral-700 px-4 text-xs text-gray-400 hover:text-white"
                 onClick={() => {
                   openUrl('https://github.com/elliothux/trunktail');
                 }}

@@ -53,7 +53,7 @@ function ContainersPage() {
       <Portal name="right-panel-title">
         <p>Details</p>
         {container ? (
-          <Button size="sm" className="ml-auto" variant="light" onPress={disclosure.onOpen} isIconOnly>
+          <Button size="sm" className="ml-auto text-gray-200" variant="light" onPress={disclosure.onOpen} isIconOnly>
             <Info size={18} />
           </Button>
         ) : null}

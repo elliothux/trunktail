@@ -1,114 +1,80 @@
+<img src="./apps/trunktail/app-logo.svg" alt="Trunktail Logo" style="max-width:320px;margin-top:12px;" />
+
 # Trunktail
 
-A container platform for macOS - native, fast, and easy to use.
+A container management app for macOS. **Trunktail is a modern UI for [Apple Container](https://github.com/apple/container)**, providing an intuitive desktop experience for managing containers and images.
+
+**Why Apple Container?**
+
+Compared to Docker, Apple Container delivers significantly better performance and lower resource usage on macOS, making it the preferred choice for native container workflows on Apple devices.
+
+Trunktail brings the power of Apple Container to a user-friendly interface, with advanced features for developers and automation workflows.
+
+---
+
+## Download
+
+Get the latest release from the [Releases Page](https://github.com/elliothux/trunktail/releases).
+
+---
+
+## Additional tools in this repository:
+
+- **CLI document** ([View Docs](https://trunktail.pages.dev)) — Auto-generated, always up-to-date CLI and API documentation.
+- **MCP Server** ([MCP Server README](./packages/mcp-server/README.md)) — Model Context Protocol server for LLM and automation integration.
+
+---
 
 ## Project Structure
 
-This is a monorepo containing:
+```
+apps/
+  trunktail/   # Desktop client
+  docs/        # Documentation site
+packages/
+  commands/    # CLI commands metadata
+  mcp-server/  # MCP Server
+```
 
-- **`apps/trunktail/`** - Main Trunktail application (Tauri + React)
-- **`apps/docs/`** - Documentation site (Astro Starlight)
-- **`packages/commands/`** - Command definitions and types
+---
 
-## Development
+## Quick Start
 
 ### Prerequisites
 
-- [Bun](https://bun.sh/) - Package manager and runtime
-- [Rust](https://rustup.rs/) - For Tauri backend
-- [Swift](https://swift.org/) - For macOS native bridge
-- macOS 10.15+ - Development target
+- Node.js 18+ or Bun 1.0+
+- macOS (Apple Container CLI required)
 
-### Quick Start
+### Install dependencies
 
 ```bash
-# Install dependencies
 bun install
-
-# Start the main application
-bun run dev
-
-# Start with Tauri (native app)
-bun run dev:tauri
-
-# Start documentation site
-bun run dev:docs
 ```
 
-### Available Scripts
+### Launch Desktop App
 
-- `bun run dev` - Start Trunktail web development server
-- `bun run dev:tauri` - Start Trunktail native app development
-- `bun run dev:docs` - Start documentation development server
-- `bun run build` - Build Trunktail web application
-- `bun run build:tauri` - Build Trunktail native application
-- `bun run build:docs` - Build documentation site
-- `bun run preview:docs` - Preview built documentation
-- `bun run lint:fix` - Fix linting issues
-- `bun run format:fix` - Format code with Prettier
-- `bun run format:swift` - Format Swift code
+```bash
+bun run dev:tauri
+```
 
-## Features
+---
 
-### Container Management
+## Tech Stack
 
-- Create, run, stop, and manage containers
-- Interactive shell sessions
-- Resource limits (CPU, memory)
-- Volume mounting and networking
+- **Frontend**: React 19, TanStack Router, HeroUI, Tailwind CSS, Vite
+- **Desktop**: Tauri, Rust, Swift (Native Bridge)
+- **CLI/Server**: TypeScript, Node.js/Bun, MCP Protocol
+- **Docs**: Astro Starlight
 
-### Image Operations
-
-- Build images from Dockerfiles
-- Pull and push to registries
-- Local image management
-- Multi-architecture support
-
-### Registry Integration
-
-- Authentication with container registries
-- Default registry configuration
-- Multi-registry support
-
-### System Integration
-
-- Native macOS integration
-- DNS management for containers
-- System service management
-- Comprehensive logging
-
-## Architecture
-
-- **Frontend**: React + TanStack Router + HeroUI
-- **Backend**: Tauri (Rust) + Swift native bridge
-- **Documentation**: Astro Starlight
-- **Package Manager**: Bun
-- **Styling**: Tailwind CSS
-
-## Documentation
-
-Visit the [documentation site](./apps/docs/) for complete guides and API reference:
-
-- **Getting Started**: Installation and setup
-- **Command Reference**: Complete command documentation
-- **Architecture**: System design and components
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Make your changes
-4. Run tests and linting: `bun run lint:fix`
-5. Commit your changes: `git commit -m 'Add amazing feature'`
-6. Push to the branch: `git push origin feature/amazing-feature`
-7. Open a Pull Request
+---
 
 ## License
 
-[MIT License](LICENSE) - see the LICENSE file for details.
+This project is licensed under the MIT License. See [LICENSE](./LICENSE) for details.
 
-## Support
+---
 
-- 📖 [Documentation](./apps/docs/)
-- 🐛 [Issue Tracker](https://github.com/trunktail/trunktail/issues)
-- 💬 [Discussions](https://github.com/trunktail/trunktail/discussions)
+## Contact
+
+- **GitHub**: [@elliothux](https://github.com/elliothux)
+- **X (Twitter)**: [@elliothux](https://x.com/elliothux)

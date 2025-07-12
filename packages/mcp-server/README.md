@@ -6,7 +6,7 @@ A Model Context Protocol (MCP) server that provides Apple Container CLI integrat
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 
-[中文文档](./README_ZH.md) | [English](./README.md)
+[中文文档](https://github.com/elliothux/trunktail/blob/main/packages/mcp-server/README_ZH.md) | [English](https://github.com/elliothux/trunktail/blob/main/packages/mcp-server/README.md)
 
 ## 🚀 Features
 
@@ -61,33 +61,33 @@ Add to your MCP configuration file (typically `~/.config/mcp/config.json`):
   "mcpServers": {
     "container": {
       "command": "bunx",
-      "args": ["container-mcp-server"]
+      "args": ["-y", "container-mcp-server@latest"]
     }
   }
 }
 ```
 
-**With pnpm + tsx:**
+**With pnpm:**
 
 ```json
 {
   "mcpServers": {
     "container": {
       "command": "pnpm",
-      "args": ["dlx", "tsx", "container-mcp-server/src/index.ts"]
+      "args": ["dlx", "container-mcp-server@latest"]
     }
   }
 }
 ```
 
-**With npm + tsx:**
+**With npm:**
 
 ```json
 {
   "mcpServers": {
     "container": {
       "command": "npx",
-      "args": ["tsx", "container-mcp-server/src/index.ts"]
+      "args": ["-y", "container-mcp-server@latest"]
     }
   }
 }

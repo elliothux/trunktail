@@ -122,7 +122,7 @@ function ImageList() {
       <Portal name="right-panel-title">
         <p>Details</p>
         {image ? (
-          <Button size="sm" className="ml-auto" variant="light" onPress={metadataDisclosure.onOpen} isIconOnly>
+          <Button size="sm" className="ml-auto text-gray-200" variant="light" onPress={metadataDisclosure.onOpen} isIconOnly>
             <Info size={18} />
           </Button>
         ) : null}

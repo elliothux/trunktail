@@ -27,7 +27,7 @@ export function SystemInfo({ compact, collapsed }: { compact: boolean; collapsed
   );
 
   return (
-    <div className="flex h-12 items-center gap-2 border-t border-gray-600 px-3 text-xs text-gray-400">
+    <div className="flex h-12 items-center gap-2 border-t border-neutral-700 px-3 text-xs text-gray-400">
       {collapsed ? null : indicator}
       <SystemMenu triggerClassName={collapsed ? 'w-full' : undefined}>{compact ? indicator : null}</SystemMenu>
     </div>
