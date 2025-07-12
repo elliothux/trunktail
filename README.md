@@ -1,4 +1,4 @@
-<img src="./apps/trunktail/app-logo.svg" alt="Trunktail Logo" style="max-width:320px;margin-top:12px;" />
+![Trunktail Logo](./apps/trunktail/app-logo.svg)
 
 # Trunktail
 
