@@ -87,7 +87,7 @@ export function PullImage({ disclosure: { isOpen, onOpenChange, onClose } }: Pro
         {() => {
           return (
             <>
-              <ModalHeader>{isPulling ? `Pulling ${image}` : 'Pull Image'}</ModalHeader>
+              <ModalHeader className="text-white">{isPulling ? `Pulling ${image}` : 'Pull Image'}</ModalHeader>
               <ModalBody>
                 {isPulling ? (
                   <div

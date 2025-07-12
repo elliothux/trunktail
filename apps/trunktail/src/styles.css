@@ -9,9 +9,9 @@
 
 html,
 body {
-  @apply h-full overflow-hidden overscroll-none bg-transparent;
+  @apply h-full bg-transparent;
 }
 
 body {
-  @apply text-gray-800 dark:text-gray-100;
+  @apply overflow-hidden overscroll-none bg-transparent;
 }

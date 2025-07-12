@@ -44,7 +44,7 @@ function SystemMenu({ triggerClassName, children }: PropsWithChildren<{ triggerC
 
   return (
     <>
-      <Dropdown className="mt-auto" placement="right-end" isDisabled={command === 'unknown'}>
+      <Dropdown className="light mt-auto" placement="right-end" isDisabled={command === 'unknown'}>
         <DropdownTrigger>
           <Button size="sm" className={cn('ml-auto text-gray-300', triggerClassName)} variant="light" isIconOnly>
             <Ellipsis size={16} />

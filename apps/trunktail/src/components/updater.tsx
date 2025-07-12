@@ -50,9 +50,9 @@ export function Updater() {
             return (
               <>
                 <ModalHeader>
-                  <h2 className="text-lg font-semibold">App Update Available</h2>
+                  <h2 className="text-lg font-semibold text-white">App Update Available</h2>
                 </ModalHeader>
-                <ModalBody className="space-y-0.5 text-sm">
+                <ModalBody className="space-y-0.5 text-sm text-gray-300">
                   {app.d?.map((i, index) => <p key={index}>{i}</p>) ??
                     `A new version of Trunktail (${app.v}) is available.`}
                 </ModalBody>
@@ -80,9 +80,9 @@ export function Updater() {
             return (
               <>
                 <ModalHeader>
-                  <h2 className="text-lg font-semibold">CLI Update Available</h2>
+                  <h2 className="text-lg font-semibold text-white">CLI Update Available</h2>
                 </ModalHeader>
-                <ModalBody className="space-y-0.5 text-sm">
+                <ModalBody className="space-y-0.5 text-sm text-gray-300">
                   {`A new version of Apple container CLI (${cli.v}) is available.`}
                 </ModalBody>
                 <ModalFooter>

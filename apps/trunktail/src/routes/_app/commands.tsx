@@ -259,8 +259,8 @@ function CommandOverview() {
     if (element) {
       element.scrollIntoView({
         behavior: 'smooth',
-        block: 'start',
-        inline: 'nearest',
+        block: 'nearest',
+        inline: 'start',
       });
     }
   };

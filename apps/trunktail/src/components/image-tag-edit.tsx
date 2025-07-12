@@ -103,14 +103,14 @@ function EditList({
 
   return (
     <>
-      <ModalHeader className="flex flex-col gap-1">Edit Tags</ModalHeader>
+      <ModalHeader className="flex flex-col gap-1 text-white">Edit Tags</ModalHeader>
       <ModalBody className="gap-y-2 text-sm">
         {tags.map((tag, index) => {
           const isEditing = editing === index;
           return (
             <div
               key={index}
-              className="hover:bg-muted flex items-center justify-start gap-1 rounded-lg border bg-gray-50 px-3 py-1"
+              className="hover:bg-muted bg-background/60 flex items-center justify-start gap-1 rounded-lg px-3 py-1 text-white"
             >
               {isEditing ? (
                 <input
@@ -125,7 +125,7 @@ function EditList({
                       return newTags;
                     });
                   }}
-                  className="shrink grow"
+                  className="placeholder:text-darkgray shrink grow text-white"
                   placeholder="Enter tag"
                   autoCapitalize="off"
                   autoComplete="off"

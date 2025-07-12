@@ -20,5 +20,11 @@ export function OperationButton({ title, active, icon, onClick, isLoading, disab
       <Icon className={cn('h-4 w-4', active ? 'text-white' : 'text-gray-300', isLoading ? 'animate-spin' : null)} />
     </Button>
   );
-  return title ? <Tooltip content={title}>{button}</Tooltip> : button;
+  return title ? (
+    <Tooltip className="text-white" content={title}>
+      {button}
+    </Tooltip>
+  ) : (
+    button
+  );
 }

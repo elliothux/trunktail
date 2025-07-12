@@ -36,7 +36,7 @@ function AboutDetail() {
     <>
       <ModalHeader className="flex flex-col gap-1">
         <div className="pt-2">
-          <Logo className="w-32" tailColor="#000" />
+          <Logo className="w-32" />
           <p className="text-default-500 mt-2 text-sm">Container Management Tool</p>
         </div>
       </ModalHeader>
@@ -45,7 +45,7 @@ function AboutDetail() {
         <ScrollShadow className="max-h-[calc(90vh-130px)] px-6 pt-4 pb-8">
           <div className="space-y-6">
             {/* Version Information */}
-            <Card>
+            <Card className="bg-gray-950">
               <CardBody>
                 <h3 className="mb-3 text-lg font-semibold">Version Information</h3>
                 <div className="flex flex-col gap-4 text-sm">
@@ -70,7 +70,7 @@ function AboutDetail() {
             </Card>
 
             {/* Developer Information */}
-            <Card>
+            <Card className="bg-gray-950">
               <CardBody>
                 <h3 className="mb-3 text-lg font-semibold">Developer</h3>
                 <div className="grid grid-cols-2 space-x-2">
@@ -103,7 +103,7 @@ function AboutDetail() {
             </Card>
 
             {/* Open Source Libraries */}
-            <Card>
+            <Card className="bg-gray-950">
               <CardBody>
                 <h3 className="mb-3 text-lg font-semibold">Built with Open Source</h3>
                 <div className="grid gap-2 md:grid-cols-2">

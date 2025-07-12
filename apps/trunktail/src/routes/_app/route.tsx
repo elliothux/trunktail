@@ -70,8 +70,12 @@ function App() {
 
   return (
     <div className="relative h-screen w-full">
-      <div className="dark w-ful absolute top-0 right-0 z-0 h-full bg-black/75">
-        <img src="/bg.png" className="rounded-large relative z-10 -translate-x-1/2 opacity-50" alt="bg" />
+      <div className="dark w-ful absolute top-0 right-0 z-0 h-full overflow-hidden bg-black/75">
+        <img
+          src="/bg.png"
+          className="relative -bottom-1/2 z-10 h-full w-full -translate-x-1/4 opacity-30 blur-lg"
+          alt="bg"
+        />
       </div>
 
       <PanelGroup direction="horizontal" className="relative flex w-full" autoSaveId="main-panel-group">

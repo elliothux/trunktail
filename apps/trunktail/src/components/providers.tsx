@@ -32,7 +32,7 @@ export function Providers({ children }: PropsWithChildren) {
               {children}
               <Updater />
             </SystemProvider>
-            <Toaster position="bottom-center" richColors />
+            <Toaster richColors />
             {/*<TanStackRouterDevtools position="bottom-right" />*/}
           </PortalProvider>
         </QueryClientProvider>

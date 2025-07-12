@@ -19,11 +19,11 @@ export function MetadataPreview({ title, metadata: raw, disclosure: { isOpen, on
           const metadata = JSON.stringify(raw, null, 2);
           return (
             <>
-              <ModalHeader className="flex flex-col gap-1">{title}</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1 text-white">{title}</ModalHeader>
               <ModalBody className="p-0">
-                <ScrollShadow className="max-h-[calc(90vh-72px-60px)] px-6 pb-8">
+                <ScrollShadow className="max-h-[calc(90vh-180px)] px-6 pb-8">
                   {metadata.split('\n').map((line, index) => (
-                    <pre key={index} className="text-xs text-gray-600">
+                    <pre key={index} className="text-xs text-gray-200">
                       {line}
                     </pre>
                   ))}
