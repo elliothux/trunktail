@@ -1,5 +1,6 @@
 import { ContainerDetail } from '@/components/container-detail';
 import { ContainerItem } from '@/components/container-item';
+import { EmptyScreen } from '@/components/empty-screen';
 import { MetadataPreview } from '@/components/metadata-preview';
 import { NoSelected } from '@/components/no-selected';
 import { Portal } from '@/components/portal';
@@ -8,7 +9,7 @@ import { Button } from '@heroui/button';
 import { useDisclosure } from '@heroui/modal';
 import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
-import { Info } from 'lucide-react';
+import { Info, Package } from 'lucide-react';
 import { useState } from 'react';
 
 export const Route = createFileRoute('/_app/containers')({
@@ -39,16 +40,20 @@ function ContainersPage() {
         </p>
       </Portal>
 
-      <>
-        {containers?.map((item) => (
+      {containers?.length ? (
+        containers?.map((item) => (
           <ContainerItem
             key={item.configuration.id}
             container={item}
             active={item.configuration.id === current}
             onSelect={setCurrent}
           />
-        ))}
-      </>
+        ))
+      ) : (
+        <EmptyScreen icon={Package} loading={containers == null}>
+          No containers
+        </EmptyScreen>
+      )}
 
       <Portal name="right-panel-title">
         <p>Details</p>

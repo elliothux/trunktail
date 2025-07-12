@@ -79,7 +79,6 @@ export function PullImage({ disclosure: { isOpen, onOpenChange, onClose } }: Pro
     <Modal
       isOpen={isOpen}
       onOpenChange={onOpenChange}
-      backdrop="blur"
       isDismissable={isPulling}
       isKeyboardDismissDisabled={isPulling}
       hideCloseButton={isPulling}

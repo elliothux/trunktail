@@ -1,3 +1,4 @@
+import { EmptyScreen } from '@/components/empty-screen';
 import { ImageDetail } from '@/components/image-detail';
 import { ImageItem } from '@/components/image-item';
 import { MetadataPreview } from '@/components/metadata-preview';
@@ -12,7 +13,7 @@ import { Tooltip } from '@heroui/tooltip';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 import { message, open } from '@tauri-apps/plugin-dialog';
-import { FolderSync, HardDriveDownload, Info, Loader2, Plus } from 'lucide-react';
+import { FileArchive, FolderSync, HardDriveDownload, Info, Loader2, Plus } from 'lucide-react';
 import { default as prettyBytes } from 'pretty-bytes';
 import { useState } from 'react';
 import { toast } from 'sonner';
@@ -115,14 +116,26 @@ function ImageList() {
         </div>
       </Portal>
 
-      {images?.map((item) => (
-        <ImageItem key={item.digest} image={item} active={current === item.digest} onSelect={setCurrent} />
-      ))}
+      {images?.length ? (
+        images?.map((item) => (
+          <ImageItem key={item.digest} image={item} active={current === item.digest} onSelect={setCurrent} />
+        ))
+      ) : (
+        <EmptyScreen icon={FileArchive} loading={images == null}>
+          No images
+        </EmptyScreen>
+      )}
 
       <Portal name="right-panel-title">
         <p>Details</p>
         {image ? (
-          <Button size="sm" className="ml-auto text-gray-200" variant="light" onPress={metadataDisclosure.onOpen} isIconOnly>
+          <Button
+            size="sm"
+            className="ml-auto text-gray-200"
+            variant="light"
+            onPress={metadataDisclosure.onOpen}
+            isIconOnly
+          >
             <Info size={18} />
           </Button>
         ) : null}

@@ -13,7 +13,7 @@ interface Props {
 
 export function MetadataPreview({ title, metadata: raw, disclosure: { isOpen, onOpen, onOpenChange } }: Props) {
   return (
-    <Modal isOpen={isOpen} onOpenChange={onOpenChange} backdrop="blur">
+    <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
       <ModalContent>
         {(onClose) => {
           const metadata = JSON.stringify(raw, null, 2);

@@ -110,7 +110,7 @@ function App() {
             </Panel>
           </>
         ) : (
-          <Panel className="flex flex-1 flex-col bg-gray-50">
+          <Panel className="flex flex-1 flex-col">
             <StartScreen />
           </Panel>
         )}

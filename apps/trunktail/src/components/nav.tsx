@@ -57,7 +57,7 @@ export function Nav({ width, collapsed }: Props) {
               to={to}
               variant={isActive ? 'solid' : 'light'}
               color={isActive ? 'primary' : 'default'}
-              className={cn('text-gray-300', collapsed ? 'w-full' : 'justify-start')}
+              className={cn('text-gray-100', collapsed ? 'w-full' : 'justify-start')}
               isIconOnly={collapsed}
               onPress={() => {
                 if (externalLink != null) {

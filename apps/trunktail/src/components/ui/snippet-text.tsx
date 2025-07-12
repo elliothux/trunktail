@@ -29,12 +29,12 @@ export function SnippetText({ className, children }: Props) {
         }, 1000 * 2);
       }}
     >
-      <span className="break-all text-gray-200">{children}</span>
+      <span className="break-all text-white">{children}</span>
       <span> </span>
       {copied ? (
         <Check className="inline text-green-500" size={16} />
       ) : (
-        <Copy className="inline text-gray-400" size={14} />
+        <Copy className="inline text-gray-300" size={14} />
       )}
     </div>
   );

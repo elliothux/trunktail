@@ -18,7 +18,7 @@ function Unsupported() {
   return (
     <>
       <OctagonAlert size={32} className="text-red-500" />
-      <p className="text-default-500 mt-2 max-w-[400px] text-center text-sm">
+      <p className="mt-2 max-w-[400px] text-center text-sm text-gray-300">
         This app is not supported on your device because it relies on the library apple/containerization, which only
         supports Apple Silicon (M1/M2/M3 and later) chips.
       </p>
@@ -31,7 +31,7 @@ function NotRunning() {
 
   return (
     <>
-      <p className="text-default-500 mt-2 max-w-[400px] text-center">Container server is not running</p>
+      <p className="mt-2 max-w-[400px] text-center text-gray-300">Container server is not running</p>
       <Button
         color="primary"
         className="mt-2"
@@ -51,7 +51,7 @@ function InstallAssistant() {
   const url = latestRelease?.cli.u;
   return (
     <>
-      <p className="text-default-500 mt-2 max-w-[400px] text-center">Container server is not installed.</p>
+      <p className="mt-2 max-w-[400px] text-center text-gray-300">Container server is not installed.</p>
       <Button
         color="primary"
         className="mt-2"

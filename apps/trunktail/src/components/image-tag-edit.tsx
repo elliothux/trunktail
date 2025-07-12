@@ -16,13 +16,7 @@ interface Props {
 
 export function ImageTagEdit({ references, disclosure: { isOpen, onOpenChange } }: Props) {
   return (
-    <Modal
-      isOpen={isOpen}
-      onOpenChange={onOpenChange}
-      backdrop="blur"
-      isDismissable={false}
-      isKeyboardDismissDisabled={false}
-    >
+    <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false} isKeyboardDismissDisabled={false}>
       <ModalContent>{(onClose) => <EditList references={references} onClose={onClose} />}</ModalContent>
     </Modal>
   );

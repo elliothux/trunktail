@@ -1,8 +1,8 @@
 import { ContainerStatusIndicator } from '@/components/container-status-indicator';
+import { ActionButton } from '@/components/ui/action-button';
 import { useContainerOperations } from '@/hooks/use-container-operations';
 import { ContainerInfo } from '@/lib/bridge/containers';
-import { Button } from '@heroui/button';
-import { BookCopy, ChevronRight, FileText, Terminal } from 'lucide-react';
+import { BookCopy, FileText, Terminal } from 'lucide-react';
 import { useMemo } from 'react';
 import { DetailRow } from './ui/detail-row';
 
@@ -44,7 +44,7 @@ export function ContainerDetail({
   console.log(container);
 
   return (
-    <div className="flex h-full flex-col p-2.5">
+    <div className="flex flex-1 flex-col p-2.5">
       <div className="mt-2">
         <DetailRow label="ID" copyable>
           {id}
@@ -62,16 +62,9 @@ export function ContainerDetail({
 
       <div className="mt-2 flex flex-col gap-2">
         {operationItems.map(({ label, icon: Icon, action }) => (
-          <Button
-            key={label}
-            className="hover:bg-primary hover:border-primary justify-between border-neutral-600 text-gray-100"
-            variant="bordered"
-            startContent={<Icon className="h-5 w-5" />}
-            endContent={<ChevronRight className="ml-auto h-5 w-5" />}
-            onPress={action}
-          >
+          <ActionButton key={label} startContent={<Icon className="h-5 w-5" />} onPress={action}>
             {label}
-          </Button>
+          </ActionButton>
         ))}
       </div>
 

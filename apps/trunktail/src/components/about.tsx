@@ -12,7 +12,7 @@ interface Props {
 
 export function About({ disclosure: { isOpen, onOpenChange } }: Props) {
   return (
-    <Modal isOpen={isOpen} onOpenChange={onOpenChange} backdrop="blur" size="2xl">
+    <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="2xl">
       <ModalContent className="w-[40vw] max-w-[520px] min-w-[360px]">{() => <AboutDetail />}</ModalContent>
     </Modal>
   );
@@ -36,7 +36,7 @@ function AboutDetail() {
     <>
       <ModalHeader className="flex flex-col gap-1">
         <div className="pt-2">
-          <Logo className="w-32" />
+          <Logo className="w-32" tailColor="#000" />
           <p className="text-default-500 mt-2 text-sm">Container Management Tool</p>
         </div>
       </ModalHeader>
