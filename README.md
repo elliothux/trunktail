@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/elliothux-trunktail-badge.png)](https://mseep.ai/app/elliothux-trunktail)
+
 ![Trunktail Logo](./apps/trunktail/app-logo.svg)
 
 # Trunktail
