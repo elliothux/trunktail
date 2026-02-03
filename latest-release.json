@@ -5,7 +5,7 @@
     "d": ["First release of Trunktail for macOS"]
   },
   "cli": {
-    "v": "0.2.0",
-    "u": "https://github.com/apple/container/releases/download/0.2.0/container-0.2.0-installer-signed.pkg"
+    "v": "0.8.0",
+    "u": "https://github.com/apple/container/releases/download/0.8.0/container-installer-signed.pkg"
   }
 }
